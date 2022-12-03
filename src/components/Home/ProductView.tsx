@@ -2,9 +2,32 @@ import react from "react"
 import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const product = {
+    mensTrends: [
+        {
+            src: require("../../Assets/images/urban-men.jpg"),
+            id: 1
+        },
+        {
+            src: require("../../Assets/images/urban-men.jpg"),
+            id: 2
+        },
+        {
+            src: require("../../Assets/images/urban-men.jpg"),
+            id: 3
+        },
+        {
+            src: require("../../Assets/images/urban-men.jpg"),
+            id: 4
+        },
+        {
+            src: require("../../Assets/images/urban-men.jpg"),
+            id: 5
+        },
+
+    ],
     name: 'Basic Tee 6-Pack',
     price: '$192',
     href: '#',
@@ -61,11 +84,42 @@ const reviews = { href: '#', average: 4, totalCount: 117 }
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
+const mensTrends = [
+    {
+        src: require("../../Assets/images/urban-men.jpg"),
+        name:'T-shirt',
+        id: 1
+    },
+    {
+        src: require("../../Assets/images/urban-men.jpg"),
+        name:'T-shirt2',
+        id: 2
+    },
+    {
+        src: require("../../Assets/images/urban-men.jpg"),
+        name:'T-shirt3',
+        id: 3
+    },
+    {
+        src: require("../../Assets/images/urban-men.jpg"),
+        name:'T-shirt4',
+        id: 4
+    },
+    {
+        src: require("../../Assets/images/urban-men.jpg"),
+         name:'T-shirt',
+        id: 5
+    },
+
+]
 
 const ProductView = () => {
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
     const navigate = useNavigate()
+    const query = useParams();
+    console.log(query?.id);
+
     return (
         <div className="bg-white">
             <div className="pt-6">
@@ -103,8 +157,6 @@ const ProductView = () => {
                         </div>
                     </ol>
                 </nav>
-
-                {/* Image gallery */}
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                     <div className="aspect-w-3 aspect-h-4 hidden overflow-hidden rounded-lg lg:block">
                         <img
@@ -113,7 +165,7 @@ const ProductView = () => {
                             className="h-full w-full object-cover object-center"
                         />
                     </div>
-                    <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+                    {/* <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
                         <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg">
                             <img
                                 src={product.images[1].src}
@@ -128,7 +180,7 @@ const ProductView = () => {
                                 className="h-full w-full object-cover object-center"
                             />
                         </div>
-                    </div>
+                    </div> */}
                     <div className="aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
                         <img
                             src={product.images[3].src}
@@ -173,7 +225,6 @@ const ProductView = () => {
                         </div>
 
                         <form className="mt-10">
-                            {/* Colors */}
                             <div>
                                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 

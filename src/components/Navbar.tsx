@@ -6,7 +6,8 @@ import Cart from './Cart';
 import { useGetAllCartQuery } from '../Services/rtk/services/test';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [NavOpen, setNavOpen] = useState(false);
     const { data: CartItems } = useGetAllCartQuery("");
     const [CartData, setCartData] = useState<any>([])
     useEffect(() => {
@@ -22,7 +23,10 @@ const Navbar = () => {
                         </div>
 
                         <div className="flex md:hidden">
-                            <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu">
+                            <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu" onClick={() => {
+                                setNavOpen((prevState) => !prevState)
+                                console.log(NavOpen);
+                            }}>
                                 <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
                                     <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
                                 </svg>
@@ -30,7 +34,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="md:flex items-center">
+                    {<div className={`${NavOpen ? 'flex' : 'hidden'} items-center  md:flex`} id='navItems'>
                         <div className="flex flex-col md:flex-row md:mx-6">
                             <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/">Home</Link>
                             <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/products">Products</Link>
@@ -57,7 +61,7 @@ const Navbar = () => {
                         <div>
                             <DropDownMenu />
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </nav>
         </>

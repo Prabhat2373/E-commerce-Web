@@ -1,29 +1,34 @@
 import React from 'react';
 import Sections from '../components/Sections';
 import { useNavigate } from "react-router-dom"
+import { useGetProductsQuery } from '../Services/rtk/services/test';
 
 export default function Hero() {
-  const mensTrends = [
-    { src: require("../Assets/images//urban-men.jpg"),
-    id: 1 },
-    {
-      src: require("../Assets/images//urban-men.jpg"),
-      id: 2
-    },
-    {
-      src: require("../Assets/images//urban-men.jpg"),
-      id: 3
-    },
-    {
-      src: require("../Assets/images//urban-men.jpg"),
-      id: 4
-    },
-    {
-      src: require("../Assets/images//urban-men.jpg"),
-      id: 5
-    },
-    
-  ]
+  // const mensTrends = [
+  //   { src: require("../Assets/images//urban-men.jpg"),
+  //   id: 1 },
+  //   {
+  //     src: require("../Assets/images//urban-men.jpg"),
+  //     id: 2
+  //   },
+  //   {
+  //     src: require("../Assets/images//urban-men.jpg"),
+  //     id: 3
+  //   },
+  //   {
+  //     src: require("../Assets/images//urban-men.jpg"),
+  //     id: 4
+  //   },
+  //   {
+  //     src: require("../Assets/images//urban-men.jpg"),
+  //     id: 5
+  //   },
+
+  // ]
+  const { data: Products } = useGetProductsQuery('');
+  const mensTrends = Products?.payload;
+  // console.log(Products);
+
   const navigate = useNavigate();
   return (
     <>
@@ -41,7 +46,7 @@ export default function Hero() {
                 navigate('/products?womens')
               }}>Purchase Now</button>
             </div>
-    
+
           </div>
 
         </div>

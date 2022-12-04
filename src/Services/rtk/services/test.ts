@@ -12,13 +12,23 @@ export const TestApi = createApi({
     }),
     getAllCart: builder.query({
       query: () => ({
-        url: "getCarts"
+        url: "cart"
       })
     }),
     CreateUser: builder.mutation({
       query: (args) => ({
         url: "signup",
-        body:args?.body
+        body: args?.body
+      })
+    }),
+    getProducts: builder.query({
+      query: () => ({
+        url: 'products',
+      })
+    }),
+    getProductById: builder.query({
+      query: (id: any) => ({
+        url: `/product/${id}`,
       })
     })
   }),
@@ -26,4 +36,4 @@ export const TestApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery, useGetAllCartQuery, useCreateUserMutation } = TestApi;
+export const { useGetPostsQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery } = TestApi;

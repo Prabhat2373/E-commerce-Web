@@ -1,33 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sections from '../components/Sections';
 import { useNavigate } from "react-router-dom"
 import { useGetProductsQuery } from '../Services/rtk/services/test';
+import WomenImg from "../Assets/images/shopping-women.jpg"
+import Modal from './../components/Modal';
 
 export default function Hero() {
-  // const mensTrends = [
-  //   { src: require("../Assets/images//urban-men.jpg"),
-  //   id: 1 },
-  //   {
-  //     src: require("../Assets/images//urban-men.jpg"),
-  //     id: 2
-  //   },
-  //   {
-  //     src: require("../Assets/images//urban-men.jpg"),
-  //     id: 3
-  //   },
-  //   {
-  //     src: require("../Assets/images//urban-men.jpg"),
-  //     id: 4
-  //   },
-  //   {
-  //     src: require("../Assets/images//urban-men.jpg"),
-  //     id: 5
-  //   },
-
-  // ]
+  const [isOpen, setIsOpen] = useState(false);
   const { data: Products } = useGetProductsQuery('');
   const mensTrends = Products?.payload;
-  // console.log(Products);
 
   const navigate = useNavigate();
   return (
@@ -35,7 +16,7 @@ export default function Hero() {
       <div className="main-parent grid md:grid-cols-2 gap-3">
         <div className="first-child ">
           <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
-            <img className="w-full relative h-[550px] object-cover brightness-[0.5]" src={require("../Assets/images/shopping-women.jpg")} alt="Flower and sky" />
+            <img className="w-full relative h-[550px] object-cover brightness-[0.5]" src={WomenImg} alt="Flower and sky" />
             <div className="absolute bottom-[150px] left-0 px-6 py-4">
               <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Shop Women's Trend</h4>
               <p className="leading-normal text-gray-100">
@@ -43,7 +24,8 @@ export default function Hero() {
 
               </p>
               <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
-                navigate('/products?womens')
+                // navigate('/products?womens') 
+                setIsOpen((prevState) => !prevState)
               }}>Purchase Now</button>
             </div>
 
@@ -64,6 +46,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
+          {isOpen && <Modal isOpen={isOpen} setIsOpen={setIsOpen} />}
           <div className="">
             <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
               <img className="relative w-full h-[270px] object-cover brightness-[0.5]" src={require("../Assets/images/cloths-men.jpg")} alt="Flower and sky" />
@@ -108,6 +91,7 @@ export default function Hero() {
       <Sections title="Men's Trending" data={mensTrends} />
       <Sections title="Womens's Trending" data={mensTrends} />
       <Sections title="Kid's Trending" data={mensTrends} />
+
     </>
   )
 }

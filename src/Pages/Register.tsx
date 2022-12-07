@@ -6,19 +6,19 @@ const Register = () => {
     const [FormData, setFormData] = useState([]);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = async (data: any) => {
-        setFormData(data);
+        // setFormData(data);
 
         await fetch("http://localhost:8000/api/user/signup", {
             method: "POST",
-            body: JSON.stringify(FormData)
+            body: JSON.stringify(data),
         }).then((res) => {
             console.log(res);
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err.message);
-            
+
         })
+        console.log(JSON.stringify(data));
     };
-    console.log(JSON.stringify(FormData));
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,7 +54,16 @@ const Register = () => {
                             {...register("file")}
                         />
                     </div>
+                    <div className="mb-2">
 
+                        <label className="inline-flex relative items-center cursor-pointer">
+                            <input type="checkbox" value="" className="sr-only peer" {...register
+                                ("isSeller")} />
+                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            <span className="ml-3 text-sm text-gray-900 font-semibold">Want to be Seller</span>
+                        </label>
+
+                    </div>
                     <div className="mb-2">
                         <label
                             htmlFor="email"

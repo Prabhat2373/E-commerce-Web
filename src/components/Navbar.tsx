@@ -17,8 +17,8 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="bg-white shadow">
-                <div className="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+            <nav className="bg-white shadow-md fixed top-0 w-full z-10">
+                <div className="container sticky top-0 left-0 mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
                     <div className="flex justify-between items-center">
                         <div>
                             <Link className="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700" to="/">W-SHOP</Link>
@@ -35,7 +35,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {<div className={`${NavOpen ? 'flex' : 'hidden'} items-center  md:flex`} id='navItems'>
+                    {<div className={`${NavOpen ? 'flex' : 'hidden'} flex flex-col md:flex-row items-start gap-2 md:gap-0 md:flex md:items-center`} id='navItems'>
                         <div className="flex flex-col md:flex-row md:mx-6">
                             <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/">Home</Link>
                             <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/products">Products</Link>

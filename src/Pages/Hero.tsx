@@ -13,7 +13,7 @@ export default function Hero() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="main-parent grid md:grid-cols-2 gap-3">
+      <div className="main-parent grid md:grid-cols-2 gap-3 mt-16 ">
         <div className="first-child ">
           <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
             <img className="w-full relative h-[550px] object-cover brightness-[0.5]" src={WomenImg} alt="Flower and sky" />

@@ -1,11 +1,10 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { url } from 'inspector';
 
 // Define a service using a base URL and expected endpoints
 export const TestApi = createApi({
   reducerPath: 'TestApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/user/', }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://w-shop.onrender.com/api/user/', }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: (id: number) => `/${id}`,
@@ -18,7 +17,7 @@ export const TestApi = createApi({
     CreateUser: builder.mutation({
       query: (args) => ({
         url: "signup",
-        body: args?.body
+        body: args
       })
     }),
     getProducts: builder.query({

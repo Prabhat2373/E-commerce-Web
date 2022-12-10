@@ -15,16 +15,17 @@ export const TestApi = createApi({
       })
     }),
     addToCart: builder.mutation({
-      query: ({ args }) => ({
+      query: (args) => ({
         url: `cart/${args?.id}`,
-        body: args.quantity,
+        body: args.payload,
         method: 'POST',
       }),
     }),
     CreateUser: builder.mutation({
       query: (args) => ({
         url: "signup",
-        body: args
+        body: args,
+        method:'POST'
       })
     }),
     getProducts: builder.query({
@@ -35,6 +36,13 @@ export const TestApi = createApi({
     getProductById: builder.query({
       query: (id: any) => ({
         url: `/product/${id}`,
+      })
+    }),
+    createProduct: builder.mutation({
+      query: (args) => ({
+        url: `/product`,
+        body: args,
+        method:'POST'
       })
     })
   }),

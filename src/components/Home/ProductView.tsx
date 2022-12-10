@@ -187,7 +187,7 @@ const ProductView = () => {
                             </div>
                         </div>
 
-                        <form className="mt-10">
+                        <form className="mt-10" >
                             <div>
                                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
@@ -287,9 +287,9 @@ const ProductView = () => {
                             </div>
 
                             <button
-                                type="submit"
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e?.preventDefault();
                                     AddToCart({
                                         payload: {
                                             quantity: 3
@@ -299,7 +299,6 @@ const ProductView = () => {
                                         console.log(res)
                                     }).catch((err) => {
                                         console.log(err?.message);
-
                                     })
                                 }}
                             >

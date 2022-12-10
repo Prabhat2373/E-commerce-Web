@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetProductByIdQuery } from "../../Services/rtk/services/test";
+import { useAddToCartMutation, useGetProductByIdQuery } from "../../Services/rtk/services/test";
 
 const product = {
     mensTrends: [
@@ -91,9 +91,10 @@ const ProductView = () => {
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
     const { data: ProductById } = useGetProductByIdQuery(query?.id)
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    const [AddToCart] = useAddToCartMutation();
     const navigate = useNavigate()
 
-    // console.log(query?.id);
+    console.log(query?.id);
     console.log(ProductById);
 
 
@@ -288,6 +289,19 @@ const ProductView = () => {
                             <button
                                 type="submit"
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                onClick={() => {
+                                    AddToCart({
+                                        payload: {
+                                            quantity: 3
+                                        },
+                                        id: query?.id
+                                    }).then((res) => {
+                                        console.log(res)
+                                    }).catch((err) => {
+                                        console.log(err?.message);
+
+                                    })
+                                }}
                             >
                                 Add to bag
                             </button>

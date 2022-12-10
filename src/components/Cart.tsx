@@ -9,8 +9,11 @@ interface Props {
     data: any;
 }
 export default function Cart({ isOpen, setOpen, data }: Props) {
+    var sum = 0;
+    console.log(data?.payload);
 
-    const { data: CartItems } = useGetAllCartQuery('');
+    const SubTotal = data?.payload?.map((el: any) => sum += el?.price)?.pop()
+
     return (
         <>
             {
@@ -61,10 +64,10 @@ export default function Cart({ isOpen, setOpen, data }: Props) {
                                                         <div className="flow-root">
                                                             <ul role="list" className="-my-6 divide-y divide-gray-200">
                                                                 {data?.payload.map((product: any) => (
-                                                                    <li key={product.productName + 1} className="flex py-6">
+                                                                    <li key={product.name + 1} className="flex py-6">
                                                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                             <img
-                                                                                src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
+                                                                                src={product?.image}
                                                                                 alt={"alternative"}
                                                                                 className="h-full w-full object-cover object-center"
                                                                             />
@@ -74,11 +77,11 @@ export default function Cart({ isOpen, setOpen, data }: Props) {
                                                                             <div>
                                                                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                                                                     <h3>
-                                                                                        <a href={"/"}>{product.productName}</a>
+                                                                                        <a href={"/"}>{product.name}</a>
                                                                                     </h3>
-                                                                                    <p className="ml-4">{product.productPrice}</p>
+                                                                                    <p className="ml-4">₹ {product.price}</p>
                                                                                 </div>
-                                                                                <p className="mt-1 text-sm text-gray-500">Salmon</p>
+                                                                                <p className="mt-1 text-sm text-gray-500">{product?.name}</p>
                                                                             </div>
                                                                             <div className="flex flex-1 items-end justify-between text-sm">
                                                                                 <p className="text-gray-500">Qty {product.quantity}</p>
@@ -103,7 +106,7 @@ export default function Cart({ isOpen, setOpen, data }: Props) {
                                                 <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                                         <p>Subtotal</p>
-                                                        <p>$262.00</p>
+                                                        <p>₹ {SubTotal}</p>
                                                     </div>
                                                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                                     <div className="mt-6">
@@ -116,7 +119,7 @@ export default function Cart({ isOpen, setOpen, data }: Props) {
                                                     </div>
                                                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                         <p>
-                                                            or
+                                                            <span className='p-2'>or</span>
                                                             <button
                                                                 type="button"
                                                                 className="font-medium text-indigo-600 hover:text-indigo-500"

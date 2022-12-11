@@ -12,7 +12,7 @@ const Navbar = () => {
     const [CartData, setCartData] = useState<any>([])
     useEffect(() => {
         setCartData(CartItems)
-    }, [CartItems]);
+    },[CartItems]);
 
     console.log(CartData);
 
@@ -45,7 +45,7 @@ const Navbar = () => {
                         <div className="flex flex-col md:flex-row md:mx-6 cursor-pointer">
                             <FiSearch />
                         </div>
-                        {<Cart isOpen={isOpen} setOpen={setIsOpen} data={CartData} />}
+                        {<Cart isOpen={isOpen} setOpen={setIsOpen} />}
                         <div className="flex justify-center md:block">
                             <p className="relative text-gray-700 hover:text-gray-600 cursor-pointer" onClick={() => {
                                 setIsOpen(!isOpen)

@@ -1,24 +1,24 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { useRemoveCartItemMutation } from '../Services/rtk/services/test';
+import { useGetAllCartQuery, useRemoveCartItemMutation } from '../Services/rtk/services/test';
 
 interface Props {
     isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    data: any;
 }
-export default function Cart({ isOpen, setOpen, data }: Props) {
-    const [removeItem] = useRemoveCartItemMutation();
-    const [productData, setProductData] = useState([]);
-    console.log(data?.payload);
+export default function Cart({ isOpen, setOpen }: Props) {
+    const [removeItem] = useRemoveCartItemMutation()
+    const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery("");
+
+    const [CartData, setCartData] = useState<any>([])
     useEffect(() => {
-        setProductData(data?.payload)
-    }, [data]);
-    console.log(productData);
+        setCartData(CartItems?.payload);
+    }, [CartItems])
+    console.log(CartData);
 
     var sum = 0;
-    const SubTotal = data?.payload?.map((el: any) => sum += el?.price)?.pop()
+    const SubTotal = CartData?.map((el: any) => sum += el?.price)?.pop()
 
     return (
         <>
@@ -69,7 +69,7 @@ export default function Cart({ isOpen, setOpen, data }: Props) {
                                                     <div className="mt-8">
                                                         <div className="flow-root">
                                                             <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                                                {data?.payload.map((product: any) => (
+                                                                {CartData?.map((product: any) => (
                                                                     <li key={product.name + 1} className="flex py-6">
                                                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                             <img

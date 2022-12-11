@@ -3,6 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { useNavigate } from 'react-router-dom';
+import { useGetProductsQuery } from '../../Services/rtk/services/test';
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -144,7 +145,8 @@ function classNames(...classes: any) {
 }
 
 export default function CollectionsFilter() {
-    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    const { data: Products } = useGetProductsQuery('');
     const navigate = useNavigate()
 
     return (
@@ -376,16 +378,16 @@ export default function CollectionsFilter() {
                             {/* Product grid */}
                             {/* Replace with your content */}
                             <div className="grid col-span-3 grid-cols-3 gap-3 overflow-y-scroll">
-                                {products.map((product) => (
-                                    <div key={product.id} className="group relative">
+                                {Products?.payload?.map((product: any) => (
+                                    <div key={product._id} className="group relative">
                                         {/* <button className=" absolute top-[60%] bg-slate-800 w-full text-center text-slate-200 p-2" onClick={() => {
                                     console.log("CLICKED");
                                 }}>Quick View </button> */}
                                         <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 " >
 
                                             <img
-                                                src={product.imageSrc}
-                                                alt={product.imageAlt}
+                                                src={product?.image}
+                                                alt={product}
                                                 className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                             />
                                         </div>
@@ -394,7 +396,7 @@ export default function CollectionsFilter() {
                                             <div>
                                                 <h3 className="text-sm text-gray-700">
                                                     <p onClick={() => {
-                                                        navigate(`/view/${product?.id}`)
+                                                        navigate(`/view/${product?._id}`)
                                                     }}>
                                                         <span aria-hidden="true" className="absolute inset-0" />
                                                         {product.name}

@@ -149,6 +149,7 @@ const ProductView = () => {
                             src={ProductById?.payload?.image}
                             alt={product.images[3].alt}
                             className="h-full w-full object-cover object-center"
+                            loading="lazy"
                         />
                     </div>
                 </div>
@@ -188,7 +189,7 @@ const ProductView = () => {
                         </div>
 
                         <form className="mt-10" >
-                            <div>
+                            {/* <div>
                                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
                                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
@@ -222,7 +223,7 @@ const ProductView = () => {
                                         ))}
                                     </div>
                                 </RadioGroup>
-                            </div>
+                            </div> */}
 
                             {/* Sizes */}
                             <div className="mt-10">

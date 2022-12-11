@@ -25,7 +25,10 @@ export const TestApi = createApi({
       query: (args) => ({
         url: "signup",
         body: args,
-        method:'POST'
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       })
     }),
     getProducts: builder.query({
@@ -42,7 +45,7 @@ export const TestApi = createApi({
       query: (args) => ({
         url: `/product`,
         body: args,
-        method:'POST'
+        method: 'POST'
       })
     })
   }),

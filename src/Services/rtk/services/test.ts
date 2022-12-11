@@ -21,6 +21,12 @@ export const TestApi = createApi({
         method: 'POST',
       }),
     }),
+    removeCartItem: builder.mutation({
+      query: (id:number) => ({
+        url: `cart/${id}`,
+        method: 'DELETE',
+      }),
+    }),
     CreateUser: builder.mutation({
       query: (args) => ({
         url: "signup",
@@ -47,10 +53,11 @@ export const TestApi = createApi({
         body: args,
         method: 'POST'
       })
-    })
+    }),
+
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation } = TestApi;
+export const { useGetPostsQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation } = TestApi;

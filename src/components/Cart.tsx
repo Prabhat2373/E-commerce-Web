@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { useGetAllCartQuery } from '../Services/rtk/services/test';
+import { useRemoveCartItemMutation } from '../Services/rtk/services/test';
 
 interface Props {
     isOpen: boolean;
@@ -9,9 +9,15 @@ interface Props {
     data: any;
 }
 export default function Cart({ isOpen, setOpen, data }: Props) {
-    var sum = 0;
+    const [removeItem] = useRemoveCartItemMutation();
+    const [productData, setProductData] = useState([]);
     console.log(data?.payload);
+    useEffect(() => {
+        setProductData(data?.payload)
+    }, [data]);
+    console.log(productData);
 
+    var sum = 0;
     const SubTotal = data?.payload?.map((el: any) => sum += el?.price)?.pop()
 
     return (
@@ -88,8 +94,10 @@ export default function Cart({ isOpen, setOpen, data }: Props) {
 
                                                                                 <div className="flex">
                                                                                     <button
-                                                                                        type="button"
                                                                                         className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                                                        onClick={() => {
+                                                                                            removeItem(product?._id)
+                                                                                        }}
                                                                                     >
                                                                                         Remove
                                                                                     </button>

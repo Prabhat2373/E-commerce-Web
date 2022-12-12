@@ -4,6 +4,7 @@ import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAddToCartMutation, useGetProductByIdQuery } from "../../Services/rtk/services/test";
+import { useSelector } from 'react-redux';
 
 const product = {
     mensTrends: [
@@ -87,6 +88,9 @@ function classNames(...classes: any) {
 }
 
 const ProductView = () => {
+    const AddProductToCart = useSelector((state: any) => state.AddProductToCart);
+    console.log(AddProductToCart);
+
     const query = useParams();
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
     const { data: ProductById } = useGetProductByIdQuery(query?.id)

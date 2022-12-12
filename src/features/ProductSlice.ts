@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ProductState {
-    value: string[]
+    value: number;
 }
 
 const initialState: ProductState = {
-    value: []
+    value: 0
 }
 
 export const ProductSlice = createSlice({
     name: "productsReducer",
     initialState,
     reducers: {
-        AddProductToCart: (state, action: PayloadAction<string>) => {
-            state.value.push(action.payload)
+        AddProductToCart: (state, action: PayloadAction<number>) => {
+            state.value = action.payload
         },
         removeReservation: (state, action: PayloadAction<number>) => {
-            state.value.splice(action.payload, 1);
+            state.value = action.payload
         }
     }
 })

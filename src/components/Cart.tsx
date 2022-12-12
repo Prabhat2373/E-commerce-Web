@@ -13,20 +13,16 @@ export default function Cart({ isOpen, setOpen }: Props) {
 
     const [CartData, setCartData] = useState<any>([])
     useEffect(() => {
-     setCartData(CartItems?.payload);
-        
+        setCartData(CartItems?.payload);
+
     }, [CartItems])
-    console.log(CartData,CartItems,removeItem);
-// useEffect(()=>{
+    console.log(CartData, CartItems, removeItem);
 
-//     FetchMore();
-// },[])
-
-function remove(id: number){
-    removeItem(id)
-    console.log(id);
-    FetchMore()
-}
+    function remove(id: number) {
+        removeItem(id).then(() => {
+            FetchMore()
+        })
+    }
 
     var sum = 0;
     const SubTotal = CartData?.map((el: any) => sum += el?.price)?.pop()
@@ -107,7 +103,7 @@ function remove(id: number){
                                                                                     <button
                                                                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                                                                         onClick={() => {
-                                                                                           remove(product?._id)
+                                                                                            remove(product?._id)
 
                                                                                         }}
                                                                                     >

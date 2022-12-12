@@ -21,7 +21,7 @@ const Register = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
             <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
                 <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
                     <h1 className="text-3xl font-semibold text-center text-indigo-500 uppercase">

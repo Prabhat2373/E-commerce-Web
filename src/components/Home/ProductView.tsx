@@ -5,6 +5,8 @@ import { RadioGroup } from '@headlessui/react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAddToCartMutation, useGetProductByIdQuery } from "../../Services/rtk/services/test";
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from './../../features/Hooks';
+import { addToCart } from "../../features/CartSlice";
 
 const product = {
     mensTrends: [
@@ -88,8 +90,7 @@ function classNames(...classes: any) {
 }
 
 const ProductView = () => {
-    const AddProductToCart = useSelector((state: any) => state.AddProductToCart);
-    console.log(AddProductToCart);
+    const dispatch = useAppDispatch();
 
     const query = useParams();
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
@@ -294,17 +295,18 @@ const ProductView = () => {
                             <button
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 onClick={(e) => {
-                                    e?.preventDefault();
-                                    AddToCart({
-                                        payload: {
-                                            quantity: 3
-                                        },
-                                        id: query?.id
-                                    }).then((res) => {
-                                        console.log(res)
-                                    }).catch((err) => {
-                                        console.log(err?.message);
-                                    })
+                                    // e?.preventDefault();
+                                    // AddToCart({
+                                    //     payload: {
+                                    //         quantity: 3
+                                    //     },
+                                    //     id: query?.id
+                                    // }).then((res) => {
+                                    //     console.log(res)
+                                    // }).catch((err) => {
+                                    //     console.log(err?.message);
+                                    // })
+                                    dispatch(addToCart(String(query?.id)))
                                 }}
                             >
                                 Add to bag

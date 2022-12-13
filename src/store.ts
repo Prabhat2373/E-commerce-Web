@@ -3,6 +3,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { TestApi } from './Services/rtk/services/test'
 import ProductReducer from "../src/features/ProductSlice"
+import CartReducer from "../src/features/CartSlice";
+
 import {
   persistStore,
   persistReducer,
@@ -30,7 +32,8 @@ export const store = configureStore({
     user: rootReducer,
     // Add the generated reducer as a specific top-level slice
     [TestApi.reducerPath]: TestApi.reducer,
-    ProductsReducer: ProductReducer,
+    products: ProductReducer,
+    cart: CartReducer
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -48,6 +51,8 @@ export const store = configureStore({
 })
 
 export let persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization

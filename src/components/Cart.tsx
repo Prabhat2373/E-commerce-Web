@@ -2,12 +2,20 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useGetAllCartQuery, useRemoveCartItemMutation } from '../Services/rtk/services/test';
+import { useAppDispatch, useAppSelector } from './../features/Hooks';
 
 interface Props {
     isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function Cart({ isOpen, setOpen }: Props) {
+    const dispatch = useAppDispatch();
+    const products = useAppSelector((state: any) => state?.products?.products);
+    const items = useAppSelector((state: any) => state?.cart?.GET_ALL_PRODUCT);
+    console.log(products['63958fdb40401b3ce4890c2e']?.image);
+    console.log(items);
+
+
     const [removeItem] = useRemoveCartItemMutation()
     const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery("");
 
@@ -16,7 +24,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
         setCartData(CartItems?.payload);
 
     }, [CartItems])
-    console.log(CartData, CartItems, removeItem);
+    // console.log(CartData, CartItems, removeItem);
 
     function remove(id: number) {
         removeItem(id).then(() => {
@@ -76,11 +84,11 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                                     <div className="mt-8">
                                                         <div className="flow-root">
                                                             <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                                                {CartData?.map((product: any) => (
-                                                                    <li key={product.name + 1} className="flex py-6">
+                                                                {Object.entries(items).map((id: any) => (
+                                                                    <li key={products[id].name + 1} className="flex py-6">
                                                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                             <img
-                                                                                src={product?.image}
+                                                                                src={products[id]?.image}
                                                                                 alt={"alternative"}
                                                                                 className="h-full w-full object-cover object-center"
                                                                             />
@@ -90,20 +98,20 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                                                             <div>
                                                                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                                                                     <h3>
-                                                                                        <a href={"/"}>{product.name}</a>
+                                                                                        <a href={"/"}>{products[id].name}</a>
                                                                                     </h3>
-                                                                                    <p className="ml-4">₹ {product.price}</p>
+                                                                                    <p className="ml-4">₹ {products[id].price}</p>
                                                                                 </div>
-                                                                                <p className="mt-1 text-sm text-gray-500">{product?.name}</p>
+                                                                                <p className="mt-1 text-sm text-gray-500">{products[id]?.name}</p>
                                                                             </div>
                                                                             <div className="flex flex-1 items-end justify-between text-sm">
-                                                                                <p className="text-gray-500">Qty {product.quantity}</p>
+                                                                                <p className="text-gray-500">Qty {products[id].quantity}</p>
 
                                                                                 <div className="flex">
                                                                                     <button
                                                                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                                                                         onClick={() => {
-                                                                                            remove(product?._id)
+                                                                                            remove(products[id]?._id)
 
                                                                                         }}
                                                                                     >

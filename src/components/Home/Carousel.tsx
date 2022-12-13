@@ -16,6 +16,7 @@ export default function Carousel({ data }: CarouselProps) {
     const navigate = useNavigate();
     const [AddToCart] = useAddToCartMutation();
     console.log(LoadingImage);
+    
 
     return (
         <>

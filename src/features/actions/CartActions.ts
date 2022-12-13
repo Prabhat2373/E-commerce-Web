@@ -1,5 +1,6 @@
 // import callApi from '../api'
 import { useGetAllCartQuery } from "../../Services/rtk/services/test";
+import { useEffect } from 'react';
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
 export const GET_ALL_PRODUCT = 'GET_ALL_PRODUCT';
@@ -11,15 +12,19 @@ export const DELETE_CART = 'DELETE_CART';
 export const actFetchProductsRequest = () => {
     return (dispatch: any) => {
         const { data: CartItems } = useGetAllCartQuery('');
-        return (
+        console.log(CartItems);
+        useEffect(() => {
             dispatch(GetAllProduct(CartItems?.payload))
-        )
+        }, [CartItems])
+        
 
     }
 }
+console.log(actFetchProductsRequest());
+
 
 /*GET_ALL_PRODUCT*/
-export function GetAllProduct(payload:any) {
+export function GetAllProduct(payload: any) {
     return {
         type: 'GET_ALL_PRODUCT',
         payload
@@ -33,32 +38,32 @@ export function GetNumberCart() {
     }
 }
 
-export function AddCart(payload:any) {
+export function AddCart(payload: any) {
     return {
         type: 'ADD_CART',
         payload
     }
 }
-export function UpdateCart(payload:any) {
+export function UpdateCart(payload: any) {
     return {
         type: 'UPDATE_CART',
         payload
     }
 }
-export function DeleteCart(payload:any) {
+export function DeleteCart(payload: any) {
     return {
         type: 'DELETE_CART',
         payload
     }
 }
 
-export function IncreaseQuantity(payload:any) {
+export function IncreaseQuantity(payload: any) {
     return {
         type: 'INCREASE_QUANTITY',
         payload
     }
 }
-export function DecreaseQuantity(payload:any) {
+export function DecreaseQuantity(payload: any) {
     return {
         type: 'DECREASE_QUANTITY',
         payload

@@ -1,9 +1,15 @@
 import { combineReducers } from 'redux';
 import { GET_ALL_PRODUCT, GET_NUMBER_CART, ADD_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, DELETE_CART } from '../features/actions/CartActions';
 
-const initProduct = {
+interface initProduct {
     numberCart: 0,
-    Carts: [],
+    Carts: [{
+        id: number,
+        name: string,
+        price: string | number,
+        image: string,
+        quantity: number
+    }],
     _products: []
 }
 interface ActionPayload {
@@ -14,10 +20,10 @@ interface ActionPayload {
         price: string | number,
         image: string,
         quantity: number
-    }
+    } | any;
 }
 
-function todoProduct(state = initProduct, action: ActionPayload) {
+function CartProduct(state: initProduct, action: ActionPayload) {
     switch (action.type) {
         case GET_ALL_PRODUCT:
             return {
@@ -31,7 +37,7 @@ function todoProduct(state = initProduct, action: ActionPayload) {
         case ADD_CART:
             if (state.numberCart === 0) {
                 let cart = {
-                    id: action.payload.id,
+                    id: action.payload._id,
                     quantity: 1,
                     name: action.payload.name,
                     image: action.payload.image,
@@ -41,8 +47,8 @@ function todoProduct(state = initProduct, action: ActionPayload) {
             }
             else {
                 let check = false;
-                state.Carts.map((item, key) => {
-                    if (item.id == action.payload.id) {
+                state.Carts?.map((item, key) => {
+                    if (item.id === action.payload.id) {
                         state.Carts[key].quantity++;
                         check = true;
                     }
@@ -85,15 +91,14 @@ function todoProduct(state = initProduct, action: ActionPayload) {
                 ...state,
                 numberCart: state.numberCart - quantity_,
                 Carts: state.Carts.filter(item => {
-                    return item.id != state.Carts[action.payload].id
+                    return item.id !== state.Carts[action.payload].id
                 })
-
             }
         default:
             return state;
     }
 }
-const ShopApp = combineReducers({
-    _todoProduct: todoProduct
+const CartReducer = combineReducers({
+    _CartProduct: CartProduct
 });
-export default ShopApp;
+export default CartReducer;

@@ -1,28 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface ProductState {
-    value: number;
+// import type { Product } from "../../app/api";
+export interface Product {
+    _id: string;
+    name: string;
+    price: number;
+    desc: string;
+    image: string;
 }
 
-const initialState: ProductState = {
-    value: 0
+export interface ProductsState {
+    products: { [_id: string]: Product } | any
 }
 
-export const ProductSlice = createSlice({
-    name: "productsReducer",
+const initialState: ProductsState = {
+    products: {}
+}
+
+const productsSlice = createSlice({
     initialState,
+    name: "products",
     reducers: {
-        AddProductToCart: (state, action: PayloadAction<number>) => {
-            state.value = action.payload
-        },
-        removeReservation: (state, action: PayloadAction<number>) => {
-            state.value = action.payload
+        receivedProducts(state, action: PayloadAction<Product[]>) {
+            const products = action.payload;
+            products?.forEach(product => {
+                console.log(product);
+                state.products[product._id] = product;
+            })
         }
-    }
-})
+    },
+});
 
-export const { AddProductToCart } = ProductSlice.actions
-export const { removeReservation } = ProductSlice.actions
-
-export default ProductSlice.reducer
-
+export const { receivedProducts } = productsSlice.actions;
+export default productsSlice.reducer;

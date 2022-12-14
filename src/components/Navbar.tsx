@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import DropDownMenu from './DropDownMenu';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
 import { useGetAllCartQuery } from '../Services/rtk/services/test';
 
@@ -10,9 +10,13 @@ const Navbar = () => {
     const [NavOpen, setNavOpen] = useState(false);
     const { data: CartItems } = useGetAllCartQuery("");
     const [CartData, setCartData] = useState<any>([])
+    const [Path, setPath] = useState('');
+    const link = useLocation()?.pathname;
+    
     useEffect(() => {
         setCartData(CartItems)
-    }, [CartItems]);
+        setPath(link);
+    }, [CartItems, link]);
 
     console.log(CartData);
 
@@ -38,9 +42,9 @@ const Navbar = () => {
 
                     {<div className={`${NavOpen ? 'flex' : 'hidden'} flex flex-col md:flex-row items-start gap-2 md:gap-0 md:flex md:items-center`} id='navItems'>
                         <div className="flex flex-col md:flex-row md:mx-6">
-                            <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/">Home</Link>
-                            <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/products">Products</Link>
-                            <Link className="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" to="/collections">Collections</Link>
+                            <Link className={`my-1 text-sm ${Path === '/' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/">Home</Link>
+                            <Link className={`my-1 text-sm ${Path === '/products' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/products">Products</Link>
+                            <Link className={`my-1 text-sm ${Path === '/collections' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/collections">Collections</Link>
                         </div>
                         <div className="flex flex-col md:flex-row md:mx-6 cursor-pointer">
                             <FiSearch />

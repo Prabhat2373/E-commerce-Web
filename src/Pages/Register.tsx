@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useCreateUserMutation } from '../Services/rtk/services/test';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const [FormData, setFormData] = useState([]);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [PostUser] = useCreateUserMutation();
+    const navigate = useNavigate()
     const onSubmit = async (data: any) => {
-        // setFormData(data);
-
-        await fetch("http://localhost:8000/api/user/signup", {
-            method: "POST",
-            body: JSON.stringify(data),
-        }).then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err.message);
-
-        })
-        console.log(JSON.stringify(data));
+        PostUser(data).then(() => navigate("/")).catch((err) => console.log(err?.message));
     };
 
     return (

@@ -7,6 +7,7 @@ import Modal from './../components/Modal';
 import { useAppDispatch, useAppSelector } from './../features/Hooks';
 import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
+import Alert from '../components/Alert';
 
 export default function Hero() {
   const dispatch = useAppDispatch();
@@ -16,7 +17,8 @@ export default function Hero() {
   useEffect(() => {
     dispatch(receivedProducts(Products?.payload))
   }, [Products]);
-  const item = useSelector((state:any) => state?.products?.products);
+  
+  const item = useSelector((state: any) => state?.products?.products);
 
   console.log(item);
 
@@ -24,6 +26,7 @@ export default function Hero() {
   const navigate = useNavigate();
   return (
     <>
+
       <div className="main-parent grid md:grid-cols-2 gap-3 mt-16 ">
         <div className="first-child ">
           <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
@@ -99,6 +102,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      {/* <Alert title="Hello" message={"Test Alert"} /> */}
       <Sections title="Men's Trending" data={mensTrends} />
       <Sections title="Womens's Trending" data={mensTrends} />
       <Sections title="Kid's Trending" data={mensTrends} />

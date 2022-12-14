@@ -33,7 +33,7 @@ export const TestApi = createApi({
         body: args,
         method: 'POST',
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          'Content-type': 'application/json; charset=utf-8',
         },
       })
     }),

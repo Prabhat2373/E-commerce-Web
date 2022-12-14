@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAddToCartMutation, useGetProductByIdQuery } from "../../Services/rtk/services/test";
+import { useAddToCartMutation, useGetAllCartQuery, useGetProductByIdQuery } from "../../Services/rtk/services/test";
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from './../../features/Hooks';
 import { addToCart } from "../../features/CartSlice";
@@ -98,11 +98,18 @@ const ProductView = () => {
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
     const [AddToCart] = useAddToCartMutation();
     const navigate = useNavigate()
+    const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery('');
 
     console.log(query?.id);
     console.log(ProductById);
 
-
+    function AddCart(id: any, quantity: any) {
+        AddToCart({
+            payload: {
+                quantity
+            }, id
+        }).then(() => FetchCart())
+    }
     return (
         <div className="bg-white">
             <div className="pt-6">
@@ -295,7 +302,7 @@ const ProductView = () => {
                             <button
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 onClick={(e) => {
-                                    // e?.preventDefault();
+                                    e?.preventDefault();
                                     // AddToCart({
                                     //     payload: {
                                     //         quantity: 3
@@ -306,7 +313,8 @@ const ProductView = () => {
                                     // }).catch((err) => {
                                     //     console.log(err?.message);
                                     // })
-                                    dispatch(addToCart(String(query?.id)))
+                                    AddCart(query?.id, 3)
+                                    // dispatch(addToCart(String(query?.id)))
                                 }}
                             >
                                 Add to bag

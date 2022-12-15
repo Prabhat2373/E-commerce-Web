@@ -104,6 +104,7 @@ export default function Hero() {
         </div>
       </div>
       {/* <Alert title="Hello" message={"Test Alert"} /> */}
+      <Toast title={"SUCCESS"} message="Hello world" isOpen={true} />
       <Sections title="Men's Trending" data={mensTrends} />
       <Sections title="Womens's Trending" data={mensTrends} />
       <Sections title="Kid's Trending" data={mensTrends} />

@@ -3,22 +3,25 @@ import { FiSearch } from 'react-icons/fi';
 import DropDownMenu from './DropDownMenu';
 import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
-import { useGetAllCartQuery } from '../Services/rtk/services/test';
+import { useGetAllCartQuery, useGetCurrentUserQuery } from '../Services/rtk/services/test';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { data: CurrentUser } = useGetCurrentUserQuery('');
     const [NavOpen, setNavOpen] = useState(false);
     const { data: CartItems } = useGetAllCartQuery("");
-    const [CartData, setCartData] = useState<any>([])
+    const [CartData, setCartData] = useState<any>([]);
     const [Path, setPath] = useState('');
     const link = useLocation()?.pathname;
-    
+
     useEffect(() => {
         setCartData(CartItems)
         setPath(link);
     }, [CartItems, link]);
 
-    console.log(CartData);
+    // console.log(CartData);
+    console.log("CURRENT USER", CurrentUser);
+
 
     return (
         <>

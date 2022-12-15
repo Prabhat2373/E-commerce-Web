@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useCreateUserMutation } from '../Services/rtk/services/test';
@@ -6,10 +6,21 @@ import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const profileRef = useRef<any>();
     const [PostUser] = useCreateUserMutation();
     const navigate = useNavigate()
     const onSubmit = async (data: any) => {
-        PostUser(data).then(() => navigate("/")).catch((err) => console.log(err?.message));
+        var formdata = new FormData();
+        formdata.append("name", data.name);
+        formdata.append("email", data.email);
+        formdata.append("password", data.password);
+        formdata.append("isSeller", data.isSeller);
+        formdata.append("file",  profileRef.current.files[0]);
+
+        PostUser(formdata).then(() => {
+            navigate("/")
+            alert("You're Logged In");
+        }).catch((err) => console.log(err?.message));
     };
 
     return (
@@ -44,6 +55,12 @@ const Register = () => {
                             type="file"
                             className="block w-full px-4 py-2 mt-2 text-indigo-500 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             {...register("file")}
+                            id="profile"
+                            ref={profileRef}
+                            onChange={() => {
+                                console.log(profileRef);
+
+                            }}
                         />
                     </div>
                     <div className="mb-2">

@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // Define a service using a base URL and expected endpoints
 export const TestApi = createApi({
   reducerPath: 'TestApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://w-shop.onrender.com/api/user/', }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/user/', }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: (id: number) => `/${id}`,
@@ -12,6 +12,11 @@ export const TestApi = createApi({
     getAllCart: builder.query({
       query: () => ({
         url: "cart"
+      })
+    }),
+    getCurrentUser: builder.query({
+      query: () => ({
+        url: "user"
       })
     }),
     addToCart: builder.mutation({
@@ -22,7 +27,7 @@ export const TestApi = createApi({
       }),
     }),
     removeCartItem: builder.mutation({
-      query: (id:number) => ({
+      query: (id: number) => ({
         url: `cart/${id}`,
         method: 'DELETE',
       }),
@@ -32,9 +37,7 @@ export const TestApi = createApi({
         url: "signup",
         body: args,
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json; charset=utf-8',
-        },
+        redirect: 'follow'
       })
     }),
     getProducts: builder.query({
@@ -60,4 +63,4 @@ export const TestApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation } = TestApi;
+export const { useGetPostsQuery, useGetCurrentUserQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation } = TestApi;

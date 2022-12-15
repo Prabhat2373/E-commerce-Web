@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from './../features/Hooks';
 import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
 import Alert from '../components/Alert';
+import Toast from '../components/Toast';
 
 export default function Hero() {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ export default function Hero() {
   useEffect(() => {
     dispatch(receivedProducts(Products?.payload))
   }, [Products]);
-  
+
   const item = useSelector((state: any) => state?.products?.products);
 
   console.log(item);

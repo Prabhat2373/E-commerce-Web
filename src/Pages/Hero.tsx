@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useGetProductsQuery } from '../Services/rtk/services/test';
 import WomenImg from "../Assets/images/shopping-women.jpg"
 import Modal from './../components/Modal';
-import { useAppDispatch, useAppSelector } from './../features/Hooks';
+import { useAppDispatch } from './../features/Hooks';
 import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
 import Alert from '../components/Alert';
@@ -13,6 +13,7 @@ import Toast from '../components/Toast';
 export default function Hero() {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(true);
   const { data: Products } = useGetProductsQuery('');
   const mensTrends = Products?.payload;
   useEffect(() => {
@@ -104,7 +105,7 @@ export default function Hero() {
         </div>
       </div>
       {/* <Alert title="Hello" message={"Test Alert"} /> */}
-      <Toast title={"SUCCESS"} message="Hello world" isOpen={true} />
+      <Toast title={"SUCCESS"} message="Hello world" isOpen={isToastOpen} setIsOpen={setIsToastOpen} />
       <Sections title="Men's Trending" data={mensTrends} />
       <Sections title="Womens's Trending" data={mensTrends} />
       <Sections title="Kid's Trending" data={mensTrends} />

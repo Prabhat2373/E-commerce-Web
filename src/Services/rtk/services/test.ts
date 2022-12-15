@@ -41,8 +41,8 @@ export const TestApi = createApi({
       })
     }),
     getProducts: builder.query({
-      query: () => ({
-        url: 'products',
+      query: (query) => ({
+        url: `products${query}`,
       })
     }),
     getProductById: builder.query({

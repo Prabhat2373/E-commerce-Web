@@ -2,8 +2,9 @@ import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useGetProductsQuery } from '../../Services/rtk/services/test';
+import { useEffect } from 'react';
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -13,7 +14,7 @@ const sortOptions = [
     { name: 'Price: High to Low', href: '#', current: false },
 ]
 const subCategories = [
-    { name: 'Totes', href: '#' },
+    { name: 'Electronics', href: '?electronics' },
     { name: 'Backpacks', href: '#' },
     { name: 'Travel Bags', href: '#' },
     { name: 'Hip Bags', href: '#' },
@@ -146,8 +147,18 @@ function classNames(...classes: any) {
 
 export default function CollectionsFilter() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-    const { data: Products } = useGetProductsQuery('');
     const navigate = useNavigate()
+    const [ProductsData, setProductsData] = useState<any>([])
+    const [Path, setPath] = useState('');
+    // const link = useLocation();
+    const { search } = useLocation();
+    const { data: Products } = useGetProductsQuery(search);
+    useEffect(() => {
+        setProductsData(Products)
+        setPath(search);
+    }, [Products, search]);
+    console.log("PATH", search);
+
 
     return (
         <div className="bg-white">
@@ -195,9 +206,9 @@ export default function CollectionsFilter() {
                                         <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                                             {subCategories.map((category) => (
                                                 <li key={category.name}>
-                                                    <a href={category.href} className="block px-2 py-3">
+                                                    <Link to={category.href} className="block px-2 py-3">
                                                         {category.name}
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                             ))}
                                         </ul>
@@ -326,7 +337,7 @@ export default function CollectionsFilter() {
                                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                                     {subCategories.map((category) => (
                                         <li key={category.name}>
-                                            <a href={category.href}>{category.name}</a>
+                                            <Link to={category.href}>{category.name}</Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -378,7 +389,7 @@ export default function CollectionsFilter() {
                             {/* Product grid */}
                             {/* Replace with your content */}
                             <div className="grid col-span-3 grid-cols-3 gap-3 overflow-y-scroll">
-                                {Products?.payload?.map((product: any) => (
+                                {ProductsData?.payload?.map((product: any) => (
                                     <div key={product._id} className="group relative">
                                         {/* <button className=" absolute top-[60%] bg-slate-800 w-full text-center text-slate-200 p-2" onClick={() => {
                                     console.log("CLICKED");

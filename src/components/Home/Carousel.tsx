@@ -8,7 +8,6 @@ import "swiper/css/pagination";
 import { useNavigate } from 'react-router-dom';
 import { StarIcon } from '@heroicons/react/20/solid';
 import { useAddToCartMutation, useGetAllCartQuery } from "../../Services/rtk/services/test";
-import Toast from './../Toast';
 interface CarouselProps {
     data?: any;
 }
@@ -27,7 +26,6 @@ export default function Carousel({ data }: CarouselProps) {
         }).then(() => {
             setIsLoading(false)
             FetchCart()
-            { <Toast title="SUCCESS" message="Cart " isOpen={true}/> }
         })
     }
 

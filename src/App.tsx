@@ -14,7 +14,9 @@ const Login = React.lazy(() => import('./Pages/Login'));
 const Register = React.lazy(() => import('./Pages/Register'));
 const ProductCreate = React.lazy(() => import('./Pages/ProductCreate'));
 
+
 function App() {
+  console.log("REACT BASE URL",process.env.REACT_APP_DEV_BASE_URL);
   return (
     <>
       <Navbar />

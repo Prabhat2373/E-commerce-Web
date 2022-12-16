@@ -23,6 +23,8 @@ export default function Hero() {
   const item = useSelector((state: any) => state?.products?.products);
 
   console.log(item);
+  console.log("BASE URL :", process.env.DEV_BASE_URL);
+
 
 
   const navigate = useNavigate();

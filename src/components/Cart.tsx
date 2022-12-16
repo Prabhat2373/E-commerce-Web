@@ -138,7 +138,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                                     <div className="mt-6 flex justify-center">
                                                         <input
                                                             type='button'
-                                                            className={`flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 w-full disabled:bg-slate-600 cursor-not-allowed`}
+                                                            className={`flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 w-full disabled:bg-slate-600 ${!SubTotal || SubTotal === undefined? 'cursor-not-allowed' : 'cursor-pointer'}`}
                                                             value="Checkout"
                                                             defaultValue={"Checkout"}
                                                             disabled={!SubTotal || SubTotal === undefined}

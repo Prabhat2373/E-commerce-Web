@@ -14,7 +14,7 @@ const sortOptions = [
     { name: 'Price: High to Low', href: '#', current: false },
 ]
 const subCategories = [
-    { name: 'Electronics', href: '?electronics' },
+    { name: 'Electronics', href: '?category=electronics' },
     { name: 'Backpacks', href: '#' },
     { name: 'Travel Bags', href: '#' },
     { name: 'Hip Bags', href: '#' },
@@ -157,7 +157,7 @@ export default function CollectionsFilter() {
         setProductsData(Products)
         setPath(search);
     }, [Products, search]);
-    console.log("PATH", search);
+    console.log("PATH", search?.split("=")[1]);
 
 
     return (
@@ -206,7 +206,7 @@ export default function CollectionsFilter() {
                                         <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                                             {subCategories.map((category) => (
                                                 <li key={category.name}>
-                                                    <Link to={category.href} className="block px-2 py-3">
+                                                    <Link to={category.href !== search ? category?.href : "/products"} className="block px-2 py-3">
                                                         {category.name}
                                                     </Link>
                                                 </li>
@@ -336,8 +336,9 @@ export default function CollectionsFilter() {
                                 <h3 className="sr-only">Categories</h3>
                                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                                     {subCategories.map((category) => (
-                                        <li key={category.name}>
-                                            <Link to={category.href}>{category.name}</Link>
+                                        <li key={category.name} className="flex items-center">
+                                            <Link to={category.href !== search ? category?.href : "/products"}>{category.name}</Link>
+                                            {<span className={`bg-indigo-600 w-2 h-2 ml-4 rounded-full ${category.href === search ? 'flex' : 'hidden'}`}></span>}
                                         </li>
                                     ))}
                                 </ul>

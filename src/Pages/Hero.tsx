@@ -54,10 +54,10 @@ export default function Hero() {
               <img className="relative w-full h-[270px] object-cover brightness-[0.5]" src={require("../Assets/images/women-1.jpg")} alt="Flower and sky" />
 
               <div className="absolute bottom-0 left-0 px-6 py-4">
-                <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Try Tough Urban</h4>
+                <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Try Urban Fashion</h4>
                 <p className="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur adipis icing elit. P</p>
                 <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
-                  navigate('/products?urban')
+                  navigate('/products?category=fashion')
                 }}>Purchase Now</button>
               </div>
             </div>

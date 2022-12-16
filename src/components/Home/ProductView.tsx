@@ -300,7 +300,11 @@ const ProductView = () => {
                                     </div>
                                 </RadioGroup>
                             </div>
-
+                            <div className="custom-number-input h-10 w-32 flex items-center mt-10">
+                                <button className="p-3 rounded-md border border-indigo-600 text-indigo-600 text-lg">-</button>
+                                <input className="p-3 rounded-md border border-indigo-600 text-indigo-600 text-lg w-3" type={"number"} value={0}/>
+                                <button className="p-3 rounded-md border border-indigo-600 text-indigo-600 text-lg">+</button>
+                            </div>
                             <button
                                 className={`mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 `}
                                 onClick={(e) => {

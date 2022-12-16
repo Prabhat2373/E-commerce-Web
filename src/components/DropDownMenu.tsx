@@ -54,7 +54,7 @@ export default function DropDownMenu(user: [] | any) {
                         <Menu.Item>
                             {({ active }) => (
                                 <Link
-                                    to="register"
+                                    to={`${user?.user?.payload?.[0]?.isSeller ? 'upload-product' : 'register'}`}
                                     className={classNames(
                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                         'block px-4 py-2 text-sm'

@@ -82,7 +82,6 @@ export default function Carousel({ data }: CarouselProps) {
                                 <div className="flex justify-between p-2">
                                     <h2>₹ {element?.price}</h2>
                                     <p className="cursor-pointer" id={element?._id} onClick={(e) => {
-                                        // console.log("ELEMENT ID :",e?.currentTarget?.id);
                                         setCartId(e?.currentTarget?.id)
 
                                         AddCart(element?._id, 1)

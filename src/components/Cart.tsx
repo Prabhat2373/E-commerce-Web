@@ -11,7 +11,9 @@ interface Props {
 export default function Cart({ isOpen, setOpen }: Props) {
     const dispatch = useAppDispatch();
     const products = useAppSelector((state: any) => state?.products?.products);
+    const [productId, setProductId] = useState('')
     const items = useAppSelector((state: any) => state?.cart?.GET_ALL_PRODUCT);
+    const [isLoading, setIsLoading] = useState(false);
     console.log(products);
     console.log(items);
 
@@ -21,14 +23,17 @@ export default function Cart({ isOpen, setOpen }: Props) {
 
     const [CartData, setCartData] = useState<any>([])
     useEffect(() => {
+
         setCartData(CartItems?.payload);
         FetchMore();
     }, [CartItems])
     // console.log(CartData, CartItems, removeItem);
 
     function remove(id: number) {
+        setIsLoading(true)
         removeItem(id).then(() => {
             FetchMore()
+            setIsLoading(false)
         })
     }
 
@@ -112,12 +117,13 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                                                                 <div className="flex">
                                                                                     <button
                                                                                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                                                        onClick={() => {
+                                                                                        id={products?._id}
+                                                                                        onClick={(e) => {
                                                                                             remove(products?._id)
-
+                                                                                            setProductId(e?.currentTarget?.id)
                                                                                         }}
                                                                                     >
-                                                                                        Remove
+                                                                                        {isLoading && products?._id === productId? 'Loading...' : 'Remove'}
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
@@ -138,7 +144,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                                     <div className="mt-6 flex justify-center">
                                                         <input
                                                             type='button'
-                                                            className={`flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 w-full disabled:bg-slate-600 ${!SubTotal || SubTotal === undefined? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                                                            className={`flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 w-full disabled:bg-slate-600 ${!SubTotal || SubTotal === undefined ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                                                             value="Checkout"
                                                             defaultValue={"Checkout"}
                                                             disabled={!SubTotal || SubTotal === undefined}

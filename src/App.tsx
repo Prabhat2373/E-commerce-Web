@@ -12,6 +12,7 @@ const ProductsIndex = React.lazy(() => import('./components/Products/ProductsInd
 const ProductView = React.lazy(() => import('./components/Home/ProductView'));
 const Login = React.lazy(() => import('./Pages/Login'));
 const Register = React.lazy(() => import('./Pages/Register'));
+const ProductCreate = React.lazy(() => import('./Pages/ProductCreate'));
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path={`view/:id`} element={<ProductView />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="upload-product" element={<ProductCreate />} />
         </Routes>
       </Suspense>
       <Footer />

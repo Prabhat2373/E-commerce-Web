@@ -13,7 +13,7 @@ const Navbar = () => {
     const [CartData, setCartData] = useState<any>([]);
     const [Path, setPath] = useState('');
     const link = useLocation()?.pathname;
-
+    
     useEffect(() => {
         setCartData(CartItems)
         setPath(link);
@@ -69,7 +69,7 @@ const Navbar = () => {
 
                         </div>
                         <div>
-                            <DropDownMenu user={CurrentUser}/>
+                            <DropDownMenu user={CurrentUser} />
                         </div>
                     </div>}
                 </div>

@@ -4,6 +4,7 @@ import DropDownMenu from './DropDownMenu';
 import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
 import { useGetAllCartQuery, useGetCurrentUserQuery } from '../Services/rtk/services/test';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,16 +14,15 @@ const Navbar = () => {
     const [CartData, setCartData] = useState<any>([]);
     const [Path, setPath] = useState('');
     const link = useLocation()?.pathname;
-    
+
     useEffect(() => {
         setCartData(CartItems)
         setPath(link);
     }, [CartItems, link]);
-
     // console.log(CartData);
     console.log("CURRENT USER", CurrentUser);
     console.log(process.env.REACT_APP_MY_ENVIRONMENT);
-    
+
     return (
         <>
             <nav className="bg-white shadow-md fixed top-0 w-full z-10">
@@ -43,8 +43,8 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {<div className={`${NavOpen ? 'flex' : 'hidden'} flex flex-col md:flex-row items-start gap-2 md:gap-0 md:flex md:items-center`} id='navItems'>
-                        <div className="flex flex-col md:flex-row md:mx-6">
+                    {<div className={`${NavOpen ? 'flex' : 'hidden'} flex-col md:flex-row items-end gap-2 md:gap-0 md:flex md:items-center`} id='navItems'>
+                        <div className="flex flex-col md:flex-row md:mx-6 text-end">
                             <Link className={`my-1 text-sm ${Path === '/' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/">Home</Link>
                             <Link className={`my-1 text-sm ${Path === '/products' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/products">Products</Link>
                             <Link className={`my-1 text-sm ${Path === '/collections' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/collections">Collections</Link>

@@ -4,6 +4,8 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { TestApi } from './Services/rtk/services/test'
 import ProductReducer from "../src/features/ProductSlice"
 import CartReducer from "../src/features/CartSlice";
+import ToastReducer from "../src/features/ToastSlice";
+
 
 import {
   persistStore,
@@ -33,7 +35,8 @@ export const store = configureStore({
     // Add the generated reducer as a specific top-level slice
     [TestApi.reducerPath]: TestApi.reducer,
     products: ProductReducer,
-    cart: CartReducer
+    cart: CartReducer,
+    toast:ToastReducer
   },
 
   middleware: (getDefaultMiddleware) =>

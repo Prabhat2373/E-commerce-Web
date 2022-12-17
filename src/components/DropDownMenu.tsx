@@ -21,7 +21,7 @@ export default function DropDownMenu(user: [] | any) {
                     {/* <FaRegUserCircle />
                     <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> */}
 
-                    {!user ? <><FaRegUserCircle /><ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> </> : <img src={user?.user?.payload?.[0]?.image} alt="user profile" className="w-10" />
+                    {!user || user?.user?.payload?.length <= 0 ? <><FaRegUserCircle /><ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> </> : <img src={user?.user?.payload?.[0]?.image} alt="user profile" className="w-10" />
                     }
 
                 </Menu.Button>
@@ -41,7 +41,7 @@ export default function DropDownMenu(user: [] | any) {
                         <Menu.Item>
                             {({ active }) => (
                                 <Link
-                                    to="/"
+                                    to="/profile"
                                     className={classNames(
                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                         'block px-4 py-2 text-sm'

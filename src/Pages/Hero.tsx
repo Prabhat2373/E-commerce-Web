@@ -9,6 +9,7 @@ import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
 import Alert from '../components/Alert';
 import Toast from '../components/Toast';
+import { Show } from '../features/ToastSlice';
 
 export default function Hero() {
   const dispatch = useAppDispatch();
@@ -24,9 +25,9 @@ export default function Hero() {
 
   console.log(item);
   console.log("BASE URL :", process.env.DEV_BASE_URL);
+  dispatch(Show({isOpen:true, message:"HELLO WORLD", title:"HELLO"}))
 
-
-
+  
   const navigate = useNavigate();
   return (
     <>
@@ -107,7 +108,6 @@ export default function Hero() {
         </div>
       </div>
       {/* <Alert title="Hello" message={"Test Alert"} /> */}
-      <Toast title={"SUCCESS"} message="Hello world" isOpen={isToastOpen} setIsOpen={setIsToastOpen} />
       <Sections title="Men's Trending" data={mensTrends} />
       <Sections title="Womens's Trending" data={mensTrends} />
       <Sections title="Kid's Trending" data={mensTrends} />

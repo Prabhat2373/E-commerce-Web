@@ -21,8 +21,8 @@ const Navbar = () => {
 
     // console.log(CartData);
     console.log("CURRENT USER", CurrentUser);
-
-
+    console.log(process.env.REACT_APP_MY_ENVIRONMENT);
+    
     return (
         <>
             <nav className="bg-white shadow-md fixed top-0 w-full z-10">

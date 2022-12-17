@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // Define a service using a base URL and expected endpoints
 export const TestApi = createApi({
   reducerPath: 'TestApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `https://w-shop.onrender.com/api/user/`, credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_DEV_BASE_URL, credentials: 'include' }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: (id: number) => `/${id}`,

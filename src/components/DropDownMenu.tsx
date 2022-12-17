@@ -12,17 +12,21 @@ export default function DropDownMenu(user: [] | any) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     console.log(user);
     useEffect(() => {
-        if (user || user?.length > 0) setIsLoggedIn(true)
+        user?.user?.payload?.[0]?.name ? setIsLoggedIn(true) : setIsLoggedIn(false)
     }, [])
+
+
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="">
+                <Menu.Button className="hover:outline-indigo-600 rounded-full border-2 border-indigo-600">
                     {/* <FaRegUserCircle />
                     <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> */}
 
-                    {!user || user?.user?.payload?.length <= 0 ? <><FaRegUserCircle /><ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> </> : <img src={user?.user?.payload?.[0]?.image} alt="user profile" className="w-10" />
-                    }
+                    <div className='overflow-hidden rounded-full '>
+                        {!user || user?.user?.payload?.length <= 0 ? <><FaRegUserCircle /><ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> </> : <img src={user?.user?.payload?.[0]?.image} alt="user profile" className="w-10" />
+                        }
+                    </div>
 
                 </Menu.Button>
             </div>
@@ -36,9 +40,9 @@ export default function DropDownMenu(user: [] | any) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute left-0 md:-left-44 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                        <Menu.Item>
+                        {isLoggedIn ? <Menu.Item>
                             {({ active }) => (
                                 <Link
                                     to="/profile"
@@ -50,7 +54,7 @@ export default function DropDownMenu(user: [] | any) {
                                     Account settings
                                 </Link>
                             )}
-                        </Menu.Item>
+                        </Menu.Item> : ''}
                         <Menu.Item>
                             {({ active }) => (
                                 <Link

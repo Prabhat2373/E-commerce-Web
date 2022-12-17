@@ -93,6 +93,7 @@ const ProductView = () => {
     const query = useParams();
     const { data: ProductById } = useGetProductByIdQuery(query?.id)
     const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+    const [quantity, setQuantity] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [AddToCart] = useAddToCartMutation();
     const navigate = useNavigate()
@@ -112,6 +113,8 @@ const ProductView = () => {
             setIsLoading(false)
         })
     }
+    console.log(quantity);
+
     return (
         <div className="bg-white">
             <div className="pt-6">
@@ -301,15 +304,16 @@ const ProductView = () => {
                                 </RadioGroup>
                             </div>
                             <div className="custom-number-input h-10 w-32 flex items-center mt-10">
-                                <button className="p-3 rounded-md border border-indigo-600 text-indigo-600 text-lg">-</button>
-                                <input className="p-3 rounded-md border border-indigo-600 text-indigo-600 text-lg w-3" type={"number"} value={0}/>
-                                <button className="p-3 rounded-md border border-indigo-600 text-indigo-600 text-lg">+</button>
+                                <input type={"button"} className="p-2 border w-7 border-indigo-600 text-indigo-600 text-lg cursor-pointer text-center hover:bg-indigo-800 hover:text-slate-200 " value={"-"} onClick={() => setQuantity((prev)=> prev - 1)} />
+                                <span className="border p-2 border-indigo-800 text-indigo-600 text-lg">{quantity}</span>
+                                <input type={"button"} className="p-2 border w-7 border-indigo-600 text-indigo-600 text-lg cursor-pointer text-center hover:bg-indigo-800 hover:text-slate-200 " value={"+"} onClick={() => setQuantity((prev)=> prev + 1)} />
                             </div>
                             <button
                                 className={`mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 `}
                                 onClick={(e) => {
                                     e?.preventDefault();
-                                    AddCart(query?.id, 3)
+                                    AddCart(query?.id, quantity ?? 1)
+                                    setQuantity(0)
                                 }}
                             >
                                 {isLoading && <div role="status">

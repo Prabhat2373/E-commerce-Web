@@ -43,7 +43,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {<div className={`${NavOpen ? 'flex' : 'hidden'} flex-col md:flex-row items-end gap-2 md:gap-0 md:flex md:items-center`} id='navItems'>
+                    {<div className={`${NavOpen ? 'flex' : 'hidden'} flex-col md:flex-row items-start gap-2 md:gap-0 md:flex md:items-center`} id='navItems'>
                         <div className="flex flex-col md:flex-row md:mx-6 text-end">
                             <Link className={`my-1 text-sm ${Path === '/' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/">Home</Link>
                             <Link className={`my-1 text-sm ${Path === '/products' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/products">Products</Link>

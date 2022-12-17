@@ -25,7 +25,7 @@ export default function Hero() {
 
   console.log(item);
   console.log("BASE URL :", process.env.DEV_BASE_URL);
-  dispatch(Show({isOpen:true, message:"HELLO WORLD", title:"HELLO"}))
+  // dispatch(Show({isOpen:true, message:"HELLO WORLD", title:"HELLO"}))
 
   
   const navigate = useNavigate();
@@ -107,6 +107,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      
       {/* <Alert title="Hello" message={"Test Alert"} /> */}
       <Sections title="Men's Trending" data={mensTrends} />
       <Sections title="Womens's Trending" data={mensTrends} />

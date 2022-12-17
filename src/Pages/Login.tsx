@@ -7,7 +7,14 @@ export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [Login] = useLoginUserMutation();
     const onSubmit = (data: any) => {
-        Login(data).then(() => console.log("SUCCESS")).catch((err) => console.log(err?.message));
+        Login(data).then(() => {
+            console.log("SUCCESS!");
+            window.location.reload()
+            window.location.href = "/"
+        }).catch((err) => {
+            console.log(err?.message)
+            alert("Something went wrong")
+        });
     }
     return (
         <div className="relative flex flex-col justify-center min-h-screen overflow-hidden mt-8">

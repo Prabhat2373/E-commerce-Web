@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import LoadingImage from "../../Assets/images/load.png";
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import 'swiper/css/navigation';
 import { useNavigate } from 'react-router-dom';
 import { StarIcon } from '@heroicons/react/20/solid';
 import { useAddToCartMutation, useGetAllCartQuery } from "../../Services/rtk/services/test";
@@ -33,15 +35,19 @@ export default function Carousel({ data }: CarouselProps) {
     return (
         <>
             <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
                 slidesPerView={4}
-                spaceBetween={30}
+                spaceBetween={20}
+                navigation
                 pagination={{
                     clickable: true,
                 }}
+              
                 width={1200}
                 height={1200}
                 className="mySwiper"
             >
+
                 {data?.length > 0 ? data?.map((element: any, index: number) => {
                     return (
                         <SwiperSlide>
@@ -138,6 +144,8 @@ export default function Carousel({ data }: CarouselProps) {
                     </div>
                 </div>}
             </Swiper>
+            <div className="review-swiper-button-prev "></div>
+            <div className="review-swiper-button-next "></div>
         </>
     );
 }

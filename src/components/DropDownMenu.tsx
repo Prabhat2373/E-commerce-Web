@@ -9,12 +9,12 @@ function classNames(...classes: any) {
 }
 
 export default function DropDownMenu(user: [] | any) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
+    let isLoggedIn = false
     console.log(user);
-    useEffect(() => {
-        user?.user?.payload?.[0]?.name ? setIsLoggedIn(true) : setIsLoggedIn(false)
-    }, [])
 
+    if(user?.user?.payload?.lenght > 0 || user?.user?.payload?.[0]?.name !== undefined) isLoggedIn = true;
+    console.log("LOGGED IN", isLoggedIn);
 
     return (
         <Menu as="div" className="relative inline-block text-left">

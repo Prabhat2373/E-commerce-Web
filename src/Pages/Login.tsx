@@ -2,15 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLoginUserMutation } from '../Services/rtk/services/test';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { isLoggedIn } from '../features/AppSlice';
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const dispatch = useDispatch();
     const [Login] = useLoginUserMutation();
     const onSubmit = (data: any) => {
         Login(data).then(() => {
             console.log("SUCCESS!");
             window.location.reload()
             window.location.href = "/"
+            dispatch(isLoggedIn())
         }).catch((err) => {
             console.log(err?.message)
             alert("Something went wrong")

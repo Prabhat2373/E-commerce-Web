@@ -14,7 +14,7 @@ const initialState = {
 
 const userSlice = createSlice({
   name: "user",
-  initialState:initialState,
+  initialState,
   reducers: {
     setIsFetching: (state) => {
       state.state.isFetching = true;

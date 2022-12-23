@@ -7,7 +7,9 @@ import Modal from './../components/Modal';
 import { useAppDispatch } from './../features/Hooks';
 import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
- 
+import Alert from '../components/Alert';
+import Toast from '../components/Toast';
+import { Show } from '../features/ToastSlice';
 
 export default function Hero() {
   const dispatch = useAppDispatch();

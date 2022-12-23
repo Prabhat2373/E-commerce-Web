@@ -26,7 +26,7 @@ const productsSlice = createSlice({
                 console.log(product);
                 state.products[product._id] = product;
             })
-        },
+        }
     },
 });
 

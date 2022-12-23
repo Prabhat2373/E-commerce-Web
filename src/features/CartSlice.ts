@@ -38,7 +38,6 @@ const cartSlice = createSlice({
 	reducers: {
 		addToCart(state, action: PayloadAction<string>) {
 			if (state.items[action.payload]) {
-
 				state.items[action.payload]++;
 			} else {
 				state.items[action.payload] = 1;

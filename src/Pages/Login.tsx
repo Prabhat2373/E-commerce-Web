@@ -4,22 +4,16 @@ import { useLoginUserMutation } from '../Services/rtk/services/test';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { isLoggedIn } from '../features/AppSlice';
-import { Cookies } from 'react-cookie';
 
 export default function Login() {
-    const cookie = new Cookies();
-    console.log(cookie?.getAll());
-    
-    const userEmail = cookie.get('user_email');
-    console.log("EMAIL :",userEmail);  
     const { register, handleSubmit, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const [Login] = useLoginUserMutation();
     const onSubmit = (data: any) => {
         Login(data).then(() => {
             console.log("SUCCESS!");
-            window.location.href = "/"
             window.location.reload()
+            window.location.href = "/"
             dispatch(isLoggedIn())
         }).catch((err) => {
             console.log(err?.message)

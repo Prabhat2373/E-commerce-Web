@@ -1,23 +1,34 @@
 import react from 'react';
 import { useGetCurrentUserQuery } from '../Services/rtk/services/test';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function Profile() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { data: CurrentUser } = useGetCurrentUserQuery('');
   const [user, setUser] = useState<any>([]);
+  const [EditOn, setEditOn] = useState(false);
+  const imageRef = useRef<any>()
   const [userMode, setUserMode] = useState(true);
   useEffect(() => {
     setUser(CurrentUser?.payload?.[0])
     setUserMode(CurrentUser?.payload?.[0]?.isSeller ? true : false);
   }, [CurrentUser])
 
-  console.log(user);
-  console.log(userMode);
+  console.log("EDIT :", EditOn)
 
+  const onSubmit = async (data: any) => {
+    var formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("email", data.email);
+    formdata.append("password", data.password);
+    formdata.append("isSeller", data.isSeller);
+    formdata.append("file", imageRef?.current?.files[0]);
 
+  };
   return (
     <>
-      <form >
+      <form onSubmit={() => handleSubmit(onSubmit)}>
         <div className='p-10'>
           <div className="md:grid md:grid-cols-1 lg:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
@@ -27,6 +38,7 @@ export default function Profile() {
                   This information will be displayed publicly so be careful what you share.
                 </p>
               </div>
+
             </div>
             <div className="mt-5 md:col-span-2 md:mt-0">
 
@@ -38,12 +50,12 @@ export default function Profile() {
                       <div className='w-24'>
                         <img src={user?.image ?? "../Assets/images/load.png"} alt="User Profile" />
                       </div>
-                      <button
-                        type="button"
+                      <input
+                        type="file"
+                        ref={imageRef}
                         className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Change
-                      </button>
+                      />
+
                     </div>
                   </div>
 
@@ -76,10 +88,13 @@ export default function Profile() {
 
         <div className="mt-10 sm:mt-0 p-10">
           <div className="md:grid md:grid-cols-1 lg:grid-cols-3 md:gap-6">
-            <div className="md:col-span-1">
+            <div className="md:col-span-1 flex justify-between">
               <div className="px-4 sm:px-0">
                 <h3 className="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
                 <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
+              </div>
+              <div className='w-6 cursor-pointer' onClick={() => setEditOn((prev) => !prev)}>
+                <img src={require("../Assets/images/edit.png")} alt="Edit Icon" />
               </div>
             </div>
             <div className="mt-5 md:col-span-2 md:mt-0">
@@ -88,44 +103,33 @@ export default function Profile() {
                 <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                        First name
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                        Name
                       </label>
-                      <input
+                      {EditOn ? <input
                         type="text"
-                        name="first-name"
-                        id="first-name"
+                        // name="name"
+                        id="name"
                         autoComplete="given-name"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        value={user?.name ?? "N.A."}
-                      />
-                    </div>
+                        placeholder='Enter Name To Update'
+                        {...register("name")}
+                      /> : <h4>{user?.name ?? "N.A."}</h4>}
 
-                    <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                        Last name
-                      </label>
-                      <input
-                        type="text"
-                        name="last-name"
-                        id="last-name"
-                        autoComplete="family-name"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
                     </div>
-
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                         Email address
                       </label>
-                      <input
+                      {EditOn ? <input
                         type="text"
-                        name="email-address"
-                        id="email-address"
+                        // name="email"
+                        id="email"
                         autoComplete="email"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        value={user?.email ?? "N.A."}
-                      />
+                        placeholder='Enter Email'
+                        {...register("email")}
+                      />: <h3>{user?.email ?? "N.A."}</h3> }
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">

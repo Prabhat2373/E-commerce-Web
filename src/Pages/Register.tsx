@@ -18,8 +18,9 @@ const Register = () => {
         formdata.append("file",  profileRef.current.files[0]);
 
         PostUser(formdata).then(() => {
-            navigate("/")
-            alert("You're Logged In");
+            navigate("/login")
+            window.location.reload();
+            // alert("You're Logged In");
         }).catch((err) => console.log(err?.message));
     };
 

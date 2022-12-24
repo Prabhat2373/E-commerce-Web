@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
 import { useSelector } from 'react-redux';
+import Cart from './components/Cart';
 
 const Home = React.lazy(() => import('./Pages/Home'))
 const Collections = React.lazy(() => import('./components/Collections/Collections'))

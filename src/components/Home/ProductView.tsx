@@ -4,9 +4,7 @@ import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAddToCartMutation, useGetAllCartQuery, useGetProductByIdQuery } from "../../Services/rtk/services/test";
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from './../../features/Hooks';
-import { addToCart } from "../../features/CartSlice";
+
 
 const product = {
     mensTrends: [
@@ -243,7 +241,7 @@ const ProductView = () => {
                             </div> */}
 
                             {/* Sizes */}
-                            <div className="mt-10">
+                            {/* <div className="mt-10">
                                 <div className="flex items-center justify-between">
                                     <h3 className="text-sm font-medium text-gray-900">Size</h3>
                                     <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -302,7 +300,9 @@ const ProductView = () => {
                                         ))}
                                     </div>
                                 </RadioGroup>
-                            </div>
+                            </div> */}
+
+
                             <div className="custom-number-input h-10 w-32 flex items-center mt-10">
                                 <input type={"button"} className="p-2 border w-7 border-indigo-600 text-indigo-600 text-lg cursor-pointer text-center hover:bg-indigo-800 hover:text-slate-200 " value={"-"} onClick={() => setQuantity((prev)=> prev - 1)} />
                                 <span className="border p-2 border-indigo-800 text-indigo-600 text-lg">{quantity}</span>

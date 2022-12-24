@@ -1,30 +1,37 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { FaRegUserCircle } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { useLogoutMutation } from '../Services/rtk/services/test';
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function DropDownMenu(user: [] | any) {
-    // const [isLoggedIn, setIsLoggedIn] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
+    const [logoutUser] = useLogoutMutation()
+    const navigate = useNavigate();
     let isLoggedIn = false
     console.log(user);
 
-    if(user?.user?.payload?.lenght > 0 || user?.user?.payload?.[0]?.name !== undefined) isLoggedIn = true;
+    if (user?.user?.payload?.lenght > 0 || user?.user?.payload?.[0]?.name !== undefined) isLoggedIn = true;
     console.log("LOGGED IN", isLoggedIn);
+
+    const Logout = () => {
+        logoutUser("").then(() => {
+            navigate("/login");
+            window.location.reload();
+        }).catch((err) => console.log(err?.message))
+    }
 
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="hover:outline-indigo-600 rounded-full border-2 border-indigo-600">
-                    {/* <FaRegUserCircle />
-                    <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> */}
 
                     <div className='overflow-hidden rounded-full '>
-                        {!user || user?.user?.payload?.length <= 0 ? <><FaRegUserCircle /><ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" /> </> : <img src={user?.user?.payload?.[0]?.image} alt="user profile" className="w-10" />
+                        {<img src={user?.user?.payload?.[0]?.image ?? require("../Assets/images/user-image.jpg")} alt="user profile" className="w-10" />
                         }
                     </div>
 
@@ -77,9 +84,16 @@ export default function DropDownMenu(user: [] | any) {
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block w-full px-4 py-2 text-left text-sm'
                                         )}
-                                        to={`${isLoggedIn ? "signup" : "login"}`}
+                                        to={`${isLoggedIn ? "register" : "login"}`}
+                                        onClick={() => {
+                                            isLoggedIn ? Logout() : navigate("/register")
+                                        }}
                                     >
-                                        {isLoggedIn ? "Sign Out" : "Sign In"}
+                                        {isLoggedIn ? <span onClick={() => {
+                                            console.log("----------");
+
+                                            Logout()
+                                        }}>sign out</span> : <span>sign in</span>}
                                     </Link>
                                 )}
                             </Menu.Item>

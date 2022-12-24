@@ -2,32 +2,24 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useGetAllCartQuery, useRemoveCartItemMutation } from '../Services/rtk/services/test';
-import { useAppDispatch, useAppSelector } from './../features/Hooks';
 
 interface Props {
     isOpen: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function Cart({ isOpen, setOpen }: Props) {
-    const dispatch = useAppDispatch();
-    const products = useAppSelector((state: any) => state?.products?.products);
     const [productId, setProductId] = useState('')
-    const items = useAppSelector((state: any) => state?.cart?.GET_ALL_PRODUCT);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(products);
-    console.log(items);
-
 
     const [removeItem] = useRemoveCartItemMutation()
     const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery("");
 
     const [CartData, setCartData] = useState<any>([])
     useEffect(() => {
-
         setCartData(CartItems?.payload);
         FetchMore();
     }, [CartItems])
-    // console.log(CartData, CartItems, removeItem);
+
 
     function remove(id: number) {
         setIsLoading(true)
@@ -39,9 +31,6 @@ export default function Cart({ isOpen, setOpen }: Props) {
 
     var sum = 0;
     const SubTotal = CartData?.map((el: any) => sum += el?.price)?.pop()
-    console.log("SUBTOTAL :", SubTotal);
-
-
     return (
         <>
             {

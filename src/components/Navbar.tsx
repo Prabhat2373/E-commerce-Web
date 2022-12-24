@@ -4,7 +4,6 @@ import DropDownMenu from './DropDownMenu';
 import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
 import { useGetAllCartQuery, useGetCurrentUserQuery } from '../Services/rtk/services/test';
-import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +20,7 @@ const Navbar = () => {
     }, [CartItems, link]);
     // console.log(CartData);
     console.log("CURRENT USER", CurrentUser);
-    console.log(process.env.REACT_APP_MY_ENVIRONMENT);
+    console.log("APP ENV :", process.env.REACT_APP_MY_ENVIRONMENT);
 
     return (
         <>

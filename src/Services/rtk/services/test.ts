@@ -65,10 +65,15 @@ export const TestApi = createApi({
         method: 'POST'
       })
     }),
-
+    logout: builder.mutation({
+      query:()=>({
+        url:"/logout",
+        method:"POST"
+      })
+    })
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery, useGetCurrentUserQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation, useLoginUserMutation, useCreateProductMutation } = TestApi;
+export const { useGetPostsQuery, useGetCurrentUserQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation, useLoginUserMutation, useCreateProductMutation,useLogoutMutation } = TestApi;

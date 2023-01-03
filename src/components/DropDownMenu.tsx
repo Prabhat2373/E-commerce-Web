@@ -31,7 +31,7 @@ export default function DropDownMenu(user: [] | any) {
                 <Menu.Button className="hover:outline-indigo-600 rounded-full border-2 border-indigo-600">
 
                     <div className='overflow-hidden rounded-full '>
-                        {<img src={user?.user?.payload?.[0]?.image ?? require("../Assets/images/user-image.jpg")} alt="user profile" className="w-10" />
+                        {<img src={user?.user?.payload?.[0]?.image ?? require("../Assets/images/user-image.jpg")} alt="user profile" className="w-10 object-fill aspect-square rounded-full" />
                         }
                     </div>
 

@@ -4,10 +4,12 @@ import DropDownMenu from './DropDownMenu';
 import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
 import { useGetAllCartQuery, useGetCurrentUserQuery } from '../Services/rtk/services/test';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { data: CurrentUser } = useGetCurrentUserQuery('');
+    const [searchOpen, setSearchOpen] = useState(false);
     const [NavOpen, setNavOpen] = useState(false);
     const { data: CartItems } = useGetAllCartQuery("");
     const [CartData, setCartData] = useState<any>([]);
@@ -24,6 +26,9 @@ const Navbar = () => {
 
     return (
         <>
+        <div className='transition-all duration-500'>
+            <SearchBar isOpen={searchOpen} setIsOpen={setSearchOpen} />
+        </div>
             <nav className="bg-white shadow-md fixed top-0 w-full z-10">
                 <div className="container sticky top-0 left-0 mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
                     <div className="flex justify-between items-center">
@@ -48,7 +53,9 @@ const Navbar = () => {
                             <Link className={`my-1 text-sm ${Path === '/products' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/products">Products</Link>
                             <Link className={`my-1 text-sm ${Path === '/collections' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/collections">Collections</Link>
                         </div>
-                        <div className="flex flex-col md:flex-row md:mx-6 cursor-pointer">
+                        <div className="flex flex-col md:flex-row md:mx-6 cursor-pointer" onClick={() => {
+                            setSearchOpen((prev)=> !prev);
+                        }}>
                             <FiSearch />
                         </div>
                         {<Cart isOpen={isOpen} setOpen={setIsOpen} />}
@@ -65,7 +72,7 @@ const Navbar = () => {
                             </p>
                         </div>
                         <div className="flex flex-col md:flex-row md:mx-6 cursor-pointer">
-
+                            {/* <SearchBar/> */}
                         </div>
                         <div>
                             <DropDownMenu user={CurrentUser} />

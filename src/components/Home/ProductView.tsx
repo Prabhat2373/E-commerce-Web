@@ -144,7 +144,7 @@ const ProductView = () => {
                             </a>
                         </li>
                         <div className="flex absolute right-20">
-                            <button className="border rounded-md text-indigo-700 border-indigo-600 px-2 " onClick={() => {
+                            <button className="border rounded-lg text-white border-indigo-600 px-3 py-1 bg-indigo-600 hover:bg-white hover:text-indigo-500 transition-all duration-100" onClick={() => {
                                 navigate(-1)
                             }}>Back</button>
                         </div>

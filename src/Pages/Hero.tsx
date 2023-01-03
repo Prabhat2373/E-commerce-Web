@@ -7,13 +7,12 @@ import Modal from './../components/Modal';
 import { useAppDispatch } from './../features/Hooks';
 import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
-import Alert from '../components/Alert';
-import Toast from '../components/Toast';
-import { Show } from '../features/ToastSlice';
+
 
 export default function Hero() {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
   const [isToastOpen, setIsToastOpen] = useState(true);
   const { data: Products } = useGetProductsQuery('');
   const mensTrends = Products?.payload;
@@ -31,7 +30,7 @@ export default function Hero() {
   const navigate = useNavigate();
   return (
     <>
-
+  
       <div className="main-parent grid md:grid-cols-2 gap-3 mt-16 ">
         <div className="first-child ">
           <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
@@ -42,7 +41,7 @@ export default function Hero() {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.  Beatae, vitae <br /> ullam quam voluptas quae ab error quos
 
               </p>
-              <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
+              <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black transition-all duration-200" onClick={() => {
                 // navigate('/products?womens') 
                 setIsOpen((prevState) => !prevState)
               }}>Purchase Now</button>
@@ -59,7 +58,7 @@ export default function Hero() {
               <div className="absolute bottom-0 left-0 px-6 py-4">
                 <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Try Urban Fashion</h4>
                 <p className="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur adipis icing elit. P</p>
-                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
+                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black transition-all duration-200" onClick={() => {
                   navigate('/products?category=fashion')
                 }}>Purchase Now</button>
               </div>
@@ -73,7 +72,7 @@ export default function Hero() {
               <div className="absolute bottom-0 left-0 px-6 py-4">
                 <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Professional Men</h4>
                 <p className="leading-normal text-gray-100">Lorem ipsum dolor, siud.</p>
-                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
+                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black transition-all duration-200" onClick={() => {
                   navigate('/products?mensTrends')
                 }}>Purchase Now</button>
               </div>
@@ -86,7 +85,7 @@ export default function Hero() {
               <div className="absolute bottom-0 left-0 px-6 py-4">
                 <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Boys Trend</h4>
                 <p className="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur a.</p>
-                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
+                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black transition-all duration-200" onClick={() => {
                   navigate('/products?boys')
                 }}>Purchase Now</button>
               </div>
@@ -99,7 +98,7 @@ export default function Hero() {
               <div className="absolute bottom-0 left-0 px-6 py-4">
                 <h4 className="mb-3 text-xl font-semibold tracking-tight text-white">Big Brands Products</h4>
                 <p className="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur</p>
-                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black" onClick={() => {
+                <button className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black transition-all duration-200" onClick={() => {
                   navigate('/products?brand')
                 }}>Purchase Now</button>
               </div>

@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // Define a service using a base URL and expected endpoints
 export const TestApi = createApi({
   reducerPath: 'TestApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_PROD_BASE_URL, credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_MY_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_BASE_URL : process.env.REACT_APP_DEV_BASE_URL, credentials: 'include' }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: (id: number) => `/${id}`,
@@ -66,9 +66,9 @@ export const TestApi = createApi({
       })
     }),
     logout: builder.mutation({
-      query:()=>({
-        url:"/logout",
-        method:"POST"
+      query: () => ({
+        url: "/logout",
+        method: "POST"
       })
     })
   }),
@@ -76,4 +76,4 @@ export const TestApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery, useGetCurrentUserQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation, useLoginUserMutation, useCreateProductMutation,useLogoutMutation } = TestApi;
+export const { useGetPostsQuery, useGetCurrentUserQuery, useGetAllCartQuery, useCreateUserMutation, useGetProductsQuery, useGetProductByIdQuery, useAddToCartMutation, useRemoveCartItemMutation, useLoginUserMutation, useCreateProductMutation, useLogoutMutation } = TestApi;

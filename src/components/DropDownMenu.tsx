@@ -20,8 +20,9 @@ export default function DropDownMenu(user: [] | any) {
 
     const Logout = () => {
         logoutUser("").then(() => {
-            navigate("/login");
+            window.localStorage.clear();
             window.location.reload();
+            navigate("/login");
         }).catch((err) => console.log(err?.message))
     }
 

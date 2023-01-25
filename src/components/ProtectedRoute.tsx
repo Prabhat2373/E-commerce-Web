@@ -3,6 +3,13 @@ import { Navigate, useLocation } from "react-router-dom"
 
 const ProtectedRoute = ({ children }: any) => {
     const location = useLocation();
+    function GetAuth() {
+        let Token = window.localStorage.getItem("token");
+        if (!Token) {
+            return false;
+        }
+        return true;
+    }
     function getCookie() {
         var arrayb = document.cookie.split(";");
         for (const item of arrayb) {
@@ -12,8 +19,9 @@ const ProtectedRoute = ({ children }: any) => {
         }
     }
 
-console.log(getCookie()?.length)
-    if (getCookie()?.length === 0 || getCookie() === undefined) {
+    // console.log(getCookie()?.length)
+    console.log("AUTH",GetAuth())
+    if (!GetAuth()) {
         return <Navigate to="/login" state={{ from: location }} replace />
     }
     return children

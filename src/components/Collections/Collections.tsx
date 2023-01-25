@@ -99,7 +99,7 @@ export default function Collections() {
                                 </div>
                             ))}
                         </div>
-                    </div> 
+                    </div>
                     <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-8">
                         <h2 className="text-2xl font-bold text-gray-900">Women's Collections</h2>
                         <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">

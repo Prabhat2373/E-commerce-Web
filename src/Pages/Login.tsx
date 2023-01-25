@@ -12,9 +12,14 @@ export default function Login() {
     const [Login] = useLoginUserMutation();
     const onSubmit = (data: any) => {
         setIsLoading(true)
-        Login(data).then(() => {
+        Login(data).then((response: any) => {
             setIsLoading(false)
             console.log("SUCCESS!");
+            const { token } = response?.data;
+            const { email } = response?.data?.isSeller;
+
+            window.localStorage.setItem("token", token);
+            window.localStorage.setItem("user_email", email);
             window.location.reload()
             window.location.href = "/"
             dispatch(isLoggedIn())

@@ -42,7 +42,7 @@ export default function Carousel({ data }: CarouselProps) {
                 pagination={{
                     clickable: true,
                 }}
-              
+
                 width={1200}
                 height={1200}
                 className="mySwiper"
@@ -58,31 +58,16 @@ export default function Carousel({ data }: CarouselProps) {
                                 <div className="flex justify-between p-2">
                                     <h3>{element?.name ?? "PRODUCT "}</h3>
                                     <p className="flex">
-                                        <StarIcon
-                                            key={Math.random()}
-                                            className={'text-orange-500 h-5 w-5 flex-shrink-0'}
-                                            aria-hidden="true"
-                                        />
-                                        <StarIcon
-                                            key={Math.random()}
-                                            className={'text-orange-500 h-5 w-5 flex-shrink-0'}
-                                            aria-hidden="true"
-                                        />
-                                        <StarIcon
-                                            key={Math.random()}
-                                            className={'text-orange-500 h-5 w-5 flex-shrink-0'}
-                                            aria-hidden="true"
-                                        />
-                                        <StarIcon
-                                            key={Math.random()}
-                                            className={'text-orange-500 h-5 w-5 flex-shrink-0'}
-                                            aria-hidden="true"
-                                        />
-                                        <StarIcon
-                                            key={Math.random()}
-                                            className={'text-gray-400 h-5 w-5 flex-shrink-0'}
-                                            aria-hidden="true"
-                                        />
+                                        {element?.rating?.map((rating: number) => {
+                                            console.log("RATING",rating)
+                                            return (
+                                                <StarIcon
+                                                    key={rating}
+                                                    className={'text-orange-500 h-5 w-5 flex-shrink-0'}
+                                                    aria-hidden="true"
+                                                />
+                                            )
+                                        })}
                                     </p>
                                 </div>
                                 <div className="flex justify-between p-2">

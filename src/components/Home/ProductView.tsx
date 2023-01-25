@@ -88,17 +88,16 @@ function classNames(...classes: any) {
 }
 
 const ProductView = () => {
-    const FetchSingleProduct = () => {
-       
-        fetch("URL", {
-            method: "GET",
-            body: "BODY"
-        }).then((response) => {
-            return response.json()
-        }).catch((err) => {
-            console.log(err?.message)
-        })
-    }
+    // const FetchSingleProduct = () => {
+    //     fetch("URL", {
+    //         method: "GET",
+    //         body: "BODY"
+    //     }).then((response) => {
+    //         return response.json()
+    //     }).catch((err) => {
+    //         console.log(err?.message)
+    //     })
+    // }
     const query = useParams();
     const { data: ProductById } = useGetProductByIdQuery(query?.id)
     const [selectedSize, setSelectedSize] = useState(product.sizes[2]);

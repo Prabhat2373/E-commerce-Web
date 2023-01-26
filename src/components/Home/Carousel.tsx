@@ -10,6 +10,7 @@ import 'swiper/css/navigation';
 import { useNavigate } from 'react-router-dom';
 import { StarIcon } from '@heroicons/react/20/solid';
 import { useAddToCartMutation, useGetAllCartQuery } from "../../Services/rtk/services/test";
+import { GetRatings } from "../../Helper/Helper";
 interface CarouselProps {
     data?: any;
 }
@@ -49,6 +50,7 @@ export default function Carousel({ data }: CarouselProps) {
             >
 
                 {data?.length > 0 ? data?.map((element: any, index: number) => {
+                    console.log(GetRatings(element?.ratings))
                     return (
                         <SwiperSlide>
                             <div className="swiper-child w-[400px] bg-[#D9D9D9] m-3 " key={element?._id + 1} >
@@ -58,8 +60,8 @@ export default function Carousel({ data }: CarouselProps) {
                                 <div className="flex justify-between p-2">
                                     <h3>{element?.name ?? "PRODUCT "}</h3>
                                     <p className="flex">
-                                        {element?.rating?.map((rating: number) => {
-                                            console.log("RATING",rating)
+                                        {GetRatings(element?.ratings - 1)?.map((rating: number) => {
+                                            console.log("RATING", rating)
                                             return (
                                                 <StarIcon
                                                     key={rating}

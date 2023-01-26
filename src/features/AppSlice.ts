@@ -7,7 +7,8 @@ const initialState = {
   },
   user: {
     name: "Clash",
-    isAuthenticated: false
+    isAuthenticated: false,
+    LoggedIn: false
   },
 }
 
@@ -21,13 +22,18 @@ const userSlice = createSlice({
     },
     isLoggedIn: (state) => {
       state.user.isAuthenticated = true;
+      state.user.LoggedIn = true;
+    },
+    LogoutUser: (state) => {
+      state.user.LoggedIn = false
     }
   }
 });
 
 export const {
   setIsFetching,
-  isLoggedIn
+  isLoggedIn,
+  LogoutUser
 } = userSlice.actions;
 
 

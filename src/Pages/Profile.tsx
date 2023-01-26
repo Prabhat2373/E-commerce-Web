@@ -1,18 +1,21 @@
 import react from 'react';
-import { useGetCurrentUserQuery } from '../Services/rtk/services/test';
 import { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useGetCurrentUserQuery } from '../Services/rtk/services/test';
 
 export default function Profile() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { data: CurrentUser } = useGetCurrentUserQuery('');
+  const { data: CurrentUser } = useGetCurrentUserQuery("");
   const [user, setUser] = useState<any>([]);
   const [EditOn, setEditOn] = useState(false);
   const imageRef = useRef<any>()
   const [userMode, setUserMode] = useState(true);
+  const Email = String(window.localStorage.getItem("user_email"));
   useEffect(() => {
-    setUser(CurrentUser?.payload?.[0])
-    setUserMode(CurrentUser?.payload?.[0]?.isSeller ? true : false);
+    CurrentUser(Email).then((res: any) => {
+      setUser(res)
+      setUserMode(res?.payload?.isSeller);
+    })
   }, [CurrentUser])
 
   console.log("EDIT :", EditOn)
@@ -129,7 +132,7 @@ export default function Profile() {
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder='Enter Email'
                         {...register("email")}
-                      />: <h3>{user?.email ?? "N.A."}</h3> }
+                      /> : <h3>{user?.email ?? "N.A."}</h3>}
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">

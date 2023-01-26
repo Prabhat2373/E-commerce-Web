@@ -7,6 +7,7 @@ import { isLoggedIn } from '../features/AppSlice';
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const [Login] = useLoginUserMutation();
@@ -15,14 +16,15 @@ export default function Login() {
         Login(data).then((response: any) => {
             setIsLoading(false)
             console.log("SUCCESS!");
-            const { token } = response?.data;
-            const { email } = response?.data?.isSeller;
+            const { token, user } = response?.data;
+            console.log("RESPONSE :", response?.data);
+
 
             window.localStorage.setItem("token", token);
-            window.localStorage.setItem("user_email", email);
+            window.localStorage.setItem("user_email", user?.email);
+            dispatch(isLoggedIn())
             window.location.reload()
             window.location.href = "/"
-            dispatch(isLoggedIn())
         }).catch((err) => {
             console.log(err?.message)
             alert("Something went wrong")

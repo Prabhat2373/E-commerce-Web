@@ -5,17 +5,21 @@ import { useGetCurrentUserQuery } from '../Services/rtk/services/test';
 
 export default function Profile() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { data: CurrentUser } = useGetCurrentUserQuery("");
+  const UserEmail = String(window?.localStorage.getItem('user_email'));
+  const { data: CurrentUser } = useGetCurrentUserQuery(UserEmail);
   const [user, setUser] = useState<any>([]);
   const [EditOn, setEditOn] = useState(false);
   const imageRef = useRef<any>()
   const [userMode, setUserMode] = useState(true);
-  const Email = String(window.localStorage.getItem("user_email"));
+  console.log("DATA : ", CurrentUser);
+  console.log("USER :", user);
+
+
+
   useEffect(() => {
-    CurrentUser(Email).then((res: any) => {
-      setUser(res)
-      setUserMode(res?.payload?.isSeller);
-    })
+
+    setUser(CurrentUser?.payload[0])
+    setUserMode(CurrentUser?.payload[0]?.isSeller);
   }, [CurrentUser])
 
   console.log("EDIT :", EditOn)

@@ -12,13 +12,14 @@ import { useSelector } from 'react-redux';
 export default function Hero() {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
-
-  const [isToastOpen, setIsToastOpen] = useState(true);
   const { data: Products } = useGetProductsQuery('');
-  const mensTrends = Products?.payload;
+  const ClothsItems = Products?.payload?.filter((el: any, index: number) => el?.category === "fashion");
+  const ElectronicsItems = Products?.payload?.filter((el: any, index: number) => el?.category === "electronics");
+  const OthersItems = Products?.payload?.filter((el: any, index: number) => el?.category !== "fashion" && el?.category !== "electronics")
+
   useEffect(() => {
     dispatch(receivedProducts(Products?.payload))
-  }, [Products]);
+  }, [Products, dispatch]);
 
   const item = useSelector((state: any) => state?.products?.products);
 
@@ -26,11 +27,11 @@ export default function Hero() {
   console.log("BASE URL :", process.env.DEV_BASE_URL);
   // dispatch(Show({isOpen:true, message:"HELLO WORLD", title:"HELLO"}))
 
-  
+
   const navigate = useNavigate();
   return (
     <>
-  
+
       <div className="main-parent grid md:grid-cols-2 gap-3 mt-16 ">
         <div className="first-child ">
           <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
@@ -106,11 +107,11 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      
+
       {/* <Alert title="Hello" message={"Test Alert"} /> */}
-      <Sections title="Men's Trending" data={mensTrends} />
-      <Sections title="Womens's Trending" data={mensTrends} />
-      <Sections title="Kid's Trending" data={mensTrends} />
+      <Sections title="Fashion & Cloths" data={ClothsItems} />
+      <Sections title="Tech and Electronics" data={ElectronicsItems} />
+      <Sections title="Others" data={OthersItems} />
 
     </>
   )

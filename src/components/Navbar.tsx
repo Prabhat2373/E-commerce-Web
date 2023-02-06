@@ -56,7 +56,7 @@ const Navbar = () => {
                         <div className="flex flex-col md:flex-row md:mx-6 text-left md:text-end ">
                             <Link className={`my-1 text-sm ${Path === '/' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/">Home</Link>
                             <Link className={`my-1 text-sm ${Path === '/products' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/products">Products</Link>
-                            <Link className={`my-1 text-sm ${Path === '/collections' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/collections">Collections</Link>
+                            {/* <Link className={`my-1 text-sm ${Path === '/collections' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/collections">Collections</Link> */}
                         </div>
                         <div className="flex flex-col md:flex-row md:mx-6 cursor-pointer" onClick={() => {
                             setSearchOpen((prev) => !prev);

@@ -179,8 +179,8 @@ export default function CollectionsFilter() {
                     </Dialog>
                 </Transition.Root>
 
-                <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+                <main className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+                    <div className="flex items-baseline justify-between border-b border-gray-200 pt-14 pb-6">
                         <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
 
                         <div className="flex items-center">
@@ -306,7 +306,7 @@ export default function CollectionsFilter() {
 
                             {/* Product grid */}
                             {/* Replace with your content */}
-                            <div className="grid col-span-3 grid-cols-3 gap-3 overflow-y-scroll">
+                            <div className="grid col-span-3 grid-cols-3 gap-3 overflow-y-scroll p-4">
                                 {ProductsData?.payload?.map((product: any) => (
                                     <div key={product._id} className="group relative">
                                         {/* <button className=" absolute top-[60%] bg-slate-800 w-full text-center text-slate-200 p-2" onClick={() => {

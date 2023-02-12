@@ -5,20 +5,18 @@ import { useLogoutMutation } from "../Services/rtk/services/test";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { LogoutUser } from '../features/AppSlice';
+import AuthWrapper from "./utils/AuthWrapper";
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
 }
 
 export default function DropDownMenu(user: [] | any) {
-    // const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const isLog = useSelector((state: any) => state.user.user)
     const [logoutUser] = useLogoutMutation();
     const navigate = useNavigate();
 
-    console.log("LOGG" ,isLog);
-    
     const Logout = () => {
         logoutUser("")
             .then(() => {
@@ -38,7 +36,7 @@ export default function DropDownMenu(user: [] | any) {
                         {
                             <img
                                 src={
-                                    user?.user?.payload?.[0]?.image ??
+                                    user?.user?.image ??
                                     require("../Assets/images/user-image.jpg")
                                 }
                                 alt="user profile"
@@ -69,32 +67,34 @@ export default function DropDownMenu(user: [] | any) {
                                             "block px-4 py-2 text-sm"
                                         )}
                                     >
-                                        Hello! {user?.user?.payload?.[0]?.name ?? "N.A."}
+                                        Hello! {user?.user?.name ?? "N.A."}
                                     </span>
                                 )}
                             </Menu.Item>
                         )}
                         {isLog?.LoggedIn ? (
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link
-                                        to="/profile"
-                                        className={classNames(
-                                            active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                                            "block px-4 py-2 text-sm"
-                                        )}
-                                    >
-                                        Account settings
-                                    </Link>
-                                )}
-                            </Menu.Item>
+                            <AuthWrapper>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link
+                                            to="/profile"
+                                            className={classNames(
+                                                active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                                                "block px-4 py-2 text-sm"
+                                            )}
+                                        >
+                                            Account settings
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </AuthWrapper>
                         ) : (
                             ""
                         )}
                         <Menu.Item>
                             {({ active }) => (
                                 <Link
-                                    to={`${user?.user?.payload?.[0]?.isSeller
+                                    to={`${user?.user?.isSeller
                                         ? "upload-product"
                                         : "register"
                                         }`}
@@ -103,12 +103,28 @@ export default function DropDownMenu(user: [] | any) {
                                         "block px-4 py-2 text-sm"
                                     )}
                                 >
-                                    {user?.user?.payload?.[0]?.isSeller
+                                    {user?.user?.isSeller
                                         ? "Sell Product"
                                         : "Become a Seller"}
                                 </Link>
                             )}
                         </Menu.Item>
+
+                        <AuthWrapper>
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <Link
+                                        to={'/your-products'}
+                                        className={classNames(
+                                            active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                                            "block px-4 py-2 text-sm"
+                                        )}
+                                    >
+                                        Your Products
+                                    </Link>
+                                )}
+                            </Menu.Item>
+                        </AuthWrapper>
 
                         <form method="POST" action="#">
                             <Menu.Item>
@@ -127,8 +143,6 @@ export default function DropDownMenu(user: [] | any) {
                                         {isLog?.LoggedIn ? (
                                             <span
                                                 onClick={() => {
-                                                    console.log("----------");
-
                                                     Logout();
                                                 }}
                                             >

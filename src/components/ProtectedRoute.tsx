@@ -11,8 +11,8 @@ const ProtectedRoute = ({ children }: any) => {
         return true;
     }
     function getCookie() {
-        var arrayb = document.cookie.split(";");
-        for (const item of arrayb) {
+        let array = document.cookie.split(";");
+        for (const item of array) {
             if (item.startsWith("jwt=")) {
                 return item.substr(6);
             }

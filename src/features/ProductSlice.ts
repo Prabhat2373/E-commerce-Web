@@ -20,15 +20,18 @@ const productsSlice = createSlice({
     initialState,
     name: "products",
     reducers: {
-        receivedProducts(state, action: PayloadAction<Product[]>) {
+        Products(state, action: PayloadAction<Product[]>) {
             const products = action.payload;
-            products?.forEach(product => {
-                console.log(product);
-                state.products[product._id] = product;
-            })
+            // products?.forEach(product => {
+            //     console.log("PRODUCTS", product);
+            //     state.products[product._id] = product;
+            // })
+            state.products = products
+            console.log("PRODUCTS :", products)
+
         }
     },
 });
 
-export const { receivedProducts } = productsSlice.actions;
+export const { Products } = productsSlice.actions;
 export default productsSlice.reducer;

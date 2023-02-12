@@ -3,16 +3,13 @@ import { FiSearch } from 'react-icons/fi';
 import DropDownMenu from './DropDownMenu';
 import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
-import { useGetCurrentUserQuery, useGetAllCartQuery } from '../Services/rtk/services/test';
+import { useGetAllCartQuery } from '../Services/rtk/services/test';
 import SearchBar from './SearchBar';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const UserEmail = String(window?.localStorage.getItem('user_email'));
-    console.log("EMAIL :", UserEmail);
-
-    const [User, setUser] = React.useState([]);
-    const { data: CurrentUser } = useGetCurrentUserQuery(UserEmail);
+    const User = useSelector((state: any) => state?.user?.payload)
     const [searchOpen, setSearchOpen] = useState(false);
     const [NavOpen, setNavOpen] = useState(false);
     const { data: CartItems } = useGetAllCartQuery("");
@@ -23,11 +20,7 @@ const Navbar = () => {
     useEffect(() => {
         setCartData(CartItems)
         setPath(link);
-        setUser(CurrentUser)
-    }, [CartItems, link, CurrentUser]);
-
-    console.log("CURRENT USER", User);
-    console.log("APP ENV :", process.env.REACT_APP_MY_ENVIRONMENT);
+    }, [CartItems, link]);
 
     return (
         <>
@@ -43,7 +36,6 @@ const Navbar = () => {
                         <div className="flex md:hidden">
                             <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu" onClick={() => {
                                 setNavOpen((prevState) => !prevState)
-                                console.log(NavOpen);
                             }}>
                                 <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
                                     <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
@@ -80,7 +72,7 @@ const Navbar = () => {
                             {/* <SearchBar/> */}
                         </div>
                         <div>
-                            <DropDownMenu user={CurrentUser} />
+                            <DropDownMenu user={User} />
                         </div>
                     </div>}
                 </div>

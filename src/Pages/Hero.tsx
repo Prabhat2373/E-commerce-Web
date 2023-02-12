@@ -5,29 +5,18 @@ import { useGetProductsQuery } from '../Services/rtk/services/test';
 import WomenImg from "../Assets/images/shopping-women.jpg"
 import Modal from './../components/Modal';
 import { useAppDispatch } from './../features/Hooks';
-import { receivedProducts } from '../features/ProductSlice';
 import { useSelector } from 'react-redux';
 
 
 export default function Hero() {
-  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const { data: Products } = useGetProductsQuery('');
   const ClothsItems = Products?.payload?.filter((el: any, index: number) => el?.category === "fashion");
   const ElectronicsItems = Products?.payload?.filter((el: any, index: number) => el?.category === "electronics");
   const OthersItems = Products?.payload?.filter((el: any, index: number) => el?.category !== "fashion" && el?.category !== "electronics")
 
-  useEffect(() => {
-    dispatch(receivedProducts(Products?.payload))
-  }, [Products, dispatch]);
 
   const item = useSelector((state: any) => state?.products?.products);
-
-  console.log(item);
-  console.log("BASE URL :", process.env.DEV_BASE_URL);
-  // dispatch(Show({isOpen:true, message:"HELLO WORLD", title:"HELLO"}))
-
-
   const navigate = useNavigate();
   return (
     <>

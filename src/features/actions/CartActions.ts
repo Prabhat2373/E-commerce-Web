@@ -12,7 +12,6 @@ export const DELETE_CART = 'DELETE_CART';
 export const actFetchProductsRequest = () => {
     return (dispatch: any) => {
         const { data: CartItems } = useGetAllCartQuery('');
-        console.log(CartItems);
         useEffect(() => {
             dispatch(GetAllProduct(CartItems?.payload))
         }, [CartItems])

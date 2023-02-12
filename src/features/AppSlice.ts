@@ -1,7 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export interface UserType {
+  _id: string
+  name: string
+  email: string
+  isSeller: string
+  image: string
+}
+
 
 const initialState = {
-
   state: {
     isFetching: false,
   },
@@ -10,6 +19,7 @@ const initialState = {
     isAuthenticated: false,
     LoggedIn: false
   },
+  payload: {}
 }
 
 
@@ -26,6 +36,11 @@ const userSlice = createSlice({
     },
     LogoutUser: (state) => {
       state.user.LoggedIn = false
+    },
+    User: (state, action: PayloadAction<UserType>) => {
+      const user = action.payload
+      console.log("USER :", user)
+      state.payload = action.payload
     }
   }
 });
@@ -33,7 +48,8 @@ const userSlice = createSlice({
 export const {
   setIsFetching,
   isLoggedIn,
-  LogoutUser
+  LogoutUser,
+  User
 } = userSlice.actions;
 
 

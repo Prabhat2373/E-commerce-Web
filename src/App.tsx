@@ -6,16 +6,16 @@ import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Toast from "./components/Toast";
-import { useSelector } from "react-redux";
-import Cart from "./components/Cart";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetCurrentUserQuery, useGetProductsQuery } from "./Services/rtk/services/test";
+import { Products } from "./features/ProductSlice"
+import { User } from "./features/AppSlice";
 
 const Home = React.lazy(() => import("./Pages/Home"));
-const Collections = React.lazy(
-  () => import("./components/Collections/Collections")
-);
 const ProductsIndex = React.lazy(
   () => import("./components/Products/ProductsIndex")
 );
+const YourProducts = React.lazy(() => import("./Pages/YourProducts"));
 const ProductView = React.lazy(() => import("./components/Home/ProductView"));
 const Login = React.lazy(() => import("./Pages/Login"));
 const Register = React.lazy(() => import("./Pages/Register"));
@@ -24,7 +24,16 @@ const Profile = React.lazy(() => import("./Pages/Profile"));
 
 function App() {
   console.log("REACT BASE URL", process.env.REACT_APP_DEV_BASE_URL);
+  const UserEmail = String(window?.localStorage.getItem('user_email'));
+  const { data: CurrentUser } = useGetCurrentUserQuery(UserEmail);
   const Test = useSelector((state: any) => state.toast.toast);
+  const dispatch = useDispatch();
+  const { data: ProductPayload } = useGetProductsQuery("")
+  console.log(ProductPayload)
+  React.useEffect(() => {
+    dispatch(Products(ProductPayload?.payload))
+    dispatch(User(CurrentUser?.payload?.[0]))
+  }, [Products, CurrentUser])
   return (
     <>
       <Navbar />
@@ -49,7 +58,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="collections" element={<Collections />} /> */}
+            <Route path="your-products" element={<YourProducts />} />
             <Route path={`view/:id`} element={<ProductView />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

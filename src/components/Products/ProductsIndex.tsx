@@ -5,6 +5,7 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useGetProductsQuery } from '../../Services/rtk/services/test';
 import { useEffect } from 'react';
+import Loading from '../Loading';
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -74,9 +75,6 @@ export default function CollectionsFilter() {
         setProductsData(Products)
         setPath(search);
     }, [Products, search]);
-    console.log("PATH", search?.split("=")[1]);
-
-
     return (
         <div className="bg-white">
             <div>
@@ -304,39 +302,40 @@ export default function CollectionsFilter() {
                                 ))}
                             </form>
 
-                            {/* Product grid */}
-                            {/* Replace with your content */}
+
                             <div className="grid col-span-3 grid-cols-3 gap-3 overflow-y-scroll p-4">
-                                {ProductsData?.payload?.map((product: any) => (
-                                    <div key={product._id} className="group relative">
-                                        {/* <button className=" absolute top-[60%] bg-slate-800 w-full text-center text-slate-200 p-2" onClick={() => {
-                                    console.log("CLICKED");
-                                }}>Quick View </button> */}
-                                        <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 " >
+                                {
+                                    ProductsData?.payload?.length > 0 ?
+                                        ProductsData?.payload?.map((product: any) => (
+                                            <div key={product._id} className="group relative">
+                                                <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 " >
 
-                                            <img
-                                                src={product?.image}
-                                                alt={product}
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
+                                                    <img
+                                                        src={product?.image}
+                                                        alt={product}
+                                                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                                    />
+                                                </div>
 
-                                        <div className="mt-4 flex justify-between">
-                                            <div>
-                                                <h3 className="text-sm text-gray-700">
-                                                    <p onClick={() => {
-                                                        navigate(`/view/${product?._id}`)
-                                                    }}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {product.name}
-                                                    </p>
-                                                </h3>
-                                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                                <div className="mt-4 flex justify-between">
+                                                    <div>
+                                                        <h3 className="text-sm text-gray-700">
+                                                            <p onClick={() => {
+                                                                navigate(`/view/${product?._id}`)
+                                                            }}>
+                                                                <span aria-hidden="true" className="absolute inset-0" />
+                                                                {product.name}
+                                                            </p>
+                                                        </h3>
+                                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                                    </div>
+                                                    <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                                                </div>
                                             </div>
-                                            <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                                        )) : <div className='flex w-full justify-center'>
+                                            <Loading />
                                         </div>
-                                    </div>
-                                ))}
+                                }
                             </div>
                             {/* /End replace */}
 

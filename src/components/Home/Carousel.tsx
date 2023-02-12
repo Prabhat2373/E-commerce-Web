@@ -17,7 +17,6 @@ interface CarouselProps {
 export default function Carousel({ data }: CarouselProps) {
     const navigate = useNavigate();
     const [AddToCart] = useAddToCartMutation();
-    console.log(LoadingImage);
     const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery('');
     const [isLoading, setIsLoading] = useState(false)
     const [CartId, setCartId] = useState("");
@@ -50,7 +49,6 @@ export default function Carousel({ data }: CarouselProps) {
             >
 
                 {data?.length > 0 ? data?.map((element: any, index: number) => {
-                    console.log(GetRatings(element?.ratings))
                     return (
                         <SwiperSlide>
                             <div className="swiper-child w-[400px] bg-[#D9D9D9] m-3 " key={element?._id + 1} >
@@ -61,7 +59,6 @@ export default function Carousel({ data }: CarouselProps) {
                                     <h3>{element?.name ?? "PRODUCT "}</h3>
                                     <p className="flex">
                                         {GetRatings(element?.ratings - 1)?.map((rating: number) => {
-                                            console.log("RATING", rating)
                                             return (
                                                 <StarIcon
                                                     key={rating}

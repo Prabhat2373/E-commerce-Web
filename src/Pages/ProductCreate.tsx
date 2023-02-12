@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateProductMutation } from '../Services/rtk/services/test';
 import AutoCompleteField from '../components/AutoCompleteField';
 import Toast from './../components/Toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Show } from '../features/ToastSlice';
-const people = [
+const Categories = [
     {
         id: 1,
         name: 'electronics',
@@ -64,6 +64,9 @@ const ProductCreate = () => {
     const productRef = useRef<any>();
     const dispatch = useDispatch();
     const [CreateProduct] = useCreateProductMutation()
+    const User = useSelector((state: any) => state?.user?.payload)
+    console.log("USER ", User);
+
     const navigate = useNavigate()
     const onSubmit = async (data: any) => {
         var formdata = new FormData();
@@ -74,6 +77,7 @@ const ProductCreate = () => {
         formdata.append("category", data.category);
         formdata.append("brand", data.brand);
         formdata.append("ratings", data.ratings);
+        formdata.append("sellerId", User?._id ?? "");
         formdata.append("file", productRef.current.files[0]);
 
         CreateProduct(formdata).then(() => {
@@ -176,13 +180,13 @@ const ProductCreate = () => {
                         >
                             category
                         </label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-500 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                            {...register("category")}
-
-                        />
-                        <AutoCompleteField name={"category"} label={"Category"} options={people} />
+                        <select id="category" {...register('category')}>
+                            {Categories?.map((el) => {
+                                return (
+                                    <option value={el?.name}>{el?.name}</option>
+                                )
+                            })}
+                        </select>
                     </div>
                     <div className="mb-2">
                         <label

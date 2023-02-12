@@ -72,12 +72,13 @@ interface FieldProps {
     name: String,
     label: String;
     options: payloadType[];
+    register?: any
 }
 interface payloadType {
     id: number,
     name: string,
 }
-export default function AutoCompleteField({ name, label, options }: FieldProps) {
+export default function AutoCompleteField({ name, label, options, register }: FieldProps) {
     const [selected, setSelected] = useState(options[3])
 
     return (

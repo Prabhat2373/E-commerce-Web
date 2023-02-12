@@ -1,5 +1,5 @@
 // import callApi from '../api'
-import { useGetAllCartQuery } from "../../Services/rtk/services/test";
+import { useGetAllCartQuery } from "../../Services/rtk/services/Api";
 import { useEffect } from 'react';
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
@@ -15,7 +15,7 @@ export const actFetchProductsRequest = () => {
         useEffect(() => {
             dispatch(GetAllProduct(CartItems?.payload))
         }, [CartItems])
-        
+
 
     }
 }

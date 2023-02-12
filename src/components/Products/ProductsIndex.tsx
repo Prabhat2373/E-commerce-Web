@@ -3,7 +3,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { useGetProductsQuery } from '../../Services/rtk/services/test';
+import { useGetProductsQuery } from '../../Services/rtk/services/Api';
 import { useEffect } from 'react';
 import Loading from '../Loading';
 

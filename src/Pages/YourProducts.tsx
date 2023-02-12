@@ -1,15 +1,23 @@
 import React from 'react'
+import { FiDelete } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
+import DeleteIcon from '../components/icons/DeleteIcon'
+import EditIcon from '../components/icons/EditIcon'
 import Page from '../components/page/Page'
+import { useDeleteProductByIdMutation, useGetProductsQuery } from '../Services/rtk/services/Api'
 
 const YourProducts = () => {
+    const [deleteProductById] = useDeleteProductByIdMutation();
+    const { data: fetchedProducts, refetch: refetchProducts } = useGetProductsQuery("");
     const User = useSelector((state: any) => state?.user?.payload)
     const Products = useSelector((state: any) => state?.products?.products)
     const sellerId = User?._id
     const filteredProducts = Products?.filter((el: any) => el?.sellerId === sellerId)
-    console.log("SELLER ID ", sellerId)
-    console.log("PRODUCTS ", Products)
-    console.log("FILTERED :", filteredProducts);
+    const deleteProduct = (id: number) => {
+        const config = window.confirm("Are You Sure To Delete This Product");
+        if (config) deleteProductById(id).then(() => refetchProducts()).catch((err) => err?.message)
+
+    }
 
     return (
         <>
@@ -31,10 +39,13 @@ const YourProducts = () => {
                                     <th scope="col" className="px-6 py-3">
                                         Price
                                     </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Actions
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredProducts?.map((el: any) => {
+                                {!filteredProducts || filteredProducts?.length <= 0 ? <tr className='text-center '><td colSpan={5} className='items-center text-center p-4'>NO ITEMS</td></tr> : filteredProducts?.map((el: any) => {
                                     return (
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -47,7 +58,13 @@ const YourProducts = () => {
                                                 {el?.category}
                                             </td>
                                             <td className="px-6 py-4">
-                                                {el?.price}
+                                                ₹{el?.price}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className='flex gap-2'>
+                                                    <span className='cursor-pointer' onClick={() => alert("ACTION NOT DEFINED YET!")}><EditIcon /></span>
+                                                    <span className='cursor-pointer' onClick={() => deleteProduct(el?._id)}><DeleteIcon /></span>
+                                                </div>
                                             </td>
                                         </tr>
                                     )

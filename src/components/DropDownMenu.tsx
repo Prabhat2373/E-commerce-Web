@@ -1,11 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { useLogoutMutation } from "../Services/rtk/services/test";
+import { useLogoutMutation } from "../Services/rtk/services/Api";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { LogoutUser } from '../features/AppSlice';
-import AuthWrapper from "./utils/AuthWrapper";
+import AuthWrapper from "./utils/AuthIsSeller";
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");

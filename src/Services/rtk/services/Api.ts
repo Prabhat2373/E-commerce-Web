@@ -68,6 +68,12 @@ export const TestApi = createApi({
         url: `/product/${id}`,
       }),
     }),
+    deleteProductById: builder.mutation({
+      query: (id: number) => ({
+        url: `/product/${id}`,
+        method: "DELETE"
+      })
+    }),
     createProduct: builder.mutation({
       query: (args) => ({
         url: `/product`,
@@ -98,4 +104,5 @@ export const {
   useLoginUserMutation,
   useCreateProductMutation,
   useLogoutMutation,
+  useDeleteProductByIdMutation,
 } = TestApi;

@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { useGetAllCartQuery, useRemoveCartItemMutation } from '../Services/rtk/services/test';
+import { useGetAllCartQuery, useRemoveCartItemMutation } from '../Services/rtk/services/Api';
 
 interface Props {
     isOpen: boolean;
@@ -112,7 +112,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                                                                             setProductId(e?.currentTarget?.id)
                                                                                         }}
                                                                                     >
-                                                                                        {isLoading && products?._id === productId? 'Loading...' : 'Remove'}
+                                                                                        {isLoading && products?._id === productId ? 'Loading...' : 'Remove'}
                                                                                     </button>
                                                                                 </div>
                                                                             </div>

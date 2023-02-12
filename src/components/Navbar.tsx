@@ -3,7 +3,7 @@ import { FiSearch } from 'react-icons/fi';
 import DropDownMenu from './DropDownMenu';
 import { Link, useLocation } from "react-router-dom";
 import Cart from './Cart';
-import { useGetAllCartQuery } from '../Services/rtk/services/test';
+import { useGetAllCartQuery } from '../Services/rtk/services/Api';
 import SearchBar from './SearchBar';
 import { useSelector } from 'react-redux';
 

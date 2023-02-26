@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { TestApi } from './Services/rtk/services/Api'
+import { TestApi } from './Services/rtk/services/test'
 import ProductReducer from "../src/features/ProductSlice"
 import CartReducer from "../src/features/CartSlice";
 import ToastReducer from "../src/features/ToastSlice";
@@ -36,7 +36,7 @@ export const store = configureStore({
     [TestApi.reducerPath]: TestApi.reducer,
     products: ProductReducer,
     cart: CartReducer,
-    toast: ToastReducer
+    toast:ToastReducer
   },
 
   middleware: (getDefaultMiddleware) =>

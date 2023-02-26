@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useCreateUserMutation } from '../Services/rtk/services/Api';
+import { useCreateUserMutation } from '../Services/rtk/services/test';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -15,7 +15,7 @@ const Register = () => {
         formdata.append("email", data.email);
         formdata.append("password", data.password);
         formdata.append("isSeller", data.isSeller);
-        formdata.append("file", profileRef.current.files[0]);
+        formdata.append("file",  profileRef.current.files[0]);
 
         PostUser(formdata).then(() => {
             navigate("/login")

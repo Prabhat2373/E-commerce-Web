@@ -7,7 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Toast from "./components/Toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetCurrentUserQuery, useGetProductsQuery } from "./Services/rtk/services/Api";
+import { useGetCurrentUserQuery, useGetProductsQuery } from "./Services/rtk/services/test";
 import { Products } from "./features/ProductSlice"
 import { User } from "./features/AppSlice";
 
@@ -26,8 +26,6 @@ function App() {
   console.log("REACT BASE URL", process.env.REACT_APP_DEV_BASE_URL);
   const UserEmail = String(window?.localStorage.getItem('user_email'));
   const { data: CurrentUser } = useGetCurrentUserQuery(UserEmail);
-  console.log(CurrentUser);
-
   const Test = useSelector((state: any) => state.toast.toast);
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery("")
@@ -35,7 +33,7 @@ function App() {
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.payload))
     dispatch(User(CurrentUser?.payload?.[0]))
-  }, [ProductPayload, CurrentUser, dispatch])
+  }, [Products, CurrentUser])
   return (
     <>
       <Navbar />

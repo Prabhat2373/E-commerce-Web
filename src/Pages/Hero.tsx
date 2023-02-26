@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sections from '../components/Sections';
 import { useNavigate } from "react-router-dom"
-import { useGetProductsQuery } from '../Services/rtk/services/Api';
+import { useGetProductsQuery } from '../Services/rtk/services/test';
 import WomenImg from "../Assets/images/shopping-women.jpg"
 import Modal from './../components/Modal';
 import { useAppDispatch } from './../features/Hooks';

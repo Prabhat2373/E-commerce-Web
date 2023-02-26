@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import 'swiper/css/navigation';
 import { useNavigate } from 'react-router-dom';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { useAddToCartMutation, useGetAllCartQuery } from "../../Services/rtk/services/Api";
+import { useAddToCartMutation, useGetAllCartQuery } from "../../Services/rtk/services/test";
 import { GetRatings } from "../../Helper/Helper";
 interface CarouselProps {
     data?: any;

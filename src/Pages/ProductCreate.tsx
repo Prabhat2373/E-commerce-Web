@@ -2,7 +2,7 @@ import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useCreateProductMutation, useGetProductsQuery } from '../Services/rtk/services/Api';
+import { useCreateProductMutation } from '../Services/rtk/services/test';
 import AutoCompleteField from '../components/AutoCompleteField';
 import Toast from './../components/Toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,7 +60,7 @@ const Categories = [
 
 const ProductCreate = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { refetch: refetchProducts } = useGetProductsQuery("");
+    const [isAlert, setIsAlert] = useState(false);
     const productRef = useRef<any>();
     const dispatch = useDispatch();
     const [CreateProduct] = useCreateProductMutation()
@@ -87,8 +87,7 @@ const ProductCreate = () => {
                 message: "Product Has Been Created",
                 title: "SUCCESS"
             }))
-            refetchProducts()
-            navigate("/your-products")
+            // navigate("/")
         }).catch((err) => console.log(err?.message));
     };
 

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAddToCartMutation, useGetAllCartQuery, useGetProductByIdQuery } from "../../Services/rtk/services/Api";
+import { useAddToCartMutation, useGetAllCartQuery, useGetProductByIdQuery } from "../../Services/rtk/services/test";
 
 
 const product = {
@@ -97,7 +97,7 @@ const ProductView = () => {
     const navigate = useNavigate()
     const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery('');
 
-
+  
 
     function AddCart(id: any, quantity: any) {
         setIsLoading(true)

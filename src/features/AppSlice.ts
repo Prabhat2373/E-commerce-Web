@@ -2,13 +2,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface UserType {
+  user: any;
+  avatar: Avatar
+  role: string
   _id: string
   name: string
   email: string
-  isSeller: string
-  image: string
+  password: string
+  createdAt: string
+  __v: number
+  resetPasswordExpire: string
+  resetPasswordToken: string
 }
 
+export interface Avatar {
+  public_id: string
+  url: string
+}
 
 const initialState = {
   state: {
@@ -27,12 +37,11 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setIsFetching: (state) => {
-      state.state.isFetching = true;
-    },
-    isLoggedIn: (state) => {
-      state.user.isAuthenticated = true;
-      state.user.LoggedIn = true;
+    isLoggedIn: (state, action: PayloadAction<boolean>) => {
+      if (action.payload === true) {
+        state.user.LoggedIn = true;
+      }
+      state.user.LoggedIn = false
     },
     LogoutUser: (state) => {
       state.user.LoggedIn = false
@@ -46,7 +55,6 @@ const userSlice = createSlice({
 });
 
 export const {
-  setIsFetching,
   isLoggedIn,
   LogoutUser,
   User

@@ -10,19 +10,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   useGetCurrentUserQuery,
   useGetProductsQuery,
-} from './Services/rtk/services/test';
-import { Products } from './features/ProductSlice';
-import { User } from './features/AppSlice';
+} from './features/services/RTK/Api';
+import { Products } from './features/Slices/ProductSlice';
+import { User } from './features/Slices/AppSlice';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
-  () => import('./components/Products/ProductsIndex')
+  () => import('./Pages/Products/ProductsIndex')
 );
 const YourProducts = React.lazy(() => import('./Pages/Admin/YourProducts'));
-const ProductView = React.lazy(() => import('./components/Home/ProductView'));
+const ProductView = React.lazy(() => import('./Pages/Products/ProductView'));
 const Login = React.lazy(() => import('./Pages/Register/Login'));
 const Register = React.lazy(() => import('./Pages/Register/Register'));
-const ProductCreate = React.lazy(() => import('./Pages/ProductCreate'));
+const ProductCreate = React.lazy(
+  () => import('./Pages/Products/ProductCreate')
+);
 const Profile = React.lazy(() => import('./Pages/Admin/Profile'));
 
 function App() {

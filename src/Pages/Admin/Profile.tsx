@@ -1,7 +1,7 @@
 import react from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetCurrentUserQuery } from '../../Services/rtk/services/test';
+import { useGetCurrentUserQuery } from '../../features/services/RTK/Api';
 
 export default function Profile() {
   const {

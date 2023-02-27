@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Page from '../../components/page/Page';
+import Page from '../../components/Page';
 
 const YourProducts = () => {
   const User = useSelector((state: any) => state?.user?.payload);

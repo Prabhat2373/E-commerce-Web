@@ -1,5 +1,5 @@
 // import callApi from '../api'
-import { useGetAllCartQuery } from "../services/RTK/Api";
+import { useGetAllCartQuery } from "../../services/RTK/Api";
 import { useEffect } from 'react';
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';

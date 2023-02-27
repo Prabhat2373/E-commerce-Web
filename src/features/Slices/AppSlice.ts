@@ -38,10 +38,11 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     isLoggedIn: (state, action: PayloadAction<boolean>) => {
-      if (action.payload === true) {
-        state.user.LoggedIn = true;
-      }
-      state.user.LoggedIn = false
+      // if (action.payload === true) {
+      //   state.user.LoggedIn = true;
+      // }
+      console.log(action.payload)
+      state.user.LoggedIn = action.payload
     },
     LogoutUser: (state) => {
       state.user.LoggedIn = false

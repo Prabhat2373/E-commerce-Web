@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLoginUserMutation } from '../../Services/rtk/services/test';
+import { useLoginUserMutation } from '../../features/services/RTK/Api';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, UserType, isLoggedIn } from '../../features/AppSlice';
+import { User, UserType, isLoggedIn } from '../../features/Slices/AppSlice';
 import { LoginPayload } from '../../interfaces/Payload';
 
 export default function Login() {
@@ -24,16 +24,14 @@ export default function Login() {
     setIsLoading(true);
     Login(data)
       .then((response: any) => {
-        console.log('RESPONSE', response);
+        console.log('RESPONSE', response?.data?.user?.email);
         setIsLoading(false);
         console.log('SUCCESS!');
-        const { token, user } = response;
 
-        window.localStorage.setItem('token', token);
-        window.localStorage.setItem('user_email', user?.email);
+        window.localStorage.setItem('token', response?.data?.token);
+        window.localStorage.setItem('user_email', response?.data?.user?.email);
         dispatch(User(response?.data?.user));
         dispatch(isLoggedIn(true));
-        console.log(userPayload);
 
         window.location.reload();
         window.location.href = '/';

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { TestApi } from './Services/rtk/services/test'
-import ProductReducer from "../src/features/ProductSlice"
-import CartReducer from "../src/features/CartSlice";
-import ToastReducer from "../src/features/ToastSlice";
+import { TestApi } from './features/services/RTK/Api'
+import ProductReducer from "./features/Slices/ProductSlice"
+import CartReducer from "./features/Slices/CartSlice";
+import ToastReducer from "./features/Slices/ToastSlice";
 
 
 import {
@@ -19,7 +19,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import userReducer from "../src/features/AppSlice";
+import userReducer from "./features/Slices/AppSlice";
 
 const persistConfig = {
   key: "root",
@@ -36,7 +36,7 @@ export const store = configureStore({
     [TestApi.reducerPath]: TestApi.reducer,
     products: ProductReducer,
     cart: CartReducer,
-    toast:ToastReducer
+    toast: ToastReducer
   },
 
   middleware: (getDefaultMiddleware) =>

@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useCreateUserMutation } from '../../Services/rtk/services/test';
+import { useCreateUserMutation } from '../../features/services/RTK/Api';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {

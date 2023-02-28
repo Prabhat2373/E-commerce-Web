@@ -10,7 +10,7 @@ export const CoreApi = createApi({
       process.env.REACT_APP_MY_ENVIRONMENT === "prod"
         ? process.env.REACT_APP_PROD_BASE_URL
         : process.env.REACT_APP_DEV_BASE_URL,
-    // credentials: "include",
+    credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       headers.set('authorization', `bearer ${String(localStorage.getItem('token'))}`)
       return headers

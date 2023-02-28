@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { TestApi } from './features/services/RTK/Api'
+import { CoreApi } from './features/services/RTK/Api'
 import ProductReducer from "./features/Slices/ProductSlice"
 import CartReducer from "./features/Slices/CartSlice";
 import ToastReducer from "./features/Slices/ToastSlice";
@@ -33,7 +33,7 @@ export const store = configureStore({
   reducer: {
     user: rootReducer,
     // Add the generated reducer as a specific top-level slice
-    [TestApi.reducerPath]: TestApi.reducer,
+    [CoreApi.reducerPath]: CoreApi.reducer,
     products: ProductReducer,
     cart: CartReducer,
     toast: ToastReducer
@@ -44,7 +44,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(TestApi.middleware),
+    }).concat(CoreApi.middleware),
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
 

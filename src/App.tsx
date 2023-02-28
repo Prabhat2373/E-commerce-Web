@@ -28,17 +28,14 @@ const ProductCreate = React.lazy(
 const Profile = React.lazy(() => import('./Pages/Admin/Profile'));
 
 function App() {
-  console.log('REACT BASE URL', process.env.REACT_APP_DEV_BASE_URL);
-  const UserEmail = String(window?.localStorage.getItem('user_email'));
-  const { data: CurrentUser } = useGetCurrentUserQuery(UserEmail);
+  const user = useSelector((state: any) => state?.user?.payload);
+  console.log('USERS', user);
   const Test = useSelector((state: any) => state.toast.toast);
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery('');
-  console.log(ProductPayload);
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.payload));
-    dispatch(User(CurrentUser?.payload?.[0]));
-  }, [Products, CurrentUser]);
+  }, [Products]);
   return (
     <>
       <Navbar />

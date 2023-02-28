@@ -3,8 +3,8 @@ import { LoginPayload } from '../../../interfaces/Payload';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define a service using a base URL and expected endpoints
-export const TestApi = createApi({
-  reducerPath: "TestApi",
+export const CoreApi = createApi({
+  reducerPath: "CoreApi",
   baseQuery: fetchBaseQuery({
     baseUrl:
       process.env.REACT_APP_MY_ENVIRONMENT === "prod"
@@ -25,11 +25,11 @@ export const TestApi = createApi({
         url: "cart",
       }),
     }),
-    getCurrentUser: builder.query({
-      query: (args: string) => ({
-        url: `user/${args}`,
-      }),
-    }),
+    // getCurrentUser: builder.query({
+    //   query: (args: string) => ({
+    //     url: `user/${args}`,
+    //   }),
+    // }),
     addToCart: builder.mutation({
       query: (args) => ({
         url: `cart/${args?.id}`,
@@ -50,6 +50,11 @@ export const TestApi = createApi({
         method: "POST",
         redirect: "follow",
       }),
+    }),
+    getCurrentUser: builder.query({
+      query: () => ({
+        url: '/me'
+      })
     }),
     LoginUser: builder.mutation<LoginPayload, any>({
       query: (args) => ({
@@ -99,4 +104,4 @@ export const {
   useLoginUserMutation,
   useCreateProductMutation,
   useLogoutMutation,
-} = TestApi;
+} = CoreApi;

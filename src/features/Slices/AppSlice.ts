@@ -25,7 +25,7 @@ const initialState = {
     isFetching: false,
   },
   user: {
-    name: "Clash",
+    name: "",
     isAuthenticated: false,
     LoggedIn: false
   },
@@ -38,10 +38,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     isLoggedIn: (state, action: PayloadAction<boolean>) => {
-      // if (action.payload === true) {
-      //   state.user.LoggedIn = true;
-      // }
-      console.log(action.payload)
       state.user.LoggedIn = action.payload
     },
     LogoutUser: (state) => {
@@ -49,8 +45,7 @@ const userSlice = createSlice({
     },
     User: (state, action: PayloadAction<UserType>) => {
       const user = action.payload
-      console.log("USER :", user)
-      state.payload = action.payload
+      state.payload = user
     }
   }
 });

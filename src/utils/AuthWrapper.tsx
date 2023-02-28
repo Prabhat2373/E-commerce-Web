@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const AuthWrapper = ({ children }: any) => {
-    let isAuthorized = true;
-    if (!isAuthorized) {
-        return <></>
-    }
-    return children
-}
+  const user = useSelector((state: any) => state.user.user);
 
-export default AuthWrapper
+  if (user?.isLoggedIn) {
+    return <></>;
+  }
+  return children;
+};
+
+export default AuthWrapper;

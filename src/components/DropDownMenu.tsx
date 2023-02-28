@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { LogoutUser } from '../features/Slices/AppSlice';
 import AuthWrapper from '../utils/AuthWrapper';
+import AdminAuth from '../features/auth/AdminAuth';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -106,7 +107,7 @@ export default function DropDownMenu(user: [] | any) {
               )}
             </Menu.Item>
 
-            <AuthWrapper>
+            <AdminAuth>
               <Menu.Item>
                 {({ active }) => (
                   <Link
@@ -120,7 +121,7 @@ export default function DropDownMenu(user: [] | any) {
                   </Link>
                 )}
               </Menu.Item>
-            </AuthWrapper>
+            </AdminAuth>
 
             <form method="POST" action="#">
               <Menu.Item>
@@ -133,7 +134,7 @@ export default function DropDownMenu(user: [] | any) {
                     )}
                     to={`${User?.LoggedIn ? 'register' : 'login'}`}
                     onClick={() => {
-                      User?.LoggedIn ? Logout() : navigate('/register');
+                      User?.LoggedIn ? Logout() : navigate('/login');
                     }}
                   >
                     {User?.LoggedIn ? (

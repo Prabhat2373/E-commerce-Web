@@ -1,27 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }: any) => {
   const location = useLocation();
-  function GetAuth() {
-    let Token = window.localStorage.getItem('token');
-    if (!Token) {
-      return false;
-    }
-    return true;
-  }
-  function getCookie() {
-    let array = document.cookie.split(';');
-    for (const item of array) {
-      if (item.startsWith('jwt=')) {
-        return item.substr(6);
-      }
-    }
-  }
+  const user = useSelector((state: any) => state.user.user);
 
   // console.log(getCookie()?.length)
-  console.log('AUTH', GetAuth());
-  if (!GetAuth()) {
+  if (!user?.isLoggedIn) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return children;

@@ -13,6 +13,7 @@ import {
 } from './features/services/RTK/Api';
 import { Products } from './features/Slices/ProductSlice';
 import { User } from './features/Slices/AppSlice';
+import { log } from 'console';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
@@ -38,6 +39,7 @@ function App() {
     dispatch(User(currentUser?.user));
   }, [ProductPayload?.products, currentUser, dispatch]);
   console.log('CURRENT USER', Userp);
+  console.log('Profucts', ProductPayload?.products);
 
   return (
     <>

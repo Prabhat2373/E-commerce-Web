@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Sections from '../../components/Sections';
 import { useNavigate } from 'react-router-dom';
-import { useGetProductsQuery } from '../../features/services/RTK/Api';
 import WomenImg from '../../Assets/images/shopping-women.jpg';
 import Modal from '../../components/Modal';
-import { useAppDispatch } from '../../features/Hooks';
 import { useSelector } from 'react-redux';
 
 export default function Hero() {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: Products } = useGetProductsQuery('');
-  const ClothsItems = Products?.payload?.filter(
+  const item = useSelector((state: any) => state.products.products);
+  const ClothsItems = item?.filter(
     (el: any, index: number) => el?.category === 'fashion'
   );
-  const ElectronicsItems = Products?.payload?.filter(
+  const ElectronicsItems = item?.filter(
     (el: any, index: number) => el?.category === 'electronics'
   );
-  const OthersItems = Products?.payload?.filter(
+  const OthersItems = item?.filter(
     (el: any, index: number) =>
       el?.category !== 'fashion' && el?.category !== 'electronics'
   );
 
-  const item = useSelector((state: any) => state?.products?.products);
   const navigate = useNavigate();
+  console.log('item', item);
   return (
     <>
       <div className="main-parent grid md:grid-cols-2 gap-3 mt-16 ">

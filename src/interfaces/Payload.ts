@@ -21,3 +21,26 @@ export interface Avatar {
     public_id: string
     url: string
 }
+
+export interface ProductType {
+    ratings: number
+    Stock: number
+    numOfReviews: number
+    _id: string
+    name: string
+    description: string
+    price: number
+    category: string
+    images: Image[]
+    user: string
+    reviews: any[]
+    createdAt: string
+    __v: number
+  }
+  
+  export interface Image {
+    _id: string
+    public_id: string
+    url: string
+  }
+  

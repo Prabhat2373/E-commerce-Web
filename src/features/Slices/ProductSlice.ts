@@ -22,12 +22,7 @@ const productsSlice = createSlice({
     reducers: {
         Products(state, action: PayloadAction<Product[]>) {
             const products = action.payload;
-            // products?.forEach(product => {
-            //     console.log("PRODUCTS", product);
-            //     state.products[product._id] = product;
-            // })
             state.products = products
-            console.log("PRODUCTS :", products)
 
         }
     },

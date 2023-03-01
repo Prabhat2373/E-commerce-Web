@@ -14,6 +14,7 @@ import {
   useGetAllCartQuery,
 } from '../../features/services/RTK/Api';
 import { GetRatings } from '../../Helper/Helper';
+import { ProductType } from '../../interfaces/Payload';
 interface CarouselProps {
   data?: any;
 }
@@ -51,7 +52,7 @@ export default function Carousel({ data }: CarouselProps) {
         className="mySwiper"
       >
         {data?.length > 0 ? (
-          data?.map((element: any, index: number) => {
+          data?.map((element: ProductType, index: number) => {
             return (
               <SwiperSlide>
                 <div
@@ -59,8 +60,8 @@ export default function Carousel({ data }: CarouselProps) {
                   key={element?._id + 1}
                 >
                   <img
-                    src={element?.image ?? LoadingImage}
-                    alt={element?._id}
+                    src={element?.images[0]?.url ?? LoadingImage}
+                    alt={'Loading Product Imag'}
                     className="cursor-pointer"
                     width={'400px'}
                     height={'440px'}

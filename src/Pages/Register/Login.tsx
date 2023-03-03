@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, UserType, isLoggedIn } from '../../features/Slices/AppSlice';
 import { LoginPayload } from '../../interfaces/Payload';
+import { Show } from '../../features/Slices/ToastSlice';
 
 export default function Login() {
   const {
@@ -28,13 +29,19 @@ export default function Login() {
         setIsLoading(false);
         console.log('SUCCESS!');
 
-        window.localStorage.setItem('token', response?.data?.token);
-        window.localStorage.setItem('user_email', response?.data?.user?.email);
+        // window.localStorage.setItem('token', response?.data?.token);
+        // window.localStorage.setItem('user_email', response?.data?.user?.email);
         dispatch(User(response?.data?.user));
         dispatch(isLoggedIn(true));
-
-        window.location.reload();
-        window.location.href = '/';
+        dispatch(
+          Show({
+            isOpen: true,
+            message: 'Random',
+            title: 'RANDOM',
+          })
+        );
+        // window.location.reload();
+        // window.location.href = '/';
       })
       .catch((err) => {
         console.log(err?.message);

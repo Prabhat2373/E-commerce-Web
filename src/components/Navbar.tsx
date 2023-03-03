@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import DropDownMenu from './DropDownMenu';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cart from './Cart';
 import { useGetAllCartQuery } from '../features/services/RTK/Api';
 import SearchBar from './SearchBar';
 import { useSelector } from 'react-redux';
+import { StarIcon } from '@heroicons/react/24/outline';
+import { GetRatings } from '../Helper/Helper';
+import { Product } from '../Types/Products';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [searchRes, setSearchRes] = useState<Product[]>();
   const [isOpen, setIsOpen] = useState(false);
   const User = useSelector((state: any) => state?.user?.payload);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -16,17 +21,16 @@ const Navbar = () => {
   const [CartData, setCartData] = useState<any>([]);
   const [Path, setPath] = useState('');
   const link = useLocation()?.pathname;
-
+  const Products = useSelector((state: any) => state.products.products);
+  console.log('productssss', Products);
   useEffect(() => {
     setCartData(CartItems);
     setPath(link);
-  }, [CartItems, link]);
+    setSearchRes(Products);
+  }, [CartItems, Products, link]);
 
   return (
     <>
-      <div className="transition-all duration-500">
-        <SearchBar isOpen={searchOpen} setIsOpen={setSearchOpen} />
-      </div>
       <nav className="bg-white shadow-md fixed top-0 w-full z-10">
         <div className="container sticky top-0 left-0 mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
           <div className="flex justify-between items-center">
@@ -82,6 +86,65 @@ const Navbar = () => {
                   Products
                 </Link>
                 {/* <Link className={`my-1 text-sm ${Path === '/collections' ? 'text-indigo-500' : 'text-gray-700'} font-medium hover:text-indigo-500 md:mx-4 md:my-0`} to="/collections">Collections</Link> */}
+              </div>
+              <div className="flex transition-all duration-300">
+                {searchOpen && (
+                  <input
+                    type="search"
+                    placeholder="Seach Products..."
+                    className="p-3 rounded-md border border-gray-700 transition-all duration-300"
+                  />
+                )}
+                {searchOpen && (
+                  <div className="search-products-container bg-slate-50 absolute w-2/3 h-full rounded-lg top-[80px] right-10">
+                    <div className="p-4">
+                      <h1 className="font-semibold text-xl">
+                        Your Searched Results
+                      </h1>
+                    </div>
+                    <div className="grid grid-cols-4 bg-slate-50">
+                      {searchRes?.map((element: any) => {
+                        return (
+                          <>
+                            <div
+                              className="swiper-child bg-[#D9D9D9] m-3 "
+                              key={element?._id + 1}
+                            >
+                              <img
+                                src={element?.images[0]?.url}
+                                alt={'Loading Product Imag'}
+                                className="cursor-pointer"
+                                width={'400px'}
+                                height={'400px'}
+                                onClick={() => {
+                                  navigate(`/view/${element?._id}`);
+                                }}
+                              />
+                              <div className="flex justify-between p-2">
+                                <h3>{element?.name ?? 'PRODUCT '}</h3>
+                                <p className="flex">
+                                  {GetRatings(element?.ratings - 1)?.map(
+                                    (rating: number) => {
+                                      return (
+                                        <StarIcon
+                                          key={rating}
+                                          className={
+                                            'text-orange-500 h-5 w-5 flex-shrink-0'
+                                          }
+                                          aria-hidden="true"
+                                        />
+                                      );
+                                    }
+                                  )}
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
               <div
                 className="flex flex-col md:flex-row md:mx-6 cursor-pointer"

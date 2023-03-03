@@ -13,7 +13,7 @@ import {
 } from './features/services/RTK/Api';
 import { Products } from './features/Slices/ProductSlice';
 import { User } from './features/Slices/AppSlice';
-import { log } from 'console';
+import { Cookies } from 'react-cookie';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
@@ -29,17 +29,17 @@ const ProductCreate = React.lazy(
 const Profile = React.lazy(() => import('./Pages/Admin/Profile'));
 
 function App() {
+  const isUserinCookie = Cookies;
   const Userp = useSelector((state: any) => state.user.User);
   const Test = useSelector((state: any) => state.toast.toast);
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery('');
   const { data: currentUser } = useGetCurrentUserQuery('');
   React.useEffect(() => {
-    dispatch(Products(ProductPayload?.products));
+    dispatch(Products(ProductPayload?.products ?? []));
     dispatch(User(currentUser?.user));
   }, [ProductPayload?.products, currentUser, dispatch]);
-  console.log('CURRENT USER', Userp);
-  console.log('Profucts', ProductPayload?.products);
+  console.log('COOKIES', document.cookie.split('; '));
 
   return (
     <>

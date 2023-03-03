@@ -12,6 +12,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useGetProductsQuery } from '../../features/services/RTK/Api';
 import { useEffect } from 'react';
 import Loading from '../../components/Loading';
+import { Product, ProductsPayloadType } from '../../Types/Products';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -72,15 +73,19 @@ function classNames(...classes: any) {
 export default function CollectionsFilter() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const navigate = useNavigate();
-  const [ProductsData, setProductsData] = useState<any>([]);
+  const [ProductsData, setProductsData] = useState<Product[]>([]);
   const [Path, setPath] = useState('');
   // const link = useLocation();
   const { search } = useLocation();
-  const { data: Products } = useGetProductsQuery(search);
+  const { data: Products, isLoading: isProductLoading } =
+    useGetProductsQuery(search);
   useEffect(() => {
-    setProductsData(Products);
+    setProductsData(Products?.products ?? []);
     setPath(search);
   }, [Products, search]);
+  console.log('PRODUCTS', Products);
+  console.log('ISLOADING', isProductLoading);
+
   return (
     <div className="bg-white">
       <div>
@@ -379,13 +384,13 @@ export default function CollectionsFilter() {
               </form>
 
               <div className="grid col-span-3 grid-cols-3 gap-3 overflow-y-scroll p-4">
-                {ProductsData?.payload?.length > 0 ? (
-                  ProductsData?.payload?.map((product: any) => (
+                {ProductsData?.length > 0 ? (
+                  ProductsData?.map((product) => (
                     <div key={product._id} className="group relative">
                       <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 ">
                         <img
-                          src={product?.image}
-                          alt={product}
+                          src={product?.images[0]?.url ?? ''}
+                          alt={product?.name}
                           className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                         />
                       </div>
@@ -406,11 +411,11 @@ export default function CollectionsFilter() {
                             </p>
                           </h3>
                           <p className="mt-1 text-sm text-gray-500">
-                            {product.color}
+                            {product.brand}
                           </p>
                         </div>
                         <p className="text-sm font-medium text-gray-900">
-                          {product.price}
+                          {product?.price}
                         </p>
                       </div>
                     </div>
@@ -421,7 +426,6 @@ export default function CollectionsFilter() {
                   </div>
                 )}
               </div>
-              {/* /End replace */}
             </div>
           </section>
         </main>

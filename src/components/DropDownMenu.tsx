@@ -4,23 +4,25 @@ import { Link } from 'react-router-dom';
 import { useLogoutMutation } from '../features/services/RTK/Api';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { LogoutUser } from '../features/Slices/AppSlice';
 import AuthWrapper from '../utils/AuthWrapper';
 import AdminAuth from '../features/auth/AdminAuth';
+import { LogoutUser } from '../features/Slices/AppSlice';
+import { UserType } from '../features/Slices/AppSlice';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function DropDownMenu(user: [] | any) {
+export default function DropDownMenu(user: UserType | any) {
   const dispatch = useDispatch();
-  const User = useSelector((state: any) => state?.user?.user);
-  const [logoutUser] = useLogoutMutation();
+  const [logoutuser] = useLogoutMutation();
   const navigate = useNavigate();
-  console.log('IS LOGGED', User?.LoggedIn);
+  const { LoggedIn } = useSelector((state: any) => state.user.user);
+  console.log('IS LOGGED', LoggedIn);
+  console.log('user', user);
 
   const Logout = () => {
-    logoutUser('')
+    logoutuser('')
       .then(() => {
         dispatch(LogoutUser());
         window.localStorage.clear();
@@ -38,7 +40,7 @@ export default function DropDownMenu(user: [] | any) {
             {
               <img
                 src={
-                  user?.user?.image ??
+                  user?.user?.avatar?.url ??
                   require('../Assets/images/user-image.jpg')
                 }
                 alt="user profile"
@@ -60,7 +62,7 @@ export default function DropDownMenu(user: [] | any) {
       >
         <Menu.Items className="absolute left-0 md:-left-44 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            {User?.LoggedIn && (
+            {LoggedIn && (
               <Menu.Item>
                 {({ active }) => (
                   <span
@@ -74,7 +76,7 @@ export default function DropDownMenu(user: [] | any) {
                 )}
               </Menu.Item>
             )}
-            {User?.LoggedIn ? (
+            {LoggedIn ? (
               <AuthWrapper>
                 <Menu.Item>
                   {({ active }) => (
@@ -96,13 +98,15 @@ export default function DropDownMenu(user: [] | any) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to={`${user?.user?.isSeller ? 'upload-product' : 'register'}`}
+                  to={`${
+                    user?.user?.role === 'admin' ? 'upload-product' : 'register'
+                  }`}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  {user?.user?.isSeller ? 'Sell Product' : 'Become a Seller'}
+                  {user?.user?.role === 'admin' ? 'Sell Product' : 'Become a Seller'}
                 </Link>
               )}
             </Menu.Item>
@@ -132,12 +136,12 @@ export default function DropDownMenu(user: [] | any) {
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
-                    to={`${User?.LoggedIn ? 'register' : 'login'}`}
+                    to={`${LoggedIn ? 'register' : 'login'}`}
                     onClick={() => {
-                      User?.LoggedIn ? Logout() : navigate('/login');
+                      LoggedIn ? Logout() : navigate('/login');
                     }}
                   >
-                    {User?.LoggedIn ? (
+                    {LoggedIn ? (
                       <span
                         onClick={() => {
                           Logout();

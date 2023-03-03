@@ -1,3 +1,5 @@
+import { Product, ProductsPayloadType } from '../../../Types/Products';
+import { GenericResponse } from '../../../Types/Responses';
 import { LoginPayload } from '../../../interfaces/Payload';
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -64,12 +66,12 @@ export const CoreApi = createApi({
         // redirect: 'follow'
       }),
     }),
-    getProducts: builder.query({
+    getProducts: builder.query<ProductsPayloadType, string>({
       query: (query) => ({
         url: `products${query}`,
       }),
     }),
-    getProductById: builder.query({
+    getProductById: builder.query<GenericResponse<Product>, string>({
       query: (id: any) => ({
         url: `/product/${id}`,
       }),

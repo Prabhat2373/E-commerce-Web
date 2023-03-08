@@ -45,8 +45,6 @@ function App() {
     <>
       <Navbar />
       <div className="mt-20">
-        <Toast title={Test.title} message={Test.message} isOpen={Test.isOpen} />
-
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route

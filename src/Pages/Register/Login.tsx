@@ -29,8 +29,9 @@ export default function Login() {
         setIsLoading(false);
         console.log('SUCCESS!');
 
-        // window.localStorage.setItem('token', response?.data?.token);
-        // window.localStorage.setItem('user_email', response?.data?.user?.email);
+        window.localStorage.setItem('token', response?.data?.token);
+        window.localStorage.setItem('user_email', response?.data?.user?.email);
+        console.log('User', response?.data?.user);
         dispatch(User(response?.data?.user));
         dispatch(isLoggedIn(true));
         dispatch(
@@ -40,8 +41,8 @@ export default function Login() {
             title: 'RANDOM',
           })
         );
-        // window.location.reload();
-        // window.location.href = '/';
+        window.location.reload();
+        window.location.href = '/';
       })
       .catch((err) => {
         console.log(err?.message);

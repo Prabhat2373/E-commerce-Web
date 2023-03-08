@@ -38,9 +38,9 @@ function App() {
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.products ?? []));
     dispatch(User(currentUser?.user));
-  }, [ProductPayload?.products, currentUser, dispatch]);
-  console.log('COOKIES', document.cookie.split('; '));
+  }, [currentUser]);
 
+  console.log('current user:', currentUser?.user);
   return (
     <>
       <Navbar />

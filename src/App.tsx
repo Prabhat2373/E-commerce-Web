@@ -12,6 +12,7 @@ import {
 } from './features/services/RTK/Api';
 import { Products } from './features/Slices/ProductSlice';
 import { User } from './features/Slices/AppSlice';
+import OrderIndex from './Pages/Orders/OrderIndex';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
@@ -68,6 +69,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="upload-product" element={<ProductCreate />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="order-form" element={<OrderIndex />} />
           </Routes>
         </Suspense>
       </div>

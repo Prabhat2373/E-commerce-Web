@@ -7,6 +7,7 @@ import {
 } from '../features/services/RTK/Api';
 import { useSelector } from 'react-redux';
 import { Product } from '../Types/Products';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   isOpen: boolean;
@@ -16,7 +17,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
   const [productId, setProductId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const User = useSelector((state: any) => state.user.payload);
-
+  const navigate = useNavigate()
   const [removeItem] = useRemoveCartItemMutation();
   const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery(User?._id);
 
@@ -34,9 +35,10 @@ export default function Cart({ isOpen, setOpen }: Props) {
     });
   }
 
-  console.log('cart data',CartData)
-  var sum = 0;
-  const SubTotal = CartData?.map((el: any) => (sum += el?.price))?.pop();
+  console.log('cart data', CartData);
+  const SubTotal = CartData?.reduce((item: any, price: any) => {
+    return Number(price?.price) + item;
+  }, 0);
   return (
     <>
       {isOpen && (
@@ -177,7 +179,8 @@ export default function Cart({ isOpen, setOpen }: Props) {
                               value="Checkout"
                               defaultValue={'Checkout'}
                               disabled={!SubTotal || SubTotal === undefined}
-                            ></input>
+                              onClick={()=> navigate('/order-form')}
+                            />
                           </div>
                           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>

@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import Loading from './components/Loading';
 import ProtectedRoute from './components/ProtectedRoute';
 import Footer from './components/Footer';
-import Toast from './components/Toast';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   useGetCurrentUserQuery,
@@ -29,20 +28,18 @@ const ProductCreate = React.lazy(
 const Profile = React.lazy(() => import('./Pages/Admin/Profile'));
 
 function App() {
-  const isUserinCookie = Cookies;
-  const Userp = useSelector((state: any) => state.user.User);
-  const Test = useSelector((state: any) => state.toast.toast);
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery('');
   const { data: currentUser } = useGetCurrentUserQuery('');
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.products ?? []));
     dispatch(User(currentUser?.user));
-  }, [currentUser]);
+  }, [currentUser, ProductPayload?.products]);
 
   console.log('current user:', currentUser?.user);
+  console.log('products in app.tsx', ProductPayload);
   return (
-    <>
+    <React.Fragment>
       <Navbar />
       <div className="mt-20">
         <Suspense fallback={<Loading />}>
@@ -73,7 +70,7 @@ function App() {
         </Suspense>
       </div>
       <Footer />
-    </>
+    </React.Fragment>
   );
 }
 

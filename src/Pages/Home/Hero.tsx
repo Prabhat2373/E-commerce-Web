@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import WomenImg from '../../Assets/images/shopping-women.jpg';
 import Modal from '../../components/Modal';
 import { useSelector } from 'react-redux';
+import { useToast } from '../../Contexts/useToast';
 
 export default function Hero() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,8 +19,9 @@ export default function Hero() {
     (el: any, index: number) =>
       el?.category !== 'fashion' && el?.category !== 'electronics'
   );
-
+  const toast = useToast();
   const navigate = useNavigate();
+  const showToast = () => toast.open('Opened');
   console.log('item', item);
   return (
     <>
@@ -43,7 +45,7 @@ export default function Hero() {
                 className="shop-btns p-3 border-2 text-white font-semibold mt-3 hover:bg-white hover:text-black transition-all duration-200"
                 onClick={() => {
                   // navigate('/products?womens')
-                  setIsOpen((prevState) => !prevState);
+                  showToast();
                 }}
               >
                 Purchase Now

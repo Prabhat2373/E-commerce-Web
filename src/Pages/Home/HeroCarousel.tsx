@@ -15,13 +15,15 @@ import {
 } from '../../features/services/RTK/Api';
 import { GetRatings } from '../../Helper/Helper';
 import { ProductType } from '../../interfaces/Payload';
+import { useSelector } from 'react-redux';
 interface CarouselProps {
   data?: any;
 }
-export default function Carousel({ data }: CarouselProps) {
+export default function HeroCarousel({ data }: CarouselProps) {
   const navigate = useNavigate();
+  const User = useSelector((state: any) => state.user.payload);
   const [AddToCart] = useAddToCartMutation();
-  const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery('');
+  const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery(User?._id);
   const [isLoading, setIsLoading] = useState(false);
   const [CartId, setCartId] = useState('');
   function AddCart(id: any, quantity: any) {

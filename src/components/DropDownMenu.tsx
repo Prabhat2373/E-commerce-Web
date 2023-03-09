@@ -106,7 +106,22 @@ export default function DropDownMenu(user: UserType | any) {
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  {user?.user?.role === 'admin' ? 'Sell Product' : 'Become a Seller'}
+                  {user?.user?.role === 'admin'
+                    ? 'Sell Product'
+                    : 'Become a Seller'}
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to={'/your-products'}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                  Your Orders
                 </Link>
               )}
             </Menu.Item>

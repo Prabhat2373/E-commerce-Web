@@ -17,7 +17,8 @@ const Navbar = () => {
   const User = useSelector((state: any) => state?.user?.payload);
   const [searchOpen, setSearchOpen] = useState(false);
   const [NavOpen, setNavOpen] = useState(false);
-  const { data: CartItems } = useGetAllCartQuery('');
+
+  const { data: CartItems } = useGetAllCartQuery(User?._id);
   const [CartData, setCartData] = useState<any>([]);
   const [Path, setPath] = useState('');
   const link = useLocation()?.pathname;

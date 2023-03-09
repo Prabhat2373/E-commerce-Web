@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 // import callApi from '../api'
 import { useGetAllCartQuery } from "../../services/RTK/Api";
 import { useEffect } from 'react';
@@ -11,7 +12,8 @@ export const DELETE_CART = 'DELETE_CART';
 
 export const actFetchProductsRequest = () => {
     return (dispatch: any) => {
-        const { data: CartItems } = useGetAllCartQuery('');
+        const User = useSelector((state: any) => state.user.payload);
+        const { data: CartItems } = useGetAllCartQuery(User?._id);
         useEffect(() => {
             dispatch(GetAllProduct(CartItems?.payload))
         }, [CartItems])

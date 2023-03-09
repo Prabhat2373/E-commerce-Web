@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useCreateProductMutation } from '../../features/services/RTK/Api';
-import AutoCompleteField from '../../components/AutoCompleteField';
+import AutoCompleteField from '../../components/Forms/AutoCompleteField';
 import Toast from '../../components/Toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { Show } from '../../features/Slices/ToastSlice';

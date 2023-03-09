@@ -23,8 +23,8 @@ export const CoreApi = createApi({
       query: (id: number) => `/${id}`,
     }),
     getAllCart: builder.query({
-      query: () => ({
-        url: "cart",
+      query: (id: number) => ({
+        url: `cart/${id}`,
       }),
     }),
     // getCurrentUser: builder.query({

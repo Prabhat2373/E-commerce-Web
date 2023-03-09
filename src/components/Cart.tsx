@@ -5,6 +5,8 @@ import {
   useGetAllCartQuery,
   useRemoveCartItemMutation,
 } from '../features/services/RTK/Api';
+import { useSelector } from 'react-redux';
+import { Product } from '../Types/Products';
 
 interface Props {
   isOpen: boolean;
@@ -13,11 +15,12 @@ interface Props {
 export default function Cart({ isOpen, setOpen }: Props) {
   const [productId, setProductId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const User = useSelector((state: any) => state.user.payload);
 
   const [removeItem] = useRemoveCartItemMutation();
-  const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery('');
+  const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery(User?._id);
 
-  const [CartData, setCartData] = useState<any>([]);
+  const [CartData, setCartData] = useState<Product[]>([]);
   useEffect(() => {
     setCartData(CartItems?.payload);
     FetchMore();
@@ -31,6 +34,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
     });
   }
 
+  console.log('cart data',CartData)
   var sum = 0;
   const SubTotal = CartData?.map((el: any) => (sum += el?.price))?.pop();
   return (

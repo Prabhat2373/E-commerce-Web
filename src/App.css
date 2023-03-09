@@ -75,7 +75,6 @@ body {
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #D9D9D9;
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -210,13 +209,14 @@ body {
 
 /* TOAST  */
 .toasts-wrapper {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 999;
 }
 
 .toast {
-  border: 2px solid transparent;
+  /* border: 2px solid transparent;
   background-color: #fafafa;
   border-radius: 4px;
   max-width: 480px;
@@ -224,7 +224,7 @@ body {
   margin-top: 16px;
   display: flex;
   position: relative;
-  cursor: pointer;
+  cursor: pointer; */
 }
 
 .toast__text {

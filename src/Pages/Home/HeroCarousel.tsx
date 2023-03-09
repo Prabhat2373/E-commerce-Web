@@ -13,29 +13,36 @@ import {
   useAddToCartMutation,
   useGetAllCartQuery,
 } from '../../features/services/RTK/Api';
-import { GetRatings } from '../../Helper/Helper';
 import { ProductType } from '../../interfaces/Payload';
 import { useSelector } from 'react-redux';
+import { GetRatings } from '../../Helper/Helper';
 interface CarouselProps {
   data?: any;
 }
 export default function HeroCarousel({ data }: CarouselProps) {
   const navigate = useNavigate();
   const User = useSelector((state: any) => state.user.payload);
+  const id = User?._id;
   const [AddToCart] = useAddToCartMutation();
   const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery(User?._id);
   const [isLoading, setIsLoading] = useState(false);
   const [CartId, setCartId] = useState('');
-  function AddCart(id: any, quantity: any) {
+  function AddCart(product: any, quantity: string | number) {
+    console.log('product hero', product);
     setIsLoading(true);
     AddToCart({
       payload: {
-        quantity,
+        name: product?.name,
+        description: product?.description,
+        price: product?.price,
+        image: product?.images?.[0]?.url,
+        quantity: quantity,
       },
       id,
     }).then(() => {
-      setIsLoading(false);
       FetchCart();
+      setIsLoading(false);
+
     });
   }
 
@@ -97,7 +104,7 @@ export default function HeroCarousel({ data }: CarouselProps) {
                       onClick={(e) => {
                         setCartId(e?.currentTarget?.id);
 
-                        AddCart(element?._id, 1);
+                        AddCart(element, 1);
                       }}
                     >
                       {isLoading && element?._id === CartId ? (

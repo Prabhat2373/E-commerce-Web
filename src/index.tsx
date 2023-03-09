@@ -6,7 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { ToastProvider } from './features/Toast/ToastProvider';
+import { ToastContextProvider } from './features/Toast/ToastContext';
+// import { ToastProvider } from './features/Toast/ToastProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,9 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <ToastProvider>
+      <ToastContextProvider>
         <App />
-      </ToastProvider>
+      </ToastContextProvider>
     </Provider>
   </BrowserRouter>
 );

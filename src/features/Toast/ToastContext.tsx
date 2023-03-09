@@ -1,7 +1,7 @@
+import React from 'react';
 import { FC, ReactNode, createContext, useMemo, useState } from 'react';
 import Toast from '../../components/Toast';
 import { createPortal } from 'react-dom';
-import { useToast } from '../../Contexts/useToast';
 
 interface ToastContextProps {
   open: (content: ReactNode) => void;
@@ -28,7 +28,6 @@ export const ToastContextProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const [toasts, setToasts] = useState<ToastContent[]>([]);
-  const toast = useToast();
   const open = (content: ReactNode) =>
     setToasts((currentToasts) => [
       ...currentToasts,
@@ -39,13 +38,7 @@ export const ToastContextProvider: FC<{
       currentToasts.filter((toast) => toast.id !== id)
     );
   const contextValue = useMemo(() => ({ open }), []);
-  const ShowToast = (message: string) => {
-    return toast.open(`${message}`);
-  };
-  // const values = {
-  //   contextValue,
-  //   ShowToast,
-  // };
+
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
@@ -61,4 +54,8 @@ export const ToastContextProvider: FC<{
       )}
     </ToastContext.Provider>
   );
+};
+
+export const useToast = () => {
+  return React.useContext(ToastContext);
 };

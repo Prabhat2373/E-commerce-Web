@@ -26,7 +26,6 @@ const ProductView = () => {
   const [quantity, setQuantity] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [AddToCart] = useAddToCartMutation();
-  const navigate = useNavigate();
   const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery(id);
   console.log('ussssss', User);
   console.log('ALL CART', AllCart);

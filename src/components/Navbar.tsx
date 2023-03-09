@@ -7,8 +7,8 @@ import { useGetAllCartQuery } from '../features/services/RTK/Api';
 import SearchBar from './SearchBar';
 import { useSelector } from 'react-redux';
 import { StarIcon } from '@heroicons/react/24/outline';
-import { GetRatings } from '../Helper/Helper';
 import { Product } from '../Types/Products';
+import { GetRatings } from '../Helper/Helper';
 
 const Navbar = () => {
   const navigate = useNavigate();

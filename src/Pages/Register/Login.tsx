@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { User, UserType, isLoggedIn } from '../../features/Slices/AppSlice';
 import { LoginPayload } from '../../interfaces/Payload';
 import { Show } from '../../features/Slices/ToastSlice';
-import { useToast } from '../../Contexts/useToast';
+import { useToast } from '../../features/Toast/ToastContext';
 
 export default function Login() {
   const {
@@ -22,7 +22,7 @@ export default function Login() {
     (state: UserType) => state?.user?.payload
   );
   const toast = useToast();
-  const showToast = (message: string) => toast.open(message);
+  // const showToast = (message: string) => toast.open(message);
 
   const onSubmit = (data: any) => {
     setIsLoading(true);
@@ -31,7 +31,7 @@ export default function Login() {
         console.log('RESPONSE', response?.data?.user?.email);
         setIsLoading(false);
         console.log('SUCCESS!');
-        showToast('Logged In Successfully');
+        // showToast('Logged In Successfully');
         window.localStorage.setItem('token', response?.data?.token);
         window.localStorage.setItem('user_email', response?.data?.user?.email);
         console.log('User', response?.data?.user);

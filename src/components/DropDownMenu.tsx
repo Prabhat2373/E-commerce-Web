@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import AuthWrapper from '../utils/AuthWrapper';
 import AdminAuth from '../features/auth/AdminAuth';
-import { LogoutUser } from '../features/Slices/AppSlice';
+import { LogoutUser, User } from '../features/Slices/AppSlice';
 import { UserType } from '../features/Slices/AppSlice';
 
 function classNames(...classes: any) {
@@ -27,6 +27,7 @@ export default function DropDownMenu(user: UserType | any) {
         dispatch(LogoutUser());
         window.localStorage.clear();
         window.location.reload();
+
         navigate('/login');
       })
       .catch((err) => console.log(err?.message));

@@ -12,7 +12,6 @@ import {
 } from './features/services/RTK/Api';
 import { Products } from './features/Slices/ProductSlice';
 import { User } from './features/Slices/AppSlice';
-import { Cookies } from 'react-cookie';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
@@ -28,12 +27,15 @@ const ProductCreate = React.lazy(
 const Profile = React.lazy(() => import('./Pages/Admin/Profile'));
 
 function App() {
+  const user = useSelector((state: any) => state.user.user);
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery('');
   const { data: currentUser } = useGetCurrentUserQuery('');
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.products ?? []));
-    dispatch(User(currentUser?.user));
+    if (user?.isLoggedIn) {
+      dispatch(User(currentUser?.user));
+    }
   }, [currentUser, ProductPayload?.products]);
 
   console.log('current user:', currentUser?.user);

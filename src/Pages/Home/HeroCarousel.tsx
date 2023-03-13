@@ -27,12 +27,13 @@ export default function HeroCarousel({ data }: CarouselProps) {
   const { data: AllCart, refetch: FetchCart } = useGetAllCartQuery(User?._id);
   const [isLoading, setIsLoading] = useState(false);
   const [CartId, setCartId] = useState('');
-  function AddCart(product: any, quantity: string | number) {
+  function AddCart(product: ProductType, quantity: string | number) {
     console.log('product hero', product);
     setIsLoading(true);
     AddToCart({
       payload: {
         name: product?.name,
+        productId: product?._id,
         description: product?.description,
         price: product?.price,
         image: product?.images?.[0]?.url,
@@ -42,7 +43,6 @@ export default function HeroCarousel({ data }: CarouselProps) {
     }).then(() => {
       FetchCart();
       setIsLoading(false);
-
     });
   }
 
@@ -50,15 +50,37 @@ export default function HeroCarousel({ data }: CarouselProps) {
     <>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        slidesPerView={4}
-        spaceBetween={20}
+        slidesPerView={1}
+        spaceBetween={10}
         navigation
         pagination={{
           clickable: true,
         }}
-        width={1200}
+        // width={1200}
+        breakpoints={{
+          // when window width is >= 320px
+          '320': {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          // when window width is >= 480px
+          '480': {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          '680': {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          // when window width is >= 640px
+          '840': {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+        }}
         height={1200}
         className="mySwiper"
+        effect="creative"
       >
         {data?.length > 0 ? (
           data?.map((element: ProductType, index: number) => {

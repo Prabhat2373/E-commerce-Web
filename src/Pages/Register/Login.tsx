@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from '../../features/services/RTK/Api';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, UserType, isLoggedIn } from '../../features/Slices/AppSlice';
-import { LoginPayload } from '../../interfaces/Payload';
-import { Show } from '../../features/Slices/ToastSlice';
 import { useToast } from '../../features/Toast/ToastContext';
 
 export default function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const [Login] = useLoginUserMutation();
-  const userPayload: UserType = useSelector(
-    (state: UserType) => state?.user?.payload
-  );
   const toast = useToast();
   // const showToast = (message: string) => toast.open(message);
 
@@ -37,15 +29,8 @@ export default function Login() {
         console.log('User', response?.data?.user);
         dispatch(User(response?.data?.user));
         dispatch(isLoggedIn(true));
-        dispatch(
-          Show({
-            isOpen: true,
-            message: 'Random',
-            title: 'RANDOM',
-          })
-        );
-        window.location.reload();
-        window.location.href = '/';
+        toast.open('You have logged in successfully!');
+        navigate('/');
       })
       .catch((err) => {
         console.log(err?.message);

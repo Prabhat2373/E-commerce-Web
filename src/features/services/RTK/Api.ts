@@ -47,7 +47,7 @@ export const CoreApi = createApi({
     }),
     CreateUser: builder.mutation({
       query: (args) => ({
-        url: "signup",
+        url: "register",
         body: args,
         method: "POST",
         redirect: "follow",

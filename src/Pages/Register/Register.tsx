@@ -18,13 +18,14 @@ const Register = () => {
     formdata.append('name', data.name);
     formdata.append('email', data.email);
     formdata.append('password', data.password);
-    formdata.append('isSeller', data.isSeller);
-    formdata.append('file', profileRef.current.files[0]);
+    formdata.append('role', data.isSeller ? 'admin' : 'user');
+    formdata.append('avatar', profileRef.current.files[0]);
 
     PostUser(formdata)
-      .then(() => {
-        navigate('/login');
-        window.location.reload();
+      .then((data: any) => {
+        // navigate('/login');
+        // window.location.reload();
+        console.log(data);
         // alert("You're Logged In");
       })
       .catch((err) => console.log(err?.message));

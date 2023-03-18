@@ -1,20 +1,26 @@
-import {
-	createSlice,
-	PayloadAction
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import { checkout, CartItems } from '../../app/api';
 
 type CheckoutState = 'LOADING' | 'READY' | 'ERROR';
+
+export interface CartItem {
+  _id: string;
+  userId: string;
+  productId: string;
+  name: string;
+  price: string;
+  quantity: string;
+  description: string;
+  image: string;
+  __v: number;
+}
+
 export interface CartState {
-	items: { [productID: string]: number };
-	checkoutState: CheckoutState;
-	errorMessage: string;
+  items: CartItem[];
 }
 
 const initialState: CartState = {
-	items: {},
-	checkoutState: 'READY',
-	errorMessage: ''
+  items: [],
 };
 
 // export const checkoutCart = createAsyncThunk<
@@ -30,30 +36,18 @@ const initialState: CartState = {
 // });
 
 const cartSlice = createSlice({
-	name: 'cart',
-	initialState,
-	reducers: {
-		addToCart(state, action: PayloadAction<string>) {
-			if (state.items[action.payload]) {
-				state.items[action.payload]++;
-			} else {
-				state.items[action.payload] = 1;
-			}
-		},
-		removeFromCart(state, action: PayloadAction<string>) {
-			delete state.items[action.payload];
-		},
-		updateQuantity(
-			state,
-			action: PayloadAction<{ id: string; quantity: number }>
-		) {
-			const { id, quantity } = action.payload;
-			state.items[id] = quantity;
-		}
-	},
+  name: 'cart',
+  initialState,
+  reducers: {
+    Cart(state, action: PayloadAction<CartItem[]>) {
+      console.log('cart item in slice', action.payload);
+      const cart = action.payload;
+      state.items = cart;
+    },
+  },
 });
 
-export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
+export const { Cart } = cartSlice.actions;
 export default cartSlice.reducer;
 
 // export function getNumItems(state: RootState) {

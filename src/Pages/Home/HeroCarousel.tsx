@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import LoadingImage from '../../Assets/images/load.png';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -21,6 +21,7 @@ interface CarouselProps {
 }
 export default function HeroCarousel({ data }: CarouselProps) {
   const navigate = useNavigate();
+  const CartArray = useSelector((state: any) => state.cart.items)
   const User = useSelector((state: any) => state.user.payload);
   const id = User?._id;
   const [AddToCart] = useAddToCartMutation();
@@ -45,6 +46,23 @@ export default function HeroCarousel({ data }: CarouselProps) {
       setIsLoading(false);
     });
   }
+
+  useEffect(() => {
+
+
+  }, [AllCart])
+  // CartArray?.filter((element: any, i: number) => {
+  //   console.log('element', data[i]?._id === element?.productId)
+  //   if (data[i]?._id === element?.productId) {
+  //     ProductInCart.push(element)
+  //   }
+  //   else { }
+  // })
+  const ProductInCart = CartArray && CartArray?.some((item: any) => console.log('ittttm', item?.userId === User?._id))
+
+  console.log('isProduct', ProductInCart)
+  console.log('data', data)
+  console.log('cart', CartArray)
 
   return (
     <>
@@ -84,6 +102,7 @@ export default function HeroCarousel({ data }: CarouselProps) {
       >
         {data?.length > 0 ? (
           data?.map((element: ProductType, index: number) => {
+            console.log('tesssss', element?._id, 'cart id', CartId)
             return (
               <SwiperSlide>
                 <div
@@ -150,20 +169,35 @@ export default function HeroCarousel({ data }: CarouselProps) {
                           <span className="sr-only">Loading...</span>
                         </div>
                       ) : (
-                        <svg
-                          className="h-5 w-5"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
+                        <>
+                          {element?._id === CartArray[index - 1]?._id ? <svg
+                            className="h-5 w-5"
+                            viewBox="0 0 24 24"
+                            fill={'red'}
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg> : <svg
+                            className="h-5 w-5"
+                            viewBox="0 0 24 24"
+                            fill={'blue'}
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>}
+                        </>
                       )}
                     </p>
                   </div>

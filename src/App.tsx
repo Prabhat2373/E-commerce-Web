@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Footer from './components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  useGetAllCartQuery,
   useGetCurrentUserQuery,
   useGetProductsQuery,
 } from './features/services/RTK/Api';
@@ -14,6 +15,7 @@ import { Products } from './features/Slices/ProductSlice';
 import { User } from './features/Slices/AppSlice';
 import OrderIndex from './Pages/Orders/OrderIndex';
 import { FormContextProvider } from './Contexts/formContext';
+import { Cart } from './features/Slices/CartSlice';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
@@ -30,18 +32,21 @@ const Profile = React.lazy(() => import('./Pages/Admin/Profile'));
 
 function App() {
   const user = useSelector((state: any) => state.user.user);
+
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery('');
   const { data: currentUser } = useGetCurrentUserQuery('');
+  const { data: CartItems } = useGetAllCartQuery(currentUser?.user?._id)
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.products ?? []));
     if (user?.isLoggedIn) {
       dispatch(User(currentUser?.user));
     }
-  }, [currentUser, ProductPayload?.products]);
-
-  console.log('current user:', currentUser?.user);
-  console.log('products in app.tsx', ProductPayload);
+    dispatch(Cart(CartItems?.payload))
+  }, [currentUser, ProductPayload, CartItems]);
+  // dispatch(User(currentUser?.user));
+  console.log('cart items', CartItems)
+  console.log('user', currentUser)
   return (
     <FormContextProvider>
       <React.Fragment>

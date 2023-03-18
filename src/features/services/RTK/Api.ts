@@ -2,28 +2,31 @@ import { Product, ProductsPayloadType } from '../../../Types/Products';
 import { GenericResponse } from '../../../Types/Responses';
 import { LoginPayload } from '../../../interfaces/Payload';
 // Need to use the React-specific entry point to import createApi
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
 export const CoreApi = createApi({
-  reducerPath: "CoreApi",
+  reducerPath: 'CoreApi',
   baseQuery: fetchBaseQuery({
     baseUrl:
-      process.env.REACT_APP_MY_ENVIRONMENT === "prod"
+      process.env.REACT_APP_MY_ENVIRONMENT === 'prod'
         ? process.env.REACT_APP_PROD_BASE_URL
         : process.env.REACT_APP_DEV_BASE_URL,
-    credentials: "include",
+    credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-      headers.set('authorization', `bearer ${String(localStorage.getItem('token'))}`)
-      return headers
-    }
+      headers.set(
+        'authorization',
+        `bearer ${String(localStorage.getItem('token'))}`
+      );
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: (id: number) => `/${id}`,
     }),
     getAllCart: builder.query({
-      query: (id: number) => ({
+      query: (id: any) => ({
         url: `cart/${id}`,
       }),
     }),
@@ -36,34 +39,46 @@ export const CoreApi = createApi({
       query: (args) => ({
         url: `cart/${args?.id}`,
         body: args.payload,
-        method: "POST",
+        method: 'POST',
       }),
     }),
     removeCartItem: builder.mutation({
       query: (id: number) => ({
         url: `cart/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
     CreateUser: builder.mutation({
       query: (args) => ({
-        url: "register",
+        url: 'register',
         body: args,
-        method: "POST",
-        redirect: "follow",
+        method: 'POST',
+        redirect: 'follow',
       }),
     }),
     getCurrentUser: builder.query({
       query: () => ({
-        url: '/me'
-      })
+        url: '/me',
+      }),
     }),
     LoginUser: builder.mutation<LoginPayload, any>({
       query: (args) => ({
-        url: "login",
+        url: 'login',
         body: args,
-        method: "POST",
+        method: 'POST',
         // redirect: 'follow'
+      }),
+    }),
+    addBillingDetails: builder.mutation({
+      query: (args) => ({
+        url: `/billing_info/${args.id}`,
+        body: args.payload,
+        method: 'POST',
+      }),
+    }),
+    getBillingDetails: builder.query({
+      query: (args) => ({
+        url: `/billing_info/${args}`,
       }),
     }),
     getProducts: builder.query<ProductsPayloadType, string>({
@@ -80,13 +95,13 @@ export const CoreApi = createApi({
       query: (args) => ({
         url: `/product`,
         body: args,
-        method: "POST",
+        method: 'POST',
       }),
     }),
     logout: builder.mutation({
       query: () => ({
-        url: "/logout",
-        method: "POST",
+        url: '/logout',
+        method: 'POST',
       }),
     }),
   }),
@@ -106,4 +121,6 @@ export const {
   useLoginUserMutation,
   useCreateProductMutation,
   useLogoutMutation,
+  useAddBillingDetailsMutation,
+  useGetBillingDetailsQuery,
 } = CoreApi;

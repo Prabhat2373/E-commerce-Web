@@ -36,7 +36,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
   }
 
   console.log('cart data', CartData);
-  const SubTotal = CartData?.reduce((item: any, price: any) => {
+   const SubTotal = CartData?.reduce((item: any, price: any) => {
     return Number(price?.price) + item;
   }, 0);
   return (

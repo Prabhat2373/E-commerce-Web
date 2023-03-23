@@ -93,7 +93,7 @@ export const CoreApi = createApi({
     }),
     createProduct: builder.mutation({
       query: (args) => ({
-        url: `/product`,
+        url: `/admin/product/new`,
         body: args,
         method: 'POST',
       }),

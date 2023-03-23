@@ -161,8 +161,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* <Alert title="Hello" message={"Test Alert"} /> */}
       <Sections title="Fashion & Cloths" data={ClothsItems} />
       <Sections title="Tech and Electronics" data={ElectronicsItems} />
       <Sections title="Others" data={OthersItems} />

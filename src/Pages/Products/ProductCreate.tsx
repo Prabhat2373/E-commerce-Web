@@ -57,24 +57,29 @@ const ProductCreate = () => {
     formState: { errors },
   } = useForm();
   const [isAlert, setIsAlert] = useState(false);
-  const productRef = useRef<any>();
+  const productRef = useRef() as MutableRefObject<HTMLInputElement>;
   const dispatch = useDispatch();
   const [CreateProduct] = useCreateProductMutation();
   const User = useSelector((state: any) => state?.user?.payload);
   console.log('USER ', User);
-
+  console.log('filesss', productRef.current?.files)
   const navigate = useNavigate();
   const onSubmit = async (data: any) => {
     var formdata = new FormData();
+    if (productRef.current.files) {
+      for (let i = 0; i < productRef?.current.files.length; i++) {
+        formdata.append('images', productRef?.current?.files[i])
+      }
+    }
     formdata.append('name', data.name);
-    formdata.append('desc', data.desc);
+    formdata.append('description', data.desc);
     formdata.append('price', data.price);
     formdata.append('stock', data.stock);
     formdata.append('category', data.category);
     formdata.append('brand', data.brand);
     formdata.append('ratings', data.ratings);
     formdata.append('sellerId', User?._id ?? '');
-    formdata.append('file', productRef.current.files[0]);
+    // formdata.append('images', productRef.current?.files);
 
     CreateProduct(formdata)
       .then(() => {
@@ -123,10 +128,12 @@ const ProductCreate = () => {
               className="block w-full px-4 py-2 mt-2 text-indigo-500 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               {...register('file')}
               id="profile"
+              multiple={true}
               ref={productRef}
               onChange={() => {
                 console.log(productRef);
               }}
+              accept="image/png, image/gif, image/jpeg"
             />
           </div>
 

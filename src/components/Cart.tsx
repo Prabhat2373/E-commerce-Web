@@ -5,7 +5,7 @@ import {
   useGetAllCartQuery,
   useRemoveCartItemMutation,
 } from '../features/services/RTK/Api';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Product } from '../Types/Products';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,23 +20,24 @@ export default function Cart({ isOpen, setOpen }: Props) {
   const navigate = useNavigate();
   const [removeItem] = useRemoveCartItemMutation();
   const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery(User?._id);
-
   const [CartData, setCartData] = useState<Product[]>([]);
   useEffect(() => {
     setCartData(CartItems?.payload);
     FetchMore();
   }, [CartItems]);
 
+
   function remove(id: number) {
     setIsLoading(true);
     removeItem(id).then(() => {
       FetchMore();
+
       setIsLoading(false);
     });
   }
 
   console.log('cart data', CartData);
-   const SubTotal = CartData?.reduce((item: any, price: any) => {
+  const SubTotal = CartData?.reduce((item: any, price: any) => {
     return Number(price?.price) + item;
   }, 0);
   return (
@@ -145,7 +146,7 @@ export default function Cart({ isOpen, setOpen }: Props) {
                                               }}
                                             >
                                               {isLoading &&
-                                              products?._id === productId
+                                                products?._id === productId
                                                 ? 'Loading...'
                                                 : 'Remove'}
                                             </button>
@@ -171,11 +172,10 @@ export default function Cart({ isOpen, setOpen }: Props) {
                           <div className="mt-6 flex justify-center">
                             <input
                               type="button"
-                              className={`flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 w-full disabled:bg-slate-600 ${
-                                !SubTotal || SubTotal === undefined
-                                  ? 'cursor-not-allowed'
-                                  : 'cursor-pointer'
-                              }`}
+                              className={`flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 w-full disabled:bg-slate-600 ${!SubTotal || SubTotal === undefined
+                                ? 'cursor-not-allowed'
+                                : 'cursor-pointer'
+                                }`}
                               value="Checkout"
                               defaultValue={'Checkout'}
                               disabled={!SubTotal || SubTotal === undefined}

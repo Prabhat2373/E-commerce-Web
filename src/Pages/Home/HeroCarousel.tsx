@@ -58,7 +58,12 @@ export default function HeroCarousel({ data }: CarouselProps) {
   //   }
   //   else { }
   // })
-  const ProductInCart = CartArray && CartArray?.some((item: any) => console.log('ittttm', item?.userId === User?._id))
+  const ProductInCart = data?.filter((el: any, i: number) => {
+    console.log('iiii', el)
+    console.log('cart', CartArray?.[i])
+    return el?._id === CartArray?.[i]?.productId
+
+  })
 
   console.log('isProduct', ProductInCart)
   console.log('data', data)
@@ -103,6 +108,7 @@ export default function HeroCarousel({ data }: CarouselProps) {
         {data?.length > 0 ? (
           data?.map((element: ProductType, index: number) => {
             console.log('tesssss', element?._id, 'cart id', CartId)
+            console.log('newwww', element?._id === CartArray?.[index]?.productId)
             return (
               <SwiperSlide>
                 <div
@@ -170,7 +176,7 @@ export default function HeroCarousel({ data }: CarouselProps) {
                         </div>
                       ) : (
                         <>
-                          {element?._id === CartArray[index - 1]?._id ? <svg
+                          {element?._id === CartArray?.[index]?.productId ? <svg
                             className="h-5 w-5"
                             viewBox="0 0 24 24"
                             fill={'red'}

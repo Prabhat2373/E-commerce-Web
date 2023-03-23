@@ -15,7 +15,10 @@ interface Cart extends Product {
   __v: number
 }
 
-const OrderSummary = () => {
+const OrderSummary = ({ formStep, nextFormStep }: {
+  formStep: number;
+  nextFormStep: () => void;
+}) => {
   const User: UserType = useSelector((state: any) => state.user.payload);
   const [CartData, setCartData] = useState<Cart[]>([]);
   const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery(User?._id);

@@ -86,6 +86,11 @@ export const CoreApi = createApi({
         url: `products${query}`,
       }),
     }),
+    getOrderById: builder.query<any, string>({
+      query: (query: number | string) => ({
+        url: `order/${query}`,
+      }),
+    }),
     getProductById: builder.query<GenericResponse<Product>, string>({
       query: (id: any) => ({
         url: `/product/${id}`,

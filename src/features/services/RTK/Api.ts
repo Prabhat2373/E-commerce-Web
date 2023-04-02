@@ -103,6 +103,17 @@ export const CoreApi = createApi({
         method: 'POST',
       }),
     }),
+    paymentProcess: builder.mutation<any, any>({
+      query: (args) => ({
+        url: `/payment/process`,
+        body: args,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_STRIPE_API_KEY}`,
+        },
+        params: args,
+      }),
+    }),
     logout: builder.mutation({
       query: () => ({
         url: '/logout',
@@ -128,4 +139,5 @@ export const {
   useLogoutMutation,
   useAddBillingDetailsMutation,
   useGetBillingDetailsQuery,
+  usePaymentProcessMutation,
 } = CoreApi;

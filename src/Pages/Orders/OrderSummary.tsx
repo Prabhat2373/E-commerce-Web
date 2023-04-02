@@ -3,24 +3,29 @@ import { Product } from '../../Types/Products';
 import { useGetAllCartQuery } from '../../features/services/RTK/Api';
 import { useSelector } from 'react-redux';
 import { UserType } from '../../features/Slices/AppSlice';
+import { useOrderFormContext } from '../../Contexts/formContext';
 
 interface Cart extends Product {
-  _id: string
-  userId: string
-  name: string
-  price: number
-  quantity: string
-  description: string
-  image: string
-  __v: number
+  _id: string;
+  userId: string;
+  name: string;
+  price: number;
+  quantity: string;
+  description: string;
+  image: string;
+  __v: number;
 }
 
-const OrderSummary = ({ formStep, nextFormStep }: {
+const OrderSummary = ({
+  formStep,
+  nextFormStep,
+}: {
   formStep: number;
   nextFormStep: () => void;
 }) => {
   const User: UserType = useSelector((state: any) => state.user.payload);
   const [CartData, setCartData] = useState<Cart[]>([]);
+  const { setFormData, formData } = useOrderFormContext();
   const { data: CartItems, refetch: FetchMore } = useGetAllCartQuery(User?._id);
   useEffect(() => {
     setCartData(CartItems?.payload);
@@ -29,7 +34,10 @@ const OrderSummary = ({ formStep, nextFormStep }: {
   const SubTotal = CartData?.reduce((item: any, price: any) => {
     return Number(price?.price) + item;
   }, 0);
-  console.log('user', User)
+  useEffect(() => {
+    setFormData({ ...formData, totalAmount: SubTotal });
+  }, [SubTotal]);
+  console.log('user', User);
   return (
     <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
       <div className="flex justify-start item-start space-y-2 flex-col ">
@@ -46,56 +54,66 @@ const OrderSummary = ({ formStep, nextFormStep }: {
             <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800">
               Customer’s Cart
             </p>
-            {CartData?.length ? CartData?.map((element) => {
-              return (
-                <>
-                  <div className="mt-4 md:mt-6 flex  flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
-                    <div className="pb-4 md:pb-8 w-full md:w-40">
-                      <img
-                        className="w-full hidden md:block"
-                        src={element?.image ?? ''}
-                        alt="dress"
-                      />
-                      <img
-                        className="w-full md:hidden"
-                        src={element?.image ?? ''}
-                        alt="dress"
-                      />
-                    </div>
-                    <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full  pb-8 space-y-4 md:space-y-0">
-                      <div className="w-full flex flex-col justify-start items-start space-y-8">
-                        <h3 className="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">
-                          {element?.name}
-                        </h3>
-                        <div className="flex justify-start items-start flex-col space-y-2">
-                          <p className="text-sm leading-none text-gray-800">
-                            <span className="text-gray-300">Category: </span> {element?.category ?? 'N.A.'}
+            {CartData?.length ? (
+              CartData?.map((element) => {
+                return (
+                  <>
+                    <div className="mt-4 md:mt-6 flex  flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
+                      <div className="pb-4 md:pb-8 w-full md:w-40">
+                        <img
+                          className="w-full hidden md:block"
+                          src={element?.image ?? ''}
+                          alt="dress"
+                        />
+                        <img
+                          className="w-full md:hidden"
+                          src={element?.image ?? ''}
+                          alt="dress"
+                        />
+                      </div>
+                      <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full  pb-8 space-y-4 md:space-y-0">
+                        <div className="w-full flex flex-col justify-start items-start space-y-8">
+                          <h3 className="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">
+                            {element?.name}
+                          </h3>
+                          <div className="flex justify-start items-start flex-col space-y-2">
+                            <p className="text-sm leading-none text-gray-800">
+                              <span className="text-gray-300">Category: </span>{' '}
+                              {element?.category ?? 'N.A.'}
+                            </p>
+                            <p className="text-sm leading-none text-gray-800">
+                              <span className="text-gray-300">Brand: </span>{' '}
+                              {element?.brand ?? 'N.A.'}
+                            </p>
+                            <p className="text-sm leading-none text-gray-800">
+                              <span className="text-gray-300">Rating: </span>{' '}
+                              {element?.ratings ?? 'N.A.'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex justify-between space-x-8 items-start w-full">
+                          <p className="text-base xl:text-lg leading-6">
+                            ${element?.price}{' '}
+                            <span className="text-red-300 line-through">
+                              {' '}
+                              ${Number(element?.price) + 200}
+                            </span>
                           </p>
-                          <p className="text-sm leading-none text-gray-800">
-                            <span className="text-gray-300">Brand: </span> {element?.brand ?? 'N.A.'}
+                          <p className="text-base xl:text-lg leading-6 text-gray-800">
+                            {element?.quantity}
                           </p>
-                          <p className="text-sm leading-none text-gray-800">
-                            <span className="text-gray-300">Rating: </span> {element?.ratings ?? 'N.A.'}
+                          <p className="text-base xl:text-lg font-semibold leading-6 text-gray-800">
+                            ${element?.price ?? 'N.A.'}
                           </p>
                         </div>
                       </div>
-                      <div className="flex justify-between space-x-8 items-start w-full">
-                        <p className="text-base xl:text-lg leading-6">
-                          ${element?.price}{' '}
-                          <span className="text-red-300 line-through"> ${Number(element?.price) + 200}</span>
-                        </p>
-                        <p className="text-base xl:text-lg leading-6 text-gray-800">
-                          {element?.quantity}
-                        </p>
-                        <p className="text-base xl:text-lg font-semibold leading-6 text-gray-800">
-                          ${element?.price ?? 'N.A.'}
-                        </p>
-                      </div>
                     </div>
-                  </div>
-                </>
-              )
-            }) : <></>}
+                  </>
+                );
+              })
+            ) : (
+              <></>
+            )}
           </div>
           <div className="flex justify-center md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
             <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 space-y-6   ">
@@ -105,7 +123,9 @@ const OrderSummary = ({ formStep, nextFormStep }: {
               <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                 <div className="flex justify-between  w-full">
                   <p className="text-base leading-4 text-gray-800">Subtotal</p>
-                  <p className="text-base leading-4 text-gray-600">${SubTotal}</p>
+                  <p className="text-base leading-4 text-gray-600">
+                    ${SubTotal}
+                  </p>
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <p className="text-base leading-4 text-gray-800">
@@ -174,10 +194,7 @@ const OrderSummary = ({ formStep, nextFormStep }: {
           <div className="flex  flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0 ">
             <div className="flex flex-col justify-start items-start flex-shrink-0">
               <div className="flex justify-center  w-full  md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
-                <img
-                  src={User?.avatar?.url ?? ''}
-                  alt="avatar"
-                />
+                <img src={User?.avatar?.url ?? ''} alt="avatar" />
                 <div className=" flex justify-start items-start flex-col space-y-2">
                   <p className="text-base font-semibold leading-4 text-left text-gray-800">
                     {User?.name ?? 'N.A.'}

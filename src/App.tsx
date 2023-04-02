@@ -36,17 +36,17 @@ function App() {
   const dispatch = useDispatch();
   const { data: ProductPayload } = useGetProductsQuery('');
   const { data: currentUser } = useGetCurrentUserQuery('');
-  const { data: CartItems } = useGetAllCartQuery(currentUser?.user?._id)
+  const { data: CartItems } = useGetAllCartQuery(currentUser?.user?._id);
   React.useEffect(() => {
     dispatch(Products(ProductPayload?.products ?? []));
     if (user?.isLoggedIn) {
       dispatch(User(currentUser?.user));
     }
-    dispatch(Cart(CartItems?.payload))
+    dispatch(Cart(CartItems?.payload));
   }, [currentUser, ProductPayload, CartItems]);
   // dispatch(User(currentUser?.user));
-  console.log('cart items', CartItems)
-  console.log('user', currentUser)
+  console.log('cart items', CartItems);
+  console.log('user', currentUser);
   return (
     <FormContextProvider>
       <React.Fragment>

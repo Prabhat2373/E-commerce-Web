@@ -1,16 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormContext, useOrderFormContext } from '../../../Contexts/formContext';
-const ShippingDetails = ({ formStep, nextFormStep }: {
+import {
+  FormContext,
+  FormDataType,
+  useOrderFormContext,
+} from '../../../Contexts/formContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+const ShippingDetails = ({
+  formStep,
+  nextFormStep,
+}: {
   formStep: number;
   nextFormStep: () => void;
 }) => {
-  const { formData, setFormData } = useOrderFormContext()
-  const { register, handleSubmit } = useForm();
+  const { formData, setFormData } = useOrderFormContext();
+  const user: any = useSelector((state: RootState) => state.user.payload);
+  console.log('user', user);
+  const initialValues: FormDataType = {
+    first_name: user?.name,
+    last_name: user?.last_name ?? '',
+    email: user?.email,
+    address1: user?.billing_info?.billing_address_line1,
+    address2: user?.billing_info?.billing_address_line2,
+    city: user?.billing_info?.billing_city,
+    state: user?.billing_info?.billing_state,
+    country: user?.billing_info?.billing_country,
+    zip: user?.billing_info?.billing_zip,
+    phone: user?.billing_info?.billing_phone,
+    totalAmount: 0,
+  };
+  useEffect(() => {
+    if (initialValues) {
+      setFormData(initialValues);
+    }
+  }, []);
+  const { register, handleSubmit } = useForm({
+    defaultValues: initialValues,
+  });
   const onSubmit = (data: any) => {
-    setFormData(data)
-    nextFormStep()
-  }
+    setFormData(data);
+    nextFormStep();
+  };
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -20,9 +51,7 @@ const ShippingDetails = ({ formStep, nextFormStep }: {
             <input
               type="text"
               {...register('first_name')}
-              className="
-      block
-      w-full
+              className="block w-full
       mt-1
       border-gray-300
       rounded-md
@@ -51,7 +80,6 @@ const ShippingDetails = ({ formStep, nextFormStep }: {
       focus:ring-opacity-50
     "
               placeholder="example@gmail.com"
-
             />
           </label>
           <label className="block mb-6">
@@ -194,7 +222,7 @@ const ShippingDetails = ({ formStep, nextFormStep }: {
               placeholder=""
             />
           </label>
-          <button type='submit'>Next</button>
+          <button type="submit">Next</button>
         </div>
       </form>
     </>

@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 
 interface ToastContextProps {
   open: (content: ReactNode) => void;
+  type?: 'success' | 'error' | 'warning';
 }
 
 export const ToastContext = createContext<ToastContextProps>(

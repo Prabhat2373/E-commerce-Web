@@ -114,6 +114,23 @@ export const CoreApi = createApi({
         params: args,
       }),
     }),
+    createOrder: builder.mutation<any, any>({
+      query: (args) => ({
+        url: `/order/new`,
+        body: args,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // params: args,
+      }),
+    }),
+    getStripeKey: builder.query<any, any>({
+      query: (args) => ({
+        url: `/stripeapikey`,
+        // params: args,
+      }),
+    }),
     logout: builder.mutation({
       query: () => ({
         url: '/logout',
@@ -140,4 +157,6 @@ export const {
   useAddBillingDetailsMutation,
   useGetBillingDetailsQuery,
   usePaymentProcessMutation,
+  useCreateOrderMutation,
+  useGetStripeKeyQuery,
 } = CoreApi;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OrderSummary from '../OrderSummary';
 import BillingInfoForm from './BillingInfoForm';
 import ShippingDetails from './ShippingDetails';
@@ -8,9 +8,14 @@ import {
   useOrderFormContext,
 } from '../../../Contexts/formContext';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import { useAddBillingDetailsMutation } from '../../../features/services/RTK/Api';
+import {
+  useAddBillingDetailsMutation,
+  useGetStripeKeyQuery,
+} from '../../../features/services/RTK/Api';
 import { useSelector } from 'react-redux';
 import { User } from '../../../interfaces/Payload';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 export interface BillingData {
   first_name: string;
@@ -29,6 +34,7 @@ const OrderForm = () => {
   const [BillingDetails] = useAddBillingDetailsMutation();
   const user: User = useSelector((state: any) => state?.user?.payload);
   const [step, setStep] = useState(1);
+  const [stripeApiKey, setStripeApiKey] = useState('');
   const handleNext = () => {
     setStep(step + 1);
   };
@@ -72,6 +78,13 @@ const OrderForm = () => {
   const nextFormStep = () => setFormStep((currentStep) => currentStep + 1);
 
   const prevFormStep = () => setFormStep((currentStep) => currentStep - 1);
+  const { data: StripeKey } = useGetStripeKeyQuery('');
+
+  useEffect(() => {
+    setStripeApiKey(StripeKey?.stripeApiKey);
+  }, [StripeKey]);
+
+  console.log('STRIPEKEY', stripeApiKey);
 
   return (
     <div className="flex items-center justify-center">
@@ -118,10 +131,12 @@ const OrderForm = () => {
           (step === 3 && (
             <div>
               <h3 className="text-lg font-medium mb-4">Payment Info</h3>
-              <BillingInfoForm
-                formStep={formStep}
-                nextFormStep={nextFormStep}
-              />
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <BillingInfoForm
+                  formStep={formStep}
+                  nextFormStep={nextFormStep}
+                />
+              </Elements>
             </div>
           ))}
         <div className="flex justify-between mt-6">

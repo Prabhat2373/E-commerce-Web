@@ -29,6 +29,7 @@ export default function Login() {
         console.log('User', response?.data?.user);
         dispatch(User(response?.data?.user));
         dispatch(isLoggedIn(true));
+
         toast.open('You have logged in successfully!');
         navigate('/');
       })

@@ -70,7 +70,9 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route path="your-products" element={<YourProducts />} />
+              <Route path="my-orders" element={<YourProducts />} />
               <Route path={`view/:id`} element={<ProductView />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />

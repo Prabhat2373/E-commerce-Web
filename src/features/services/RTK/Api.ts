@@ -125,10 +125,21 @@ export const CoreApi = createApi({
         // params: args,
       }),
     }),
+    removeAllCart: builder.mutation({
+      query: () => ({
+        url: '/cart',
+        method: 'DELETE',
+      }),
+    }),
     getStripeKey: builder.query<any, any>({
       query: (args) => ({
         url: `/stripeapikey`,
         // params: args,
+      }),
+    }),
+    getMyOrders: builder.query<any, any>({
+      query: () => ({
+        url: '/orders/me',
       }),
     }),
     logout: builder.mutation({
@@ -159,4 +170,6 @@ export const {
   usePaymentProcessMutation,
   useCreateOrderMutation,
   useGetStripeKeyQuery,
+  useGetMyOrdersQuery,
+  useRemoveAllCartMutation,
 } = CoreApi;

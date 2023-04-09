@@ -16,12 +16,14 @@ import { User } from './features/Slices/AppSlice';
 import OrderIndex from './Pages/Orders/OrderIndex';
 import { FormContextProvider } from './Contexts/formContext';
 import { Cart } from './features/Slices/CartSlice';
+import PaymentSuccess from './Pages/payment/PaymentSuccess';
 
 const Home = React.lazy(() => import('./Pages/Home'));
 const ProductsIndex = React.lazy(
   () => import('./Pages/Products/ProductsIndex')
 );
 const YourProducts = React.lazy(() => import('./Pages/Admin/YourProducts'));
+const MyOrders = React.lazy(() => import('./Pages/Orders/OrderList'));
 const ProductView = React.lazy(() => import('./Pages/Products/ProductView'));
 const Login = React.lazy(() => import('./Pages/Register/Login'));
 const Register = React.lazy(() => import('./Pages/Register/Register'));
@@ -72,13 +74,14 @@ function App() {
               />
 
               <Route path="your-products" element={<YourProducts />} />
-              <Route path="my-orders" element={<YourProducts />} />
+              <Route path="my-orders" element={<MyOrders />} />
               <Route path={`view/:id`} element={<ProductView />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="upload-product" element={<ProductCreate />} />
               <Route path="profile" element={<Profile />} />
               <Route path="order-form" element={<OrderIndex />} />
+              <Route path="order-success" element={<PaymentSuccess />} />
             </Routes>
           </Suspense>
         </div>

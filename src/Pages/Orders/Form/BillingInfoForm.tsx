@@ -6,6 +6,7 @@ import { useOrderFormContext } from '../../../Contexts/formContext';
 import {
   useCreateOrderMutation,
   usePaymentProcessMutation,
+  useRemoveAllCartMutation,
 } from '../../../features/services/RTK/Api';
 import {
   CardNumberElement,
@@ -14,8 +15,9 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-import { StripeCardElement } from '@stripe/stripe-js';
-import { StripeCardNumberElement } from '@stripe/stripe-js';
+// import { StripeCardElement } from '@stripe/stripe-js';
+// import { StripeCardNumberElement } from '@stripe/stripe-js';
+import { useNavigate } from 'react-router-dom';
 
 const BillingInfoForm = ({
   formStep,
@@ -34,6 +36,8 @@ const BillingInfoForm = ({
   const methods = useForm();
   const stripe = useStripe();
   const elements = useElements();
+  const nav = useNavigate();
+  const [RemoveCartItems] = useRemoveAllCartMutation();
   const paymentData = {
     amount: Math.round(formData && formData?.totalAmount * 100),
   };
@@ -98,23 +102,18 @@ const BillingInfoForm = ({
         CreateOrder(order)
           .then((res) => {
             console.log('ORDER CREATED SUCCESSFULLY', res);
+            nav('/order-success');
+            RemoveCartItems('');
           })
           .catch((err) => {
             console.log(err?.message);
           });
-        // dispatch(createOrder(order));
 
         // history.push('/success');
       } else {
         alert("There's some issue while processing payment ");
       }
     }
-    // }
-
-    // console.log('res', client_secret);
-    // console.log('Order Items', cartItems);
-    // console.log(data);
-    // console.log('formdata', formData);
   };
   return (
     <FormProvider {...methods}>
@@ -122,7 +121,7 @@ const BillingInfoForm = ({
         <form className="w-1/2" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col ">
             <label htmlFor="name">Name On Card</label>
-            <CardNumberElement className="paymentInput" />
+            <CardNumberElement className="paymentInput px-4 py-2 border border-gray-900" />
           </div>
           <div className="flex flex-col ">
             <label htmlFor="cardNumber">Card Number</label>
@@ -136,26 +135,16 @@ const BillingInfoForm = ({
             <CardExpiryElement className="paymentInput" />
           </div>
           <div className="flex flex-col ">
-            <label htmlFor="expireDate">CVV</label>
-            <input type="date" id="expireDate" {...register('expireDate')} />
-          </div>
-          <div className="flex flex-col ">
             <label htmlFor="cvv">CVV</label>
             {/* <input type="password" {...register('cvv')} id="cvv" /> */}
             <CardCvcElement className="paymentInput" />
           </div>
           <div className="flex justify-end">
-            {/* <button
-              className="border bg-blue-500 px-5 py-2 text-white rounded-md hover:bg-opacity-60"
-              type="submit"
-            >
-              Proceed To Pay
-            </button> */}
             <input
               type="submit"
               value={`Pay - ₹${formData && formData.totalAmount}`}
               ref={payBtn}
-              className="paymentFormBtn"
+              className="paymentFormBtn bg-indigo-600 px-4 py-2 rounded-lg cursor-pointer text-white font-sans font-semibold hover:bg-indigo-400"
             />
           </div>
         </form>

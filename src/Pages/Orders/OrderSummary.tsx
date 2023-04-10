@@ -19,9 +19,11 @@ interface Cart extends Product {
 const OrderSummary = ({
   formStep,
   nextFormStep,
+  prevFormStep,
 }: {
   formStep: number;
   nextFormStep: () => void;
+  prevFormStep: () => void;
 }) => {
   const User: UserType = useSelector((state: any) => state.user.payload);
   const [CartData, setCartData] = useState<Cart[]>([]);
@@ -112,7 +114,13 @@ const OrderSummary = ({
                 );
               })
             ) : (
-              <></>
+              <>
+                <div className="flex justify-center px-4 py-6 w-full ">
+                  <h1 className="text-slate-800 font-semibold text-lg">
+                    No Items In Cart
+                  </h1>
+                </div>
+              </>
             )}
           </div>
           <div className="flex justify-center md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
@@ -257,6 +265,20 @@ const OrderSummary = ({
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex justify-between ">
+          <button
+            className="px-4 py-2 bg-slate-600 text-white rounded-lg"
+            onClick={() => prevFormStep()}
+          >
+            Back
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-500 rounded-lg text-white"
+            onClick={() => nextFormStep()}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>

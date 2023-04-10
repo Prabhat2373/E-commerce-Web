@@ -222,7 +222,14 @@ const ShippingDetails = ({
               placeholder=""
             />
           </label>
-          <button type="submit">Next</button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 rounded-lg text-white"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </form>
     </>

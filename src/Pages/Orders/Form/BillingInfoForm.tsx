@@ -59,13 +59,7 @@ const BillingInfoForm = ({
     if (!stripe || !elements) return;
 
     console.log('inside ');
-    // const cardElement:
-    //   | StripeCardElement
-    //   | StripeCardNumberElement
-    //   | any
-    //   | { token: string } = elements.getElement(CardElement);
-    // if (cardElement === null) return;
-    // if (cardElement || cardElement !== null) {
+
     console.log('inside cardelee');
 
     const result = await stripe.confirmCardPayment(client_secret, {
